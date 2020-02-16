@@ -6,7 +6,9 @@ const api = {
   insertOneRecord: 'Bill/addOneRecord',
   getSpecifidBillInRange: '/Bill/getSpecifidBillInRange',
   getPast7DaysPayList: '/Bill/getPast7DayPayList',
-  getPast7DayIncomeList: 'Bill/getPast7DayIncomeList'
+  getPast7DayIncomeList: 'Bill/getPast7DayIncomeList',
+  searchOneBillInfo: 'Bill/searchOneBillInfo'
+
 }
 export default api
 
@@ -57,6 +59,14 @@ export function insertOneRecord (param) {
     url: `${api.insertOneRecord}`,
     method: 'post',
     data: param
+    // get方法传参用params，post方法传参用data
+  })
+}
+
+export function searchOneBillInfo (param) {
+  return axios({
+    url: `${api.searchOneBillInfo}?bid=` + param,
+    method: 'get'
     // get方法传参用params，post方法传参用data
   })
 }

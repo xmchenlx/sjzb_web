@@ -32,14 +32,13 @@
       <el-table-column prop="money" label="波动金额" align="center" width="150">
         <template slot-scope="scope">
           <span :class="payTypeClass(scope.row.money)">
-           ￥ {{scope.row.money}}
+           ￥ {{scope.row.money.toFixed(2)}}
             </span>
         </template>
       </el-table-column>
-      <el-table-column label="一级目录" align="center" width="100">
+      <el-table-column label="一级目录" align="center" width="130">
         <template slot-scope="scope">
-          <!-- :color="tableTagsColorConvert(scope.row.type1stName)" -->
-          <el-tag type="light" hit="true" size="mdeium" disable-transitions>
+          <el-tag type="light"  size="mdeium" >
             <i :class="tableTagsIconConvert(scope.row.type1stName)" />
             {{scope.row.type1stName}}
           </el-tag>
@@ -48,8 +47,8 @@
       <el-table-column prop="type2ndName" label="二级目录" align="center" width="100"></el-table-column>
       <el-table-column prop="note" label="额外备注" align="center" width="210"></el-table-column>
       <el-table-column label="操作">
-        <template>
-          <el-button type="primary" size="small" icon="el-icon-edit">编辑详情</el-button>
+        <template slot-scope="scope">
+          <el-button type="primary" size="small" icon="el-icon-edit" @click="searchDetailInfo(scope.row.id)">编辑详情</el-button>
           <el-button type="danger" size="small" icon="el-icon-delete">假装不存在</el-button>
         </template>
       </el-table-column>
@@ -63,13 +62,14 @@
       :total="1000">
     </el-pagination>-->
       <el-tag v-show="isTagShow" :closable="true" @close="closeTag" style="height:35px;font-size:20px;margin:10px 0">简报：{{billListReport}}</el-tag>
-
+<ediaModal ref="ediaModal"/>
   </div>
 </template>
 
 <script>
 /* eslint-disable */
 import { getAllBill, getAllBillInRange } from "@/api/BillInfo";
+import ediaModal from '../modal/addModal'
 import moment from "moment";
 import Bus from "@/bus";
 export default {
@@ -92,6 +92,9 @@ export default {
       this.isTableLoading = false;
     });
   },
+  components:{
+    ediaModal
+  },
   methods: {
     generateBillListReport(billData){
       let _this = this;
@@ -112,6 +115,9 @@ export default {
         console.log(this.tableData);
         this.isTableLoading = false;
       });
+    },
+    searchDetailInfo(bid){
+      this.$refs.ediaModal.editBillInfo(bid)
     },
     convertDate: function(row, column) {
       let newDate = moment(row.billDate).format("YYYY-MM-DD");

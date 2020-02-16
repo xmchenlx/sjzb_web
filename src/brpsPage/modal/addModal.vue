@@ -1,7 +1,13 @@
 <template>
   <div id="addmodal">
-    <el-dialog title="记录单次新变动" :visible.sync="isAddModalShow" width="30%" :before-close="handleClose">
-      <el-form ref="newRecord" :rules="rule" :model="newRecord" >
+    <el-dialog :title="titleName" :visible.sync="isAddModalShow" width="30%" :before-close="handleClose">
+      <el-form ref="newRecord" :rules="rule" :model="newRecord" label-position="right" label-width="100px">
+        <el-form-item label="类型：">
+          <el-radio-group v-model="billType" size="medium">
+      <el-radio border v-model="billType" label="0">支出</el-radio>
+      <el-radio border v-model="billType" label="1">收入</el-radio>
+    </el-radio-group>
+        </el-form-item>
         <el-form-item   label="变动日期:" prop="bill_date">
           <el-date-picker
             v-model="newRecord.bill_date"
@@ -18,7 +24,9 @@
         </el-form-item>
         <el-form-item label="变动金额:" prop="money">
           <!-- <el-input type="money" v-model.number="newRecord.money" style="width:80%" placeholder="【+】正数表示收入，【-】负数表示支出"/> -->
-          <el-input-number v-model="newRecord.money" :precision="2" :step="0.1" :max="99999" style="width:80%"></el-input-number>
+          <el-tooltip class="item" effect="dark" content="请输入金额，不论正负。选择类型为支出或收入后系统自动为您归类。" placement="right">
+          <el-input-number v-model="tempRecordMoney" :precision="2" :step="0.1" :min="0" :max="99999" style="width:80%"></el-input-number>
+        </el-tooltip>
         </el-form-item>
 
         <el-form-item label="一级类目:">
@@ -41,6 +49,21 @@
             ></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="是否优惠">
+    <el-switch v-model="isDiscount"></el-switch>
+  </el-form-item>
+
+    <div id="DiscountCalcu" v-if="isDiscount==true">
+      <el-form-item label="原总价:">
+        <el-input v-model="originPrice" style="width:80%"/>
+      </el-form-item>
+      <el-form-item label="实付价:">
+        <el-input v-model="payPrice" style="width:80%"/>
+      </el-form-item>
+      <el-form-item label="优惠比例:">
+        <span style="color:red;font-weight:bold">节省整单价格的{{100-fixxiaoshu(disCountPercent*100)}}%</span>
+      </el-form-item>
+    </div>
         <el-form-item label="额外备注:" >
           <el-input v-model="newRecord.note" style="width:80%"/>
         </el-form-item>
@@ -48,6 +71,9 @@
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="insertOneBillInfo" :loading="isProcess" :disabled="isProcessClick">确 定</el-button>
         </el-form-item>
+        <el-form-item label="该单实付:">
+        <span style="color:red;font-weight:bold">￥{{fixxiaoshu(newRecord.money)}}元</span>
+      </el-form-item>
       </el-form>
 
     </el-dialog>
@@ -57,7 +83,7 @@
 <script>
 import { getAllType } from '@/api/type1st'
 import { getTypeListByFid } from '@/api/type2nd'
-import { insertOneRecord } from '@/api/BillInfo'
+import { insertOneRecord, searchOneBillInfo } from '@/api/BillInfo'
 import moment from 'moment'
 import Bus from '@/bus'
 export default {
@@ -65,17 +91,24 @@ export default {
     return {
       isAddModalShow: false,
       newRecord: {
-        bill_date: '',
+        bill_date: moment(new Date()).format('YYYY-MM-DD'),
         type2nd: '',
         content: '',
-        money: '',
+        money: 0,
         type1st: '',
         note: ''
       },
+      billType: '0', // 类型为支出或收入
+      isDiscount: false, // 如果是直售商品为false，如用优惠券为true
+      payPrice: '',
+      originPrice: '',
       isProcess: false,
+      disCountPercent: 100,
       isProcessClick: false,
       type1stOptions: [],
       type2ndOptions: [],
+      tempRecordMoney: 0,
+      titleName: '记录单次新变动',
 
       rule: {
         bill_date: [{ required: true, message: '请输入日期', trigger: 'blur' }],
@@ -142,6 +175,9 @@ export default {
         })
       })
     },
+    fixxiaoshu (n) {
+      return n.toFixed(2)
+    },
     type1stIsChange () {
       this.getType2ndList()
     },
@@ -152,12 +188,19 @@ export default {
       // this.newRecord.bill_date = null
       this.isProcess = true
       this.isProcessClick = true
+      // 如果是支出，需要添加负号，收入则维持正数状态
+
+      this.newRecord.money = (this.billType == '0') ? this.newRecord.money * -1 : this.newRecord.money
+      this.newRecord.money = (this.newRecord.money).toFixed(3)
+
       this.newRecord.billDate = moment(this.newRecord.bill_date).valueOf()
       insertOneRecord({...this.newRecord}).then(res => {
         if (res.data.data > 0) {
           this.$message.success('添加成功。变动项目：' + this.newRecord.content)
           let lastDate = this.newRecord.bill_date
           this.$refs.newRecord.resetFields()
+          this.tempRecordMoney = 0
+          this.newRecord.type1st = ''
           this.newRecord.bill_date = lastDate
           Bus.$emit('addNewRec', 'success')
         } else {
@@ -171,9 +214,70 @@ export default {
         })
       })
     },
+    processOptionLabel (typeindex, id) {
+      let _this = this
+      if (typeindex == '1') {
+        for (let i = 0; i < this.type1stOptions.length; i++) {
+          if (_this.type1stOptions[i].value == id) {
+            _this.newRecord.type1st = _this.type1stOptions[i].label
+            break
+          }
+        }
+      } else if (typeindex == '2') {
+
+      }
+      return 'finish'
+    },
+    editBillInfo (bid) {
+      let _this = this
+      searchOneBillInfo(bid).then(res => {
+        _this.newRecord = res.data.data
+        _this.newRecord.bill_date = res.data.data.billDate
+        let money = res.data.data.money
+        _this.tempRecordMoney = (money > 0) ? money : money * -1
+        _this.billType = (money > 0) ? '1' : '0'
+        _this.titleName = '编辑已有记录'
+        // _this.processOptionLabel(1, res.data.data.type1st)
+        // _this.type2nd = _this.processOptionLabel(2, res.data.data.type2nd)
+        _this.show()
+      })
+    },
     show () {
       this.isAddModalShow = true
+    },
+    computedDiscount () {
+      if (this.payPrice != 0 && this.payPrice != '') {
+        this.disCountPercent = (this.payPrice / this.originPrice)
+      } else {
+        this.disCountPercent = 1
+      }
+    },
+    computedLastPrice () {
+      if (this.isDiscount == false) this.disCountPercent = 1
+      else this.computedDiscount()
+      this.newRecord.money = ((this.disCountPercent) * this.tempRecordMoney)
     }
+  },
+  watch: {
+    originPrice: function () {
+      this.computedDiscount()
+    },
+    payPrice: function () {
+      this.computedDiscount()
+    },
+    disCountPercent: function () {
+      this.computedLastPrice()
+    },
+    tempRecordMoney: function () {
+      this.computedLastPrice()
+    },
+    newRecord: function () {
+      this.computedLastPrice()
+    },
+    isDiscount: function () {
+      this.computedLastPrice()
+    }
+
   }
 }
 </script>

@@ -5,7 +5,7 @@ import LoginPage from '@/homepage/login'
 
 Vue.use(Router)
 
-export default new Router({
+export default  new Router({
   routes: [
     {
       path: '/',
@@ -17,9 +17,17 @@ export default new Router({
       name: 'personalCenter',
       component: () => import('@/brpsPage/personalCenter'),
       meta: {
-        title: '个人中心',
+        title: '????',
         show: true
       }
     }
   ]
 })
+
+// default.beforeEach((to, from, next) => {
+//   /* ??????????title */
+//   if (to.meta.title) {
+//     document.title = to.meta.title + " - ????"
+//   }
+//   next()
+// })

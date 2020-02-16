@@ -59,12 +59,19 @@ export default {
 
     processDataToList (d) {
       let _this = this
-      d.forEach(function (item) {
+      // _this.chartData.rows[index]['incomeMoney'] = objmap[i].money
+      for (let i in d) {
         _this.chartData.rows.push({
-          billDate: moment(item.billDate).format('YYYY-MM-DD'),
-          payMoney: item.money
+          billDate: moment(d[i].billDate).format('YYYY-MM-DD'),
+          payMoney: d[i].money
         })
-      })
+      }
+      // d.forEach(function (item) {
+      //   _this.chartData.rows.push({
+      //     billDate: moment(item.billDate).format('YYYY-MM-DD'),
+      //     payMoney: item.money
+      //   })
+      // })
     }
   },
   created: function () {
