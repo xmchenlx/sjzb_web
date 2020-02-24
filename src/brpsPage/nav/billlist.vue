@@ -49,7 +49,7 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button type="primary" size="small" icon="el-icon-edit" @click="searchDetailInfo(scope.row.id)">编辑详情</el-button>
-          <el-button type="danger" size="small" icon="el-icon-delete">假装不存在</el-button>
+          <el-button type="danger" size="small" icon="el-icon-delete" @click="removeOneRecord(scope.row.id,scope.row.content)">假装不存在</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -61,6 +61,7 @@
       layout="total, prev, pager, next"
       :total="1000">
     </el-pagination>-->
+
       <el-tag v-show="isTagShow" :closable="true" @close="closeTag" style="height:35px;font-size:20px;margin:10px 0">简报：{{billListReport}}</el-tag>
 <ediaModal ref="ediaModal"/>
   </div>
@@ -68,7 +69,7 @@
 
 <script>
 /* eslint-disable */
-import { getAllBill, getAllBillInRange } from "@/api/BillInfo";
+import { getAllBill, getAllBillInRange, removeOneRecord } from "@/api/BillInfo";
 import ediaModal from '../modal/addModal'
 import moment from "moment";
 import Bus from "@/bus";
@@ -107,6 +108,24 @@ export default {
       let reportText='在此期间，您累计支出￥'+payCount.toFixed(2)+'元，累计收入￥'+incomeCount.toFixed(2)+'元，差额'+(incomeCount-payCount).toFixed(2)+'元。'
       this.billListReport = reportText;
       this.isTagShow=true
+    },
+    removeOneRecord(bid,content){
+      this.$confirm('您正在尝试删除名为【'+content+'】的记录，操作不可逆，确认删除？','删除操作确认',{
+        confirmButtonText:'意已决，删除',
+        cancelButtonText: '朕再考虑',
+        type:'warning'
+      }).then(()=>{
+        removeOneRecord(bid).then(res=>{
+          if(res.data.data>0){
+            this.$message.success('已经删除！你真是个省钱的小天才！')
+            this.refreshTable()
+          }else{
+            this.$message.error('删除结果未知，请尝试刷新表格')
+          }
+        })
+      }).catch(()=>{
+        this.$message('操作终止')
+      })
     },
     getRangeData() {
       this.BillTitle = moment(new Date()).format("YYYY年MM月");
@@ -148,8 +167,9 @@ export default {
       this.getRangeData().then(res => {
         _this.refreshIconName = "el-icon-refresh-right";
         _this.refreshHint = "已是最新数据！";
-        _this.$forceUpdate();
-      });
+       
+      })
+      _this.$forceUpdate();
     },
     payTypeClass(p){
       if(p<0)return 'redPay'

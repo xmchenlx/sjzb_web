@@ -4,6 +4,8 @@ const api = {
   getAllBill: 'Bill/getAllBill',
   getAllBillInRange: 'Bill/getAllBillInRange',
   insertOneRecord: 'Bill/addOneRecord',
+  updateOneRecord: 'Bill/updateOneRecord',
+  removeOneRecord: 'Bill/removeOneRecord',
   getSpecifidBillInRange: '/Bill/getSpecifidBillInRange',
   getPast7DaysPayList: '/Bill/getPast7DayPayList',
   getPast7DayIncomeList: 'Bill/getPast7DayIncomeList',
@@ -59,6 +61,30 @@ export function insertOneRecord (param) {
     url: `${api.insertOneRecord}`,
     method: 'post',
     data: param
+    // get方法传参用params，post方法传参用data
+  })
+}
+
+/***
+ * 更新一条账单信息
+ */
+export function updateOneRecord (param) {
+  return axios({
+    url: `${api.updateOneRecord}`,
+    method: 'put',
+    data: param
+    // get方法传参用params，post方法传参用data
+  })
+}
+
+/**
+ * 删除一条记录
+ * @param {bid} p
+ */
+export function removeOneRecord (p) {
+  return axios({
+    url: `${api.removeOneRecord}?bid=` + p,
+    method: 'get'
     // get方法传参用params，post方法传参用data
   })
 }
