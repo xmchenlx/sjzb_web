@@ -76,7 +76,7 @@ import Bus from "@/bus";
 export default {
   data() {
     return {
-      tableData: "",
+      tableData: [],
       isTableLoading: true,
       BillTitle: "",
       refreshHint: "刷新数据",

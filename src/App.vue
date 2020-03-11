@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
+    <transition name="translate">
     <router-view/>
+    </transition>
   </div>
 </template>
 

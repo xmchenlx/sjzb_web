@@ -4,7 +4,6 @@
       :title="titleName"
       :visible.sync="isAddModalShow"
       width="30%"
-      :before-close="handleClose"
     >
       <el-form
         ref="newRecord"
@@ -123,8 +122,16 @@
             :disabled="isProcessClick"
           >提交更改</el-button>
         </el-form-item>
-        <el-form-item label="该单实付:">
-          <span style="color:red;font-weight:bold">￥{{fixxiaoshu(newRecord.money)}}元</span>
+        <el-form-item label="实际波动:">
+          <span style="color:red;font-weight:bold;font-size:27px" v-if="billType == 0">
+            <span style="font-size:19px;border:1px red solid;border-radius:5px;padding:0 2px 3px 2px;">花</span>
+            ￥{{fixxiaoshu(newRecord.money)}}元
+            </span>
+          <span style="color:green;font-weight:bold;font-size:27px" v-else>
+            <span style="font-size:19px;border:1px green solid;border-radius:5px;padding:0 2px 3px 2px;">赚</span>
+
+            ￥{{fixxiaoshu(newRecord.money)}}元
+            </span>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -275,7 +282,8 @@ export default {
       this.newRecord.money = this.newRecord.money.toFixed(3)
 
       this.newRecord.billDate = moment(this.newRecord.bill_date).valueOf()
-      insertOneRecord({ ...this.newRecord }).then(res => {
+      this.newRecord.userId = parseInt(localStorage.getItem('userId'))
+      insertOneRecord(this.newRecord).then(res => {
         if (res.data.data > 0) {
           this.$message.success(
             '添加成功。变动项目：' + this.newRecord.content

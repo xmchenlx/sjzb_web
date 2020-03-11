@@ -1,5 +1,5 @@
 import axios from '../../node_modules/axios'
-
+axios.defaults.withCredentials = true
 const api = {
   getAllType: 'type1st/getAllType1Info'
 

@@ -5,6 +5,7 @@
 const path = require('path')
 
 module.exports = {
+  // baseUrl:'./',
   dev: {
 
     // Paths
@@ -62,13 +63,15 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
+    // assetsSubDirectory: 'brps_web',
     assetsPublicPath: '/',
 
     /**
      * Source Maps
      */
-
+    //开发时为true,发布改为false
     productionSourceMap: true,
+    // productionSourceMap: false,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 

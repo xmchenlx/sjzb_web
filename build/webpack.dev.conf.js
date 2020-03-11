@@ -40,9 +40,10 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     publicPath: config.dev.assetsPublicPath,
     // proxy: config.dev.proxyTable,
     proxy:  [{
-      context:['/Bill','/type1st','/type2nd'],
+      context:['/Bill','/type1st','/type2nd','/User'],
       target: 'http://localhost:6868/brps_war/',
-      ws: false,
+      ws: true,
+      
     }],
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
