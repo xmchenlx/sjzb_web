@@ -269,6 +269,7 @@ export default {
     },
     insertOneBillInfo () {
       // this.newRecord.bill_date = null
+      this.isProcess = true
       if (this.validateIsFilled() === false) {
         this.$message.error('请填写完整信息！')
         return false
