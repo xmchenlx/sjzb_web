@@ -1,12 +1,13 @@
 <template>
-  <div id="billlist">
+  <div id="billlistMobile">
     <h2 style="text-align:center">
       {{BillTitle}}消费流水账单
-      <el-button type="text" @click="refreshTable" :underline="false">
+    </h2>
+
+      <el-button type="text" @click="refreshTable" :underline="false" style="margin:0 auto">
         <i :class="refreshIconName" />
         {{refreshHint}}
       </el-button>
-    </h2>
     <el-table
       :data="tableData"
       border
@@ -19,24 +20,57 @@
       <img  draggable="false" src="@/img/panda_angry.png" style="padding-bottom: -50px;margin-bottom:-60px;"/>
       <p style="margin-top:5%;font-size:20px;color:gray;">没有任何开销？你真的不是一位合格的肥宅！快去花钱！！</p>
     </template>
-      <el-table-column prop="id" label="流水" width="100"></el-table-column>
+    <el-table-column type="expand">
+      <template slot-scope="props">
+        <el-form label-position="left" inline class="demo-table-expand">
+        <el-form-item label="波动日期">
+            <span>{{convertDateDetail(props.row.billDate)}} </span>
+          </el-form-item>
+          <el-form-item label="账单内容">
+            <span>{{ props.row.content }}</span>
+          </el-form-item>
+          <el-form-item label="波动金额">
+            <template>
+          <span :class="payTypeClass(props.row.money)">
+           ￥ {{props.row.money.toFixed(2)}}
+            </span>
+        </template>
+          </el-form-item>
+          <el-form-item label="隶属一级目录名称">
+            <span>
+              <i :class="tableTagsIconConvert(props.row.type1stName)" />
+            {{props.row.type1stName}}
+            </span>
+          </el-form-item>
+          <el-form-item label="隶属二级目录名称">
+            <span>
+            {{props.row.type2ndName}}
+            </span>
+          </el-form-item>
+          <el-form-item label="操作">
+            <span>编辑</span>
+          </el-form-item>
+        </el-form>
+      </template>
+    </el-table-column>
+      <!-- <el-table-column prop="id" label="流水" width="100"></el-table-column> -->
       <el-table-column
         prop="billDate"
         :formatter="convertDate"
         label="日期"
         sortable
-        width="150"
+        width="100"
         align="center"
       ></el-table-column>
-      <el-table-column prop="content" label="账单内容" width="450" align="center"></el-table-column>
-      <el-table-column prop="money" label="波动金额" align="center" width="150">
+      <el-table-column prop="content" label="账单内容" width="100" align="center"></el-table-column>
+      <el-table-column prop="money" label="波动金额" align="center" width="100">
         <template slot-scope="scope">
           <span :class="payTypeClass(scope.row.money)">
            ￥ {{scope.row.money.toFixed(2)}}
             </span>
         </template>
       </el-table-column>
-      <el-table-column label="一级目录" align="center" width="130">
+      <!-- <el-table-column label="一级目录" align="center" width="130">
         <template slot-scope="scope">
           <el-tag type="light"  size="mdeium" >
             <i :class="tableTagsIconConvert(scope.row.type1stName)" />
@@ -51,7 +85,7 @@
           <el-button type="primary" size="small" icon="el-icon-edit" @click="searchDetailInfo(scope.row.id)">编辑详情</el-button>
           <el-button type="danger" size="small" icon="el-icon-delete" @click="removeOneRecord(scope.row.id,scope.row.content)">假装不存在</el-button>
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
     <!-- <el-pagination
       @size-change="handleSizeChange"
@@ -62,7 +96,7 @@
       :total="1000">
     </el-pagination>-->
 
-      <el-tag v-show="isTagShow" :closable="true" @close="closeTag" style="height:35px;font-size:20px;margin:10px 0">简报：{{billListReport}}</el-tag>
+      <!-- <el-tag v-show="isTagShow" :closable="true" @close="closeTag" style="height:35px;font-size:20px;margin:10px 0">简报：{{billListReport}}</el-tag> -->
 <ediaModal ref="ediaModal"/>
   </div>
 </template>
@@ -136,7 +170,10 @@ export default {
       });
     },
     searchDetailInfo(bid){
-      this.$refs.ediaModal.editBillInfo(bid,true)
+      this.$refs.ediaModal.editBillInfo(bid)
+    },
+    convertDateDetail:function(dat){
+      return moment(dat).format('YYYY-MM-DD')
     },
     convertDate: function(row, column) {
       let newDate = moment(row.billDate).format("YYYY-MM-DD");
@@ -200,7 +237,7 @@ export default {
 </script>
 
 <style>
-#billlist {
+#billlistMobile {
   width: 100%;
   height: 100%;
 }
@@ -213,4 +250,16 @@ export default {
   font-weight: bold;
   color:green;
 }
+ .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 150px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 100%;
+  }
 </style>

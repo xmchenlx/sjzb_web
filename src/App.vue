@@ -9,6 +9,22 @@
 
 <script>
 export default {
+  methods: {
+    isMobile () {
+      let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+      return flag
+    }
+  },
+  mounted () {
+    let _this = this
+    if (_this.isMobile()) {
+      // alert('手机端')
+      this.$router.push({path: 'login_m'})
+    } else {
+      // alert('pc端')
+      this.$router.replace({path: '/'})
+    }
+  }
 }
 </script>
 

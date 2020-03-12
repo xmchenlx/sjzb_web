@@ -1,17 +1,15 @@
 <template>
-  <div id="loginpage">
-    <el-container>
-      <el-header>
-        <h2 style="text-align:center;">欢迎使用个人记账系统，请登录</h2>
-        <p
-          style="text-align:center"
-        >Welcome to use Bill Record And Process System.Please Enter your info and using it.
-        </p>
+  <div id="loginpage_mobile">
+    <el-container style="height:100%;width:100%">
+      <el-header style="height:20%">
+        <h2 style="text-align:center;">
+          欢迎使用个人记账<br/>
+          <span style="font-size:15px">这里是Mobile端·请登录</span></h2>
         <br/>
       </el-header>
-      <el-main>
+      <el-main style="height:55%;width:100%;margin:5% 0;margin:0 auto">
         <el-card class="logincard">
-          <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="20%">
+          <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="25%">
             <el-form-item label="账号" prop="uName">
               <el-input v-model="loginForm.uName"></el-input>
             </el-form-item>
@@ -25,10 +23,12 @@
               </el-button>
             </el-form-item>
           </el-form>
+          <el-link type="primary" id="linktext" style="float:left">注册账号</el-link>
+          <el-link type="primary" id="linktext" style="float:right">忘记密码惹</el-link>
         </el-card>
       </el-main>
-      <el-footer>
-        <foot />
+      <el-footer style="width:100%;height:20%">
+        <foot style="width:90%;height:50px;font-size:10px"/>
       </el-footer>
     </el-container>
   </div>
@@ -40,6 +40,7 @@ import Bus from '@/bus'
 import foot from "@/homepage/copyrightFoot";
 import {validateUser } from '@/api/Users'
 import moment from 'moment'
+
 export default {
   data() {
     return {
@@ -99,13 +100,14 @@ export default {
               message: '欢迎使用个人记账系统！\r\n现在时间：'+moment().locale('zh-cn').format('YYYY-MM-DD HH:mm'),
               type:'success'
             })
-            _this.$router.push({ name: "personalCenter" });
+            _this.$router.push({ name: "personalCenter_m" });
 
           }else{
             this.$message.error('账号信息不正确！')
           }
         })
       }catch(e){
+        alert('excception')
         _this.$notify.error({
           title:'响应异常',
           message:'请求发送可能超时。可能是因为服务器正在维护，请您稍后再试。'
@@ -141,16 +143,21 @@ export default {
 </script>
 
 <style lang="less" scoped>
-#loginpage {
+#loginpage_mobile {
   width: 100%;
   height: 100%;
   background-image: linear-gradient(rgb(212, 244, 255), rgb(5, 117, 245));
 }
 
 .logincard {
-  width: 80%;
+  width: 95%;
+  padding:10px 0;
   margin: 0 auto;
-  margin-top: 5%;
+  // margin-top: 5%;
+
+  #linktext{
+
+  }
 
 }
 </style>

@@ -17,7 +17,7 @@ module.exports = {
           // disableHostCheck: true, // 跳过host检查，避免【Invalid Host header错误】
           // proxy: {
             '/Bill': {
-        target: 'http://localhost:6868/brps_war/',
+        target: 'http://192.168.1.2:6868/brps_war/',
               changeOrigin:true
             }
           // }
@@ -26,7 +26,8 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    //0.0.0.0映射局域网可以访问，本机其实localhost就够了
+    host: '0.0.0.0', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,

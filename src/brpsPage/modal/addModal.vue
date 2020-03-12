@@ -3,7 +3,7 @@
     <el-dialog
       :title="titleName"
       :visible.sync="isAddModalShow"
-      width="30%"
+      :width="ModalWidth"
     >
       <el-form
         ref="newRecord"
@@ -46,6 +46,7 @@
               :min="0"
               :max="99999"
               style="width:80%"
+              @keyup.enter.native="insertOneBillInfo"
             ></el-input-number>
           </el-tooltip>
         </el-form-item>
@@ -110,6 +111,7 @@
           <el-button
             type="primary"
             @click="insertOneBillInfo"
+
             :loading="isProcess"
             v-if="isEditStatus == false"
             :disabled="isProcessClick"
@@ -156,6 +158,7 @@ export default {
         type1st: '',
         note: ''
       },
+      ModalWidth: '95%',
       billType: '0', // 类型为支出或收入
       isDiscount: false, // 如果是直售商品为false，如用优惠券为true
       isEditStatus: false, // 模态框是否编辑，否为新增，是为编辑
@@ -290,9 +293,12 @@ export default {
             '添加成功。变动项目：' + this.newRecord.content
           )
           let lastDate = this.newRecord.bill_date
-          this.$refs.newRecord.resetFields()
+          // this.$refs.newRecord.resetFields()
+          this.newRecord.content = ''
+
           this.tempRecordMoney = 0
-          this.newRecord.type1st = ''
+          // this.newRecord.type1st = ''
+          // this.$refs.newRecord.content.focus()
           this.newRecord.bill_date = lastDate
           Bus.$emit('addNewRec', 'success')
         } else {
@@ -319,9 +325,11 @@ export default {
       }
       return 'finish'
     },
-    editBillInfo (bid) {
+    editBillInfo (bid, isUsePC) {
       let _this = this
       this.isEditStatus = true
+      this.$forceUpdate()
+      console.log(this.ModalWidth)
       searchOneBillInfo(bid).then(res => {
         _this.newRecord = res.data.data
         // 填充记录的日期
@@ -329,7 +337,7 @@ export default {
         // select识别key=>value必须为数值型，需要对传过来的数据进行数值化转义
         _this.newRecord.type1st = Number(_this.newRecord.type1st)
         _this.newRecord.type2nd = Number(_this.newRecord.type2nd)
-        console.log(_this.newRecord.type1st)
+        // console.log(_this.newRecord.type1st)
         _this.processType2ndList(_this.newRecord.type1st)
 
         let money = res.data.data.money
@@ -338,10 +346,11 @@ export default {
         _this.titleName = '编辑已有记录'
         // _this.processOptionLabel(1, res.data.data.type1st)
         // _this.type2nd = _this.processOptionLabel(2, res.data.data.type2nd)
-        _this.show()
+        _this.show(isUsePC)
       })
     },
-    show () {
+    show (isUsePC) {
+      this.ModalWidth = (isUsePC === true) ? '30%' : '95%'
       this.isAddModalShow = true
     },
     computedDiscount () {
@@ -381,4 +390,8 @@ export default {
 </script>
 
 <style>
+
+#addmodal{
+  width:100%;
+}
 </style>

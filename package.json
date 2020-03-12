@@ -12,10 +12,12 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "babel-polyfill": "^6.26.0",
     "echarts": "^4.6.0",
     "element-ui": "^2.13.0",
     "moment": "^2.24.0",
     "v-charts": "^1.19.0",
+    "vconsole": "^3.3.4",
     "vue": "^2.5.2",
     "vue-cookies": "^1.7.0",
     "vue-router": "^3.0.1"

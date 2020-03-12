@@ -18,9 +18,24 @@ const router = new Router({
       component: LoginPage
     },
     {
+      path: '/login_m',
+      name: 'LoginPageMobile',
+      component: () => import('@/homePage/login_Mobile')
+    },
+    {
       path: '/personalCenter',
       name: 'personalCenter',
       component: () => import('@/brpsPage/personalCenter'),
+      meta: {
+        title: '个人中心',
+        show: true,
+        requireAuth: true // 需要登录权限
+      }
+    },
+    {
+      path: '/personalCenter_m',
+      name: 'personalCenter_m',
+      component: () => import('@/brpsPage/personalCenter_Mobile'),
       meta: {
         title: '个人中心',
         show: true,
@@ -33,6 +48,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   // 发起的路由包含权限验证属性
+  // console.log('beforEach')
   if (to.matched.some(res => res.meta.requireAuth)) {
     if (localStorage.getItem('userId')) {
       // 能查询到登录信息

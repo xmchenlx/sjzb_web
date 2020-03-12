@@ -1,7 +1,9 @@
 <template>
-  <div id="personalCenter">
+  <div id="personalCenter_Mobile">
     <div id="greetingsArea">你好啊{{username}},今天是{{fullDate}},{{weekName}}。访问系统的时间为{{fullTime}}</div>
-    <billlist style="width:100%;height:100%;"/>
+    <billlist style="width:100%"/>
+    <el-divider content-position="left">检索筛选·开始你的表演</el-divider>
+
     <el-date-picker
       v-model="searchBillRange"
       type="daterange"
@@ -23,17 +25,15 @@
     <el-input placeholder="账单内容关键词检索" v-model="contentKeyWord" style="width:250px" prefix-icon="el-icon-search"></el-input>
     <el-button type="primary" @click="searchSpecifiedBillList">搜索</el-button>
     <el-button type="primary" @click="addNewRec">记新账</el-button>
-    <div id="amodal">
-    <addModal ref="addModal" width="300" />
-
-    </div>
+    <addModal ref="addModal" style="width:90%"/>
+    <el-divider content-position="left">过去7天消费收入统计图</el-divider>
     <charts ref="charts" />
   </div>
 </template>
 
 <script>
 /* eslint-disable */
-import billlist from "./nav/billlist";
+import billlist from "./nav/billlist_Mobile";
 import charts from "./nav/statisticalCharts";
 import addModal from "./modal/addModal"
 import moment from "moment";
@@ -103,8 +103,15 @@ export default {
   created:function() {
    this.loadingPageFun();
    this.getType1stList();
+   this.mobileUITips();
   },
   methods: {
+    mobileUITips(){
+      let tipsText ='为啥呢？在手机Web访问时，为了界面简洁，表格不会展示全部的数据。点击【>】箭头符号时，会为您下拉出账单的详细数据方便您操作。'
+      this.$alert(tipsText,'界面优化说明',{
+        confirmButtonText:'好的，我晓得了'
+      });
+    },
     processType2ndList (t1Id) {
       let _this = this
       let tempOptionlist=[]
@@ -155,7 +162,8 @@ export default {
       }
 },
 addNewRec(){
-  this.$refs.addModal.show(true);
+  //show的参数（isUsePC），这里是否
+  this.$refs.addModal.show(false);
 },
 searchSpecifiedBillList(){
   let _this = this;
@@ -177,11 +185,16 @@ searchSpecifiedBillList(){
 
   })
 }
+  },mounted(){
+    this.$refs.addModal.style.width = "200px"
   }
 };
 </script>
 
 <style lang="less" scoped>
+#personalCenter_Mobile{
+  width:100%
+}
 #incomeNumber {
   color: green;
   font-weight: bold;
