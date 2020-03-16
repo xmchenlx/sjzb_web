@@ -28,6 +28,8 @@
 
     </div>
     <charts ref="charts" />
+    <scanModal/>
+
   </div>
 </template>
 
@@ -41,6 +43,7 @@ import {getSpecifidBillInRange } from '@/api/BillInfo'
 import { getAllType } from '@/api/type1st'
 import { getTypeListByFid } from '@/api/type2nd'
 import Bus from '@/bus'
+import scanModal from '@/brpsPage/modal/scanModal'
 
 export default {
   data() {
@@ -49,6 +52,7 @@ export default {
       fullDate: "",
       weekName: "",
       fullTime: "",
+      contentKeyWord:'',
       PayOfMonth: 660,
       IncomeOfMonth: 550,
       minusNumber: 0,
@@ -98,7 +102,9 @@ export default {
   components: {
     billlist,
     addModal,
-    charts
+    charts,
+    scanModal
+
   },
   created:function() {
    this.loadingPageFun();

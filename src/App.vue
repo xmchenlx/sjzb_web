@@ -16,15 +16,15 @@ export default {
     }
   },
   mounted () {
-    let _this = this
-    if (_this.isMobile()) {
-      // alert('手机端')
-      this.$router.push({path: 'login_m'})
-    } else {
-      // alert('pc端')
-      this.$router.replace({path: '/'})
-    }
-  }
+  //   let _this = this
+  //   if (_this.isMobile()) {
+  //     // alert('手机端')
+  //     this.$router.push({path: 'login_m'})
+  //   } else {
+  //     // alert('pc端')
+  //     this.$router.replace({path: '/'})
+  //   }
+  },
 }
 </script>
 

@@ -41,12 +41,13 @@ import {getSpecifidBillInRange } from '@/api/BillInfo'
 import { getAllType } from '@/api/type1st'
 import { getTypeListByFid } from '@/api/type2nd'
 import Bus from '@/bus'
-
+import scanModal from '@/brpsPage/modal/scanModal'
 export default {
   data() {
     return {
       username: "测试",
       fullDate: "",
+      contentKeyWord:'',
       weekName: "",
       fullTime: "",
       PayOfMonth: 660,
@@ -98,7 +99,8 @@ export default {
   components: {
     billlist,
     addModal,
-    charts
+    charts,
+    scanModal
   },
   created:function() {
    this.loadingPageFun();
@@ -186,7 +188,6 @@ searchSpecifiedBillList(){
   })
 }
   },mounted(){
-    this.$refs.addModal.style.width = "200px"
   }
 };
 </script>

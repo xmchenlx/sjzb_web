@@ -1,7 +1,7 @@
 <template>
   <div id="loginpage">
-    <el-container>
-      <el-header>
+    <el-container style="height:100%">
+      <el-header style="height:20%">
         <h2 style="text-align:center;">欢迎使用个人记账系统，请登录</h2>
         <p
           style="text-align:center"
@@ -9,7 +9,7 @@
         </p>
         <br/>
       </el-header>
-      <el-main>
+      <el-main style="height:70%">
         <el-card class="logincard">
           <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="20%">
             <el-form-item label="账号" prop="uName">
@@ -23,11 +23,14 @@
                 <i :class="enterBtnIcon" />
                 进入系统
               </el-button>
+              <el-button type="primary" @click="gotoArticle()">
+                浏览公告文章
+              </el-button>
             </el-form-item>
           </el-form>
         </el-card>
       </el-main>
-      <el-footer>
+      <el-footer style="height:10%">
         <foot />
       </el-footer>
     </el-container>
@@ -65,6 +68,9 @@ export default {
     Bus
   },
   methods: {
+    gotoArticle(){
+      this.$router.push({name:'articleList'})
+    },
     getTimeToMadeGreetins(){
       //分析时间返回问候语
       let now = moment().locale('zh-cn').format('HH')

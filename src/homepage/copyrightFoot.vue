@@ -2,17 +2,16 @@
   <div id="footCopy" class="CopyInfo_homepage">
     <span style="text-align:center;">
       Copyright ©2019-{{nowYear}} BRPS 版权所有 | 本网站仅用于技术的学习交流与个人记账，不用于任何商业用途 |
-      <a style="color:white;text-decoration:none;" href="http://www.miitbeian.gov.cn">备案号：闽ICP备18027684号-1</a> |
+      <a class="aStyle1" style="text-decoration:none;" href="http://www.miitbeian.gov.cn">备案号：闽ICP备18027684号-1</a> |
     </span>
     <img style="width:12px;" src="@/img/beianIcon.png" />
     <a
       target="_blank"
       href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=35020602001332"
-      style="display:inline-block;text-decoration:none;height:20px;line-height:15px;color:white;"
+      class="aStyle1"
     >
       <img src style="float:left;" />
-      <p
-        style="float:left;height:20px;line-height:25px;margin: 0px 0px 0px 5px;color:white "
+      <p class="aStyle1"
       >闽公网安备 35020602001332号</p>
     </a>
     <!-- <span style="font-size:15px;">本网站仅用于分享个人生活和经验用途，并不用于任何商业目的.</span> -->
@@ -42,7 +41,7 @@ html,body{padding:0;margin:0;border:0;}
   width: 100%;
   margin: 0 auto;
   bottom:30px;
-  position: fixed;
+  // position: fixed;
   // position 属性规定元素的定位类型。
   // fixed生成绝对定位的元素，相对于浏览器窗口进行定位。
   // 元素的位置通过 "left", "top", "right" 以及 "bottom" 属性进行规定。
@@ -51,6 +50,10 @@ html,body{padding:0;margin:0;border:0;}
 }
 .CopyInfo a{
   text-decoration: none;
-  color:white;
+  color:lightblue;
+}
+
+.aStyle1{
+  display:inline-block;text-decoration:none;height:20px;line-height:15px;color:lightblue;
 }
 </style>
