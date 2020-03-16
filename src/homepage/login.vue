@@ -5,32 +5,40 @@
         <h2 style="text-align:center;">欢迎使用个人记账系统，请登录</h2>
         <p
           style="text-align:center"
-        >Welcome to use Bill Record And Process System.Please Enter your info and using it.
-        </p>
-        <br/>
+        >Welcome to use Bill Record And Process System.Please Enter your info and using it.</p>
+        <br />
       </el-header>
       <el-main style="height:70%">
         <el-card class="logincard">
-          <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="20%">
-            <el-form-item label="账号" prop="uName">
-              <el-input v-model="loginForm.uName"></el-input>
+          <el-form
+            :model="loginForm"
+            :rules="rules"
+            ref="loginForm"
+            label-width="20%"
+            :disabled="isLogining"
+          >
+            <el-form-item label="账号：" prop="uName">
+              <el-input v-model="loginForm.uName" placeholder="输入账号"></el-input>
             </el-form-item>
-            <el-form-item label="密码" prop="uPwd">
-              <el-input v-model="loginForm.uPwd" show-password></el-input>
+            <el-form-item label="密码：" prop="uPwd">
+              <el-input
+                v-model="loginForm.uPwd"
+                show-password
+                @keyup.enter.native="loginSystem()"
+                placeholder="输入密码"
+              ></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="loginSystem()">
                 <i :class="enterBtnIcon" />
                 进入系统
               </el-button>
-              <el-button type="primary" @click="gotoArticle()">
-                浏览公告文章
-              </el-button>
+              <el-button type="primary" @click="gotoArticle()">浏览公告文章</el-button>
             </el-form-item>
           </el-form>
         </el-card>
       </el-main>
-      <el-footer style="height:10%">
+      <el-footer style="height:10%;margin:0;">
         <foot />
       </el-footer>
     </el-container>
@@ -39,17 +47,18 @@
 
 <script>
 /* eslint-disable */
-import Bus from '@/bus'
+import Bus from "@/bus";
 import foot from "@/homepage/copyrightFoot";
-import {validateUser } from '@/api/Users'
-import moment from 'moment'
+import { validateUser } from "@/api/Users";
+import moment from "moment";
 export default {
   data() {
     return {
       enterBtnIcon: "el-icon-key",
+      isLogining: false,
       loginForm: {
-        uName: "chenlx",
-        uPwd:'123456'
+        uName: "",
+        uPwd: ""
       },
       rules: {
         uName: [
@@ -68,59 +77,83 @@ export default {
     Bus
   },
   methods: {
-    gotoArticle(){
-      this.$router.push({name:'articleList'})
+    gotoArticle() {
+      this.$router.push({ name: "articleList" });
     },
-    getTimeToMadeGreetins(){
+    getTimeToMadeGreetins() {
       //分析时间返回问候语
-      let now = moment().locale('zh-cn').format('HH')
-      now = parseInt(now)
-      if(now >=0 && now<5){
-        return '夜深了，'
-      }else if(now >=5 && now<11){
-        return '早上好，'
-      }else if(now >=11 && now<13){
-        return '中午好'
-      }else if(now>=13 && now<18){
-        return '下午好，精神小伙'
-      }else if(now >=18 && now<24){
-        return '晚上好呀，'
+      let now = moment()
+        .locale("zh-cn")
+        .format("HH");
+      now = parseInt(now);
+      if (now >= 0 && now < 5) {
+        return "夜深了，";
+      } else if (now >= 5 && now < 11) {
+        return "早上好，";
+      } else if (now >= 11 && now < 13) {
+        return "中午好";
+      } else if (now >= 13 && now < 18) {
+        return "下午好，精神小伙";
+      } else if (now >= 18 && now < 24) {
+        return "晚上好呀，";
       }
     },
     loginSystem() {
-      let _this = this
-      let loginForm = _this.loginForm
-      this.enterBtnIcon = 'el-icon-loading'
-      try{
-        validateUser(loginForm).then(res=>{
-          if(res.data.success === true){
-            // _this.$cookies.headers
-            // $cookies.set('JSESSIONID',res.response.headers.cookie.JSESSIONID)
-            localStorage.setItem('userId',res.data.data);
-            localStorage.setItem('userName',_this.loginForm.uName);
-            sessionStorage.setItem('userId',res.data.data);
-            sessionStorage.setItem('userName',_this.loginForm.uName);
-            _this.$notify({
-              title: _this.getTimeToMadeGreetins()+loginForm.uName,
-              message: '欢迎使用个人记账系统！\r\n现在时间：'+moment().locale('zh-cn').format('YYYY-MM-DD HH:mm'),
-              type:'success'
-            })
-            _this.$router.push({ name: "personalCenter" });
-
-          }else{
-            this.$message.error('账号信息不正确！')
-          }
-        })
-      }catch(e){
+      this.$nextTick(() => {
+        this.isLogining = true;
+      });
+      let _this = this;
+      this.$forceUpdate();
+      let loginForm = _this.loginForm;
+      this.enterBtnIcon = "el-icon-loading";
+      try {
+        validateUser(loginForm)
+          .then(res => {
+            if (res.data.success === true) {
+              // _this.$cookies.headers
+              // $cookies.set('JSESSIONID',res.response.headers.cookie.JSESSIONID)
+              localStorage.setItem("userId", res.data.data);
+              localStorage.setItem("userName", _this.loginForm.uName);
+              sessionStorage.setItem("userId", res.data.data);
+              sessionStorage.setItem("userName", _this.loginForm.uName);
+              _this.$notify({
+                title: _this.getTimeToMadeGreetins() + loginForm.uName,
+                message:
+                  "欢迎使用个人记账系统！\r\n现在时间：" +
+                  moment()
+                    .locale("zh-cn")
+                    .format("YYYY-MM-DD HH:mm"),
+                type: "success"
+              });
+              _this.$router.push({ name: "personalCenter" });
+            } else {
+              this.$message.error("账号信息不正确！");
+            }
+            this.isLogining = false;
+          })
+          .catch(error => {
+            this.$notify.error({
+              title: "访问被拒绝",
+              message:
+                "服务器无法访问，可能是服务器正在维护，请稍后再试。"
+            });
+            this.enterBtnIcon = "el-icon-key";
+            this.isLogining = false;
+          });
+      } catch (e) {
         _this.$notify.error({
-          title:'响应异常',
-          message:'请求发送可能超时。可能是因为服务器正在维护，请您稍后再试。'
+          title: "响应异常",
+          message: "请求发送可能超时。可能是因为服务器正在维护，请您稍后再试。"
         });
-          console.log(e)
-      _this.enterBtnIcon = 'el-icon-key'
-
-
+        console.log(e);
+        _this.enterBtnIcon = "el-icon-key";
+        this.isLogining = false;
       }
+      // this.$nextTick(() => {
+      //   this.isLogining = false;
+      // });
+
+      this.isLogining = false;
     }
     // beforeRouteUpdate(to,from,next){
     //   let _this = this
@@ -133,15 +166,21 @@ export default {
     //   next()
     // }
   },
-  mounted:function(){
+  mounted: function() {
     let _this = this;
-    Bus.$on("unLogin",function(){
-      console.log('BusOnUnlogin')
-       _this.$notify({
-      title: '非法访问',
-      message: '没有检测到您的登录信息，此次访问已被拦截。请重新登录。'
-    })
-    })
+    Bus.$on("unLogin", function() {
+      console.log("BusOnUnlogin");
+      _this.$notify({
+        title: "非法访问",
+        message: "没有检测到您的登录信息，此次访问已被拦截。请重新登录。"
+      });
+    });
+  },
+  watch: {
+    isLogining(val) {
+      if (val === true) {
+      }
+    }
   }
 };
 </script>
@@ -151,12 +190,12 @@ export default {
   width: 100%;
   height: 100%;
   background-image: linear-gradient(rgb(212, 244, 255), rgb(5, 117, 245));
+  background-size: cover;
 }
 
 .logincard {
   width: 80%;
   margin: 0 auto;
   margin-top: 5%;
-
 }
 </style>

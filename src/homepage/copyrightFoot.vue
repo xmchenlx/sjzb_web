@@ -40,7 +40,7 @@ html,body{padding:0;margin:0;border:0;}
   color: white;
   width: 100%;
   margin: 0 auto;
-  bottom:30px;
+  // bottom:30px;
   // position: fixed;
   // position 属性规定元素的定位类型。
   // fixed生成绝对定位的元素，相对于浏览器窗口进行定位。

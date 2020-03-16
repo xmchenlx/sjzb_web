@@ -147,6 +147,7 @@ export default {
   width: 100%;
   height: 100%;
   background-image: linear-gradient(rgb(212, 244, 255), rgb(5, 117, 245));
+  background-size:cover;
 }
 
 .logincard {

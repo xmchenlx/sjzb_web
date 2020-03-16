@@ -2,7 +2,7 @@
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
     <transition name="translate">
-    <router-view/>
+    <router-view style="width:100%;height:100%"/>
     </transition>
   </div>
 </template>
@@ -14,8 +14,8 @@ export default {
       let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
       return flag
     }
-  },
-  mounted () {
+  }
+  // mounted () {
   //   let _this = this
   //   if (_this.isMobile()) {
   //     // alert('手机端')
@@ -24,7 +24,7 @@ export default {
   //     // alert('pc端')
   //     this.$router.replace({path: '/'})
   //   }
-  },
+  // },
 }
 </script>
 
@@ -32,9 +32,14 @@ export default {
 html,body{
   margin: 0;
   padding: 0;
+  border:0;
+  height:100%;
+  width:100%;
+
 }
 #app{
-  height: 100vh;
+  height: 100%;
+  width:100%;
 }
 /* #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
