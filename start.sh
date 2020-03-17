@@ -3,6 +3,9 @@ git pull
 #删除容器
 docker rm -f brps_web_nginx &> /dev/null
 
+#build依赖
+npm config set registry http://registry.cnpmjs.org
+
 npm run build
 
 
