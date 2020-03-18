@@ -41,7 +41,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     // proxy: config.dev.proxyTable,
     proxy:  [{
       context:['/Bill','/type1st','/type2nd','/User','/Article'],
-      target: 'https://119.3.20.59:6868/brps_war/',
+      target: 'https://bp.chenlx.top:6868/brps_war/',
       secure: false,
       changeOrigin: true,
       // target: 'http://localhost:6868/brps_war/',

@@ -46,8 +46,8 @@ export default {
     return {
       enterBtnIcon: "el-icon-key",
       loginForm: {
-        uName: "chenlx",
-        uPwd:'123456'
+        uName: "",
+        uPwd:''
       },
       rules: {
         uName: [
@@ -105,9 +105,14 @@ export default {
           }else{
             this.$message.error('账号信息不正确！')
           }
-        })
+        }).catch(error=>{
+          this.$notify({
+            title:'访问被拒绝',
+            message:'服务器没有回应。无法使用'
+          })
+        
+        });
       }catch(e){
-        alert('excception')
         _this.$notify.error({
           title:'响应异常',
           message:'请求发送可能超时。可能是因为服务器正在维护，请您稍后再试。'
