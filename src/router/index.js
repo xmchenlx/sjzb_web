@@ -25,7 +25,7 @@ const router = new Router({
     {
       path: '/personalCenter',
       name: 'personalCenter',
-      component: () => import('@/brpsPage/personalCenter'),
+      component: (resolve) => require(['@/brpsPage/personalCenter'], resolve),
       meta: {
         title: '个人中心',
         show: true,
@@ -35,7 +35,7 @@ const router = new Router({
     {
       path: '/personalCenter_m',
       name: 'personalCenter_m',
-      component: () => import('@/brpsPage/personalCenter_Mobile'),
+      component: (resolve) => require(['@/brpsPage/personalCenter_Mobile'], resolve),
       meta: {
         title: '个人中心',
         show: true,
@@ -54,7 +54,7 @@ const router = new Router({
     {
       path: '/articleDetail',
       name: 'articleDetail',
-      component: () => import('@/Article/articleDetail'),
+      component: (resolve) => require(['@/Article/articleDetail'], resolve),
       meta: {
         title: '文章详情',
         show: true

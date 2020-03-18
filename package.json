@@ -15,6 +15,7 @@
     "babel-polyfill": "^6.26.0",
     "echarts": "^4.6.0",
     "element-ui": "^2.13.0",
+    "gzip": "^0.1.0",
     "moment": "^2.24.0",
     "v-charts": "^1.19.0",
     "vconsole": "^3.3.4",

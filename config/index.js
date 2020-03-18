@@ -60,7 +60,11 @@ module.exports = {
   build: {
     // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),
-
+    //2020-3-18 gzip -add
+    productionGzip: true,
+    productionGzipExtensions: ['js', 'css'],
+    //gzip -end
+    
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
@@ -71,7 +75,7 @@ module.exports = {
      * Source Maps
      */
     //开发时为true,发布改为false
-    productionSourceMap: true,
+    productionSourceMap: false,
     // productionSourceMap: false,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
