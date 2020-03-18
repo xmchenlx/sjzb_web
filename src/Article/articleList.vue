@@ -23,6 +23,12 @@
               prop="aTag"
               label="类型"
               width="70">
+              <template slot-scope="scope">
+                <el-tag
+                  :color="convertArticleType(scope.row.aTag)"
+                >{{convertArticleInfo(scope.row.aTag)}}
+                </el-tag>
+              </template>
             </el-table-column>
             <el-table-column
               prop="aTitle"
@@ -32,8 +38,11 @@
             <el-table-column
               prop="aPostTime"
               label="发布时间"
-              :formatter="datetimeConvert"
               width="180">
+              <template slot-scope="scope">
+            {{datetimeConvert(scope.row.aPostTime)}}
+            </template>
+
             </el-table-column>
 
             <el-table-column
@@ -46,7 +55,8 @@
           background
           hide-on-single-page
           layout="prev, pager, next"
-          :total="1000">
+          :current-page="currentPage"
+          :total="listTotal">
         </el-pagination>
         </el-main>
     </div>
@@ -80,6 +90,8 @@ export default {
         aTitlePicPath: '',
         uName: ''
       },
+      listTotal: '',
+      currentPage: '',
       articlelist: [],
       serachKey: ''
     }
@@ -96,7 +108,19 @@ export default {
       }
       getArticleList(queryDict).then(res => {
         this.articlelist = res.data.data
+        this.listTotal = res.data.total
+        this.currentPage = res.data.pageNum
       })
+    },
+    convertArticleType (d) {
+      if (d === 1) return 'lightblue'
+      else if (d === 2) return 'lightgreen'
+      else return 'orange'
+    },
+    convertArticleInfo (d) {
+      if (d === 1) return '公告'
+      else if (d === 2) return '文章'
+      else return '其他'
     },
     datetimeConvert (d) {
       return moment(d).format('YYYY-MM-DD HH:mm:ss')
@@ -104,11 +128,11 @@ export default {
     submitCommit () {
       this.$message.error('评论系统还在建设中...暂时无法发表评论哦')
     },
-    convertArticleType (t) {
-      if (t === 1) return '[公告]'
-      else if (t === 2) return '[活动]'
-      else return '[未知]'
-    },
+    // convertArticleType (t) {
+    //   if (t === 1) return '[公告]'
+    //   else if (t === 2) return '[活动]'
+    //   else return '[未知]'
+    // },
     openArticle (row) {
       let routeData = this.$router.resolve({
         name: 'articleDetail'

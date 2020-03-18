@@ -23,7 +23,7 @@ let scan = null
 export default {
   data () {
     return {
-      isScanDivShow: true,
+      isScanDivShow: false,
       vedio: '',
       canvas: '',
       context: '',

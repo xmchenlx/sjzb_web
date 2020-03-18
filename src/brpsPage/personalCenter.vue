@@ -1,7 +1,7 @@
 <template>
   <div id="personalCenter">
     <div id="greetingsArea">你好啊{{username}},今天是{{fullDate}},{{weekName}}。访问系统的时间为{{fullTime}}</div>
-    <billlist style="width:100%;height:100%;"/>
+
     <el-date-picker
       v-model="searchBillRange"
       type="daterange"
@@ -20,13 +20,17 @@
     filterable
     clearable
     ></el-cascader>
-    <el-input placeholder="账单内容关键词检索" v-model="contentKeyWord" style="width:250px" prefix-icon="el-icon-search"></el-input>
+    <el-input placeholder="该功能尚未实现 | 账单内容关键词检索" v-model="contentKeyWord" style="width:250px" prefix-icon="el-icon-search"></el-input>
     <el-button type="primary" @click="searchSpecifiedBillList">搜索</el-button>
     <el-button type="primary" @click="addNewRec">记新账</el-button>
+
+    <billlist style="width:100%;height:100%;"/>
     <div id="amodal">
     <addModal ref="addModal" width="300" />
 
     </div>
+    <el-divider><h2>近7日消费与支出汇总图表</h2></el-divider>
+
     <charts ref="charts" />
     <scanModal/>
 
@@ -48,7 +52,7 @@ import scanModal from '@/brpsPage/modal/scanModal'
 export default {
   data() {
     return {
-      username: "测试",
+      username: sessionStorage.getItem('userName'),
       fullDate: "",
       weekName: "",
       fullTime: "",

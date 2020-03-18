@@ -5,11 +5,25 @@
         <h2 style="text-align:center;">欢迎使用个人记账系统，请登录</h2>
         <p
           style="text-align:center"
+
         >Welcome to use Bill Record And Process System.Please Enter your info and using it.</p>
         <br />
       </el-header>
       <el-main style="height:70%">
-        <el-card class="logincard">
+        <el-card class="logincard" v-if="wantToRegister==true">
+          <h3 style="text-align:center">请您开始表演</h3>
+          <el-form>
+            <el-form-item label="用户名：">
+              <el-input></el-input>
+            </el-form-item>
+            <el-form-item label="密码：">
+              <el-input></el-input>
+            </el-form-item>
+          </el-form>
+        </el-card>
+        <el-card class="logincard" v-else>
+        <span>网站尚处于研发阶段，部分未完成的功能暂时不提供使用。<br>测试账号：yezhan,密码：95951</span>
+
           <el-form
             :model="loginForm"
             :rules="rules"
@@ -29,13 +43,15 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="loginSystem()">
+              <el-button type="primary" :disabled="isBtnEnabled" @click="loginSystem()">
                 <i :class="enterBtnIcon" />
                 进入系统
               </el-button>
               <el-button type="primary" @click="gotoArticle()">浏览公告文章</el-button>
             </el-form-item>
           </el-form>
+          <el-button type="text" style="float:left" @click="registerUser()">注册账号</el-button>
+              <el-button type="text" style="float:right" @click="fogertPwd()">忘记密码惹</el-button>
         </el-card>
       </el-main>
       <el-footer style="height:10%;margin:0;">
@@ -54,7 +70,10 @@ import moment from "moment";
 export default {
   data() {
     return {
+      wantToRegister:false,
       enterBtnIcon: "el-icon-key",
+      errorCount:0,
+      isBtnEnabled:false,
       isLogining: false,
       loginForm: {
         uName: "",
@@ -98,6 +117,15 @@ export default {
         return "晚上好呀，";
       }
     },
+    stopContinue(){
+      this.$message.error('该功能还在佛系编写ing...')
+    },
+    registerUser(){
+      this.stopContinue()
+    },
+    fogertPwd(){
+      this.stopContinue();
+    },
     loginSystem() {
       this.$nextTick(() => {
         this.isLogining = true;
@@ -127,11 +155,18 @@ export default {
               });
               _this.$router.push({ name: "personalCenter" });
             } else {
+              _this.errorCount++;
+              if(_this.errorCount ==3){
+                this.$alert('你太过分了嘤嘤嘤。错误次数过多，本次会话已被禁止。','物理自闭已开始');
+                this.$nextTick(()=>{this.isBtnEnabled=true})
+              }
               this.$message.error("账号信息不正确！");
+              _this.$nextTick(()=>{this.enterBtnIcon = "el-icon-key";})
             }
             this.isLogining = false;
           })
           .catch(error => {
+            this.$nextTick(()=>{this.enterBtnIcon = "el-icon-key";})
             this.$notify.error({
               title: "访问被拒绝",
               message:
@@ -194,7 +229,7 @@ export default {
 }
 
 .logincard {
-  width: 80%;
+  width: 35%;
   margin: 0 auto;
   margin-top: 5%;
 }

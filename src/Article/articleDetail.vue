@@ -100,6 +100,9 @@ export default {
 //   border: 0;
 //   height: 100%;
 // }
+html{
+  height:100%;
+}
 #BRPSHead {
   width: 100%;
   height: 350px;

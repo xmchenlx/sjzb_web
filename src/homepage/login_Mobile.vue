@@ -9,6 +9,8 @@
       </el-header>
       <el-main style="height:55%;width:100%;margin:5% 0;margin:0 auto">
         <el-card class="logincard">
+        <span>网站尚处于研发阶段，部分未完成的功能暂时不提供使用。<br>测试账号：yezhan,密码：95951</span>
+
           <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="25%">
             <el-form-item label="账号" prop="uName">
               <el-input v-model="loginForm.uName"></el-input>

@@ -190,7 +190,7 @@ export default {
       _this.isTableLoading = true;
       _this.generateBillListReport(p);
       _this.tableData = p;
-      _this.BillTitle = dataRange[0] + '至' +dataRange[1] +'期间'
+      _this.BillTitle = dataRange.a + '至' +dataRange.b +'期间'
       _this.isTableLoading = false;
 
 
