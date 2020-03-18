@@ -17,7 +17,7 @@ module.exports = {
           // disableHostCheck: true, // 跳过host检查，避免【Invalid Host header错误】
           // proxy: {
             '/Bill': {
-        target: 'http://192.168.1.2:6868/brps_war/',
+        target: 'https://192.168.1.2:6868/brps_war/',
               changeOrigin:true
             }
           // }

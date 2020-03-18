@@ -18,4 +18,5 @@ npm run build
 sudo systemctl start docker
 
 #启动容器
-docker run --name brps_web_nginx -d -p 8081:80 -p 443:443 -v $PWD/dist:/usr/share/nginx/html nginx -v /root/nginx-1.8.1/conf/nginx.conf:/usr/share/nginx.conf
+docker run -d -p 80:80 -p 443:443 --name brps_nginx -v /home/brpsProject/nginx/conf.d:/etc/nginx/conf.d:rw -v /home/brpsProject/brps_web/brps_web/dist:/home/brpsProject/nginx/html  nginx
+# docker run --name brps_web_nginx -d -p 8081:80 -p 443:443 -v $PWD/dist:/usr/share/nginx/html nginx -v /root/nginx-1.8.1/conf/nginx.conf:/usr/share/nginx.conf
