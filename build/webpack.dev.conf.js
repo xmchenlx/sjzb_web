@@ -44,7 +44,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       target: 'https://bp.chenlx.top:6868/brps_war/',
       secure: false,
       changeOrigin: true,
-      // target: 'http://localhost:6868/brps_war/',
       ws: true,
       
     }],
