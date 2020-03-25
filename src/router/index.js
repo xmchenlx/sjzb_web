@@ -52,6 +52,15 @@ const router = new Router({
       }
     },
     {
+      path: '/wmList',
+      name: 'wmList',
+      component: () => import('@/Article/wmList'),
+      meta: {
+        title: 'lx接单情况表',
+        show: true
+      }
+    },
+    {
       path: '/articleDetail',
       name: 'articleDetail',
       component: (resolve) => require(['@/Article/articleDetail'], resolve),
@@ -72,6 +81,9 @@ function isMobile () {
 router.beforeEach((to, from, next) => {
   // 发起的路由包含权限验证属性
   console.log('beforEach')
+  if (to.meta.title) {
+    document.title = to.meta.title + ' - BRPS个人记账网'
+  }
   if (to.name === '/' || to.name === 'LoginPageMobile' || to.name === 'LoginPage') {
     // 如果前往地址是登录界面直接放行
     // 检查是否适配，不适配的话，需要更改地址

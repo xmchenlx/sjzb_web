@@ -1,7 +1,7 @@
 <template>
   <div id="footCopy" class="CopyInfo_homepage">
     <span style="text-align:center;">
-      Copyright ©2019-{{nowYear}} BRPS 版权所有 版本：2020-03-18 | 本网站仅用于技术的学习交流与个人记账，不用于任何商业用途 |
+      Copyright ©2019-{{nowYear}} BRPS 版权所有 版本：2020-03-26 | 本网站仅用于技术的学习交流与个人记账，不用于任何商业用途 |
       <a class="aStyle1" style="text-decoration:none;" href="http://www.miitbeian.gov.cn">备案号：闽ICP备18027684号-1</a> |
     </span>
     <img style="width:12px;" src="@/img/beianIcon.png" />

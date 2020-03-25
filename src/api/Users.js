@@ -6,7 +6,8 @@ axios.defaults.withCredentials = true
 // }
 const api = {
   unlogin: 'User/unlogin',
-  userLogin: 'User/validateUser'
+  userLogin: 'User/validateUser',
+  userReg: 'User/userReg'
 
 }
 export default api
@@ -21,6 +22,17 @@ export function unlogin () {
 export function validateUser (u) {
   return axios({
     url: `${api.userLogin}`,
+    method: 'post',
+    withCredentials: true,
+    data: u
+
+    // get方法传参用params，post方法传参用data
+  })
+}
+
+export function userReg (u) {
+  return axios({
+    url: `${api.userReg}`,
     method: 'post',
     withCredentials: true,
     data: u

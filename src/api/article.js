@@ -14,7 +14,8 @@ export default api
 export function getArticleList (param) {
   return axios({
     url: `${api.getArticleList}`,
-    method: 'get'
+    method: 'get',
+    params: param
     // get方法传参用params，post方法传参用data
   })
 }

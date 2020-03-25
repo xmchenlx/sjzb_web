@@ -1,19 +1,18 @@
 <template>
-  <div id="articlelist">
+  <div id="wmList">
     <headerBanner />
-    <el-container style="height:100%" direction="vertical">
+    <el-container direction="vertical">
       <div id="mainLayout">
         <div id="breadGuide">
           <el-breadcrumb separator="/">
             <el-breadcrumb-item>
               <el-link href="http://www.chenlx.top" :underline="false">lx的小天地[首页]</el-link>
             </el-breadcrumb-item>
-            <el-breadcrumb-item :to="{ path: '/' }">BRPS登录页</el-breadcrumb-item>
-            <el-breadcrumb-item>社区中心</el-breadcrumb-item>
+            <el-breadcrumb-item>lx接单情况表</el-breadcrumb-item>
           </el-breadcrumb>
         </div>
         <el-header style="margin:10px 0;height:10%">
-          <h1>社区文章公告墙</h1>
+          <h1>lx的接单查询页</h1>
         </el-header>
         <el-main style="height:90%">
           <el-input
@@ -23,29 +22,46 @@
             prefix-icon="el-icon-search"
           />
           <el-button type="primary" @click="queryList">查询</el-button>
-          <el-table :data="articlelist" stripe @row-click="openArticle" style="width: 100%">
-            <el-table-column :formatter="convertArticleType" prop="aTag" label="类型" width="70">
-              <template slot-scope="scope">
-                <el-tag
-                  :color="convertArticleType(scope.row.aTag)"
-                >{{convertArticleInfo(scope.row.aTag)}}</el-tag>
-              </template>
-            </el-table-column>
-            <el-table-column prop="aTitle" label="标题" width="750"></el-table-column>
-            <el-table-column prop="aPostTime" label="发布时间" width="180">
-              <template slot-scope="scope">{{datetimeConvert(scope.row.aPostTime)}}</template>
-            </el-table-column>
+          <br />
+          <br />
+          <br />
+          <el-row :gutter="10">
+            <el-col :span="17">
+               <div v-if="isload==true">
+            <el-timeline>
+              <el-timeline-item
+                v-for="(item,index) in tableData"
+                :key="index"
+                placement="top"
+                :timestamp="convertIsAddDate(tableData[index].mStartDate)"
+              >
+                <el-card style="text-align:left">
+                  <h3>{{tableData[index].mTitle}}</h3>
+                  <p id="title2nd">
+                    <el-tag type="warning">{{convertStatus(tableData[index].mStatus)}}</el-tag>
+                    <el-tag>{{tableData[index].mType}}</el-tag>
+                    | 制作起讫：{{convertIsAddDate(tableData[index].mStartDate)}} ~ {{convertIsAddDate(tableData[index].mFinishDate)}}
+                    | 交付：{{tableData[index].mFrom}}
+                  </p>
+                  <el-divider></el-divider>
+                  <p id="intro">{{convertMIntro(tableData[index].mIntro)}}</p>
+                </el-card>
+              </el-timeline-item>
+            </el-timeline>
+          </div>
+            </el-col>
+            <el-col :span="7">
+              <el-card>
+                <h3>接单量：666份</h3>
+                <h3>制作中：15份</h3>
+                <el-divider></el-divider>
+                <p>这里是介绍模块。但是写什么东西我还没想好。</p>
+                <p>对了，还不能查询哦</p>
+                <p>数据也还不完整，以后再搬运</p>
+              </el-card>
+            </el-col>
+          </el-row>
 
-            <el-table-column prop="uName" label="发布人"></el-table-column>
-          </el-table>
-          <div v-html="article.aContent" class="mainContent"></div>
-          <el-pagination
-            background
-            hide-on-single-page
-            layout="prev, pager, next"
-            :current-page="currentPage"
-            :total="listTotal"
-          ></el-pagination>
         </el-main>
       </div>
       <el-footer id="foo">
@@ -56,7 +72,7 @@
 </template>
 
 <script>
-import { getArticleList } from '@/api/article'
+import { getWM } from '@/api/wmTable'
 import moment from 'moment'
 import footCopy from '@/homepage/copyrightFoot'
 import headerBanner from './nav/header'
@@ -79,8 +95,9 @@ export default {
       },
       listTotal: 0,
       currentPage: 1,
-      articlelist: [],
-      searchKey: ''
+      searchKey: '',
+      tableData: [],
+      isload: false
     }
   },
   components: {
@@ -88,21 +105,33 @@ export default {
     headerBanner
   },
   methods: {
-    getArticle (pagenumber) {
-      let queryDict = {
-        pageNum: pagenumber,
-        searchKey: this.searchKey
-      }
-      if (this.searchKey !== '') { this.$message.success('查询完成') }
-      getArticleList(queryDict).then(res => {
-        this.articlelist = res.data.data
-        this.listTotal = res.data.total
-        this.currentPage = res.data.pageNum
+    getWmList () {
+      getWM().then(res => {
+        this.$nextTick(() => {
+          this.tableData = res.data.data
+        })
+        this.$forceUpdate()
       })
+      this.isload = true
     },
-    queryList () {
-      this.getArticle(1)
+    convertIsAddDate (d) {
+      if (d === null) return '未设置'
+      return this.dateConvert(d)
     },
+    convertStatus (s) {
+      if (s === 1) return '策划中'
+      else if (s === 2) return '制作中'
+      else if (s === 3) return '已完工'
+      else if (s === 4) return '√已交付'
+      else if (s === 5) return '半成品'
+      else if (s === 6) return '×项目放弃'
+      else return '未知'
+    },
+    convertMIntro (p) {
+      if (p === null) return '该项目还没有添加介绍'
+      return p
+    },
+    queryList () {},
     convertArticleType (d) {
       if (d === 1) return 'lightblue'
       else if (d === 2) return 'lightgreen'
@@ -116,35 +145,20 @@ export default {
     datetimeConvert (d) {
       return moment(d).format('YYYY-MM-DD HH:mm:ss')
     },
-    submitCommit () {
-      this.$message.error('评论系统还在建设中...暂时无法发表评论哦')
-    },
-    // convertArticleType (t) {
-    //   if (t === 1) return '[公告]'
-    //   else if (t === 2) return '[活动]'
-    //   else return '[未知]'
-    // },
-    openArticle (row) {
-      let routeData = this.$router.resolve({
-        name: 'articleDetail'
-      })
-      localStorage.setItem('articleId', JSON.stringify(row.aId)) // 传参：房源hid
-      window.open(routeData.href, '_blank')
+    dateConvert (d) {
+      return moment(d).format('YYYY-MM-DD')
     }
   },
   created: function () {
-    this.getArticle(1)
+    this.$nextTick(() => {
+      this.getWmList()
+    })
+    console.log(this.tableData)
   }
 }
 </script>
 
 <style lang="less" scoped>
-// * {
-//   margin: 0;
-//   padding: 0;
-//   border: 0;
-//   height: 100%;
-// }
 #BRPSHead {
   width: 100%;
   height: 350px;
@@ -162,19 +176,17 @@ export default {
   padding: 110px 0 0 200px;
 }
 #articleDetail {
-  background-color: rgb(233, 233, 233);
+  background-color: rgb(255, 212, 133);
   background-repeat: repeat;
   width: 100%;
   //   height: 100%;
   margin: 0 auto;
 }
 #mainLayout {
-  background-color: white;
-  box-shadow: 0 5px 5px black;
-  width: 75%;
+  background-color: rgb(230, 251, 255);
+  width: 100%;
   height: 100%;
   margin: 0 auto;
-  padding: 0 50px;
   //   margin-bottom: 25px;
 }
 .mainContent {
@@ -207,6 +219,16 @@ p {
 
 #breadGuide {
   margin: 10px 0;
+}
+
+#title2nd {
+  text-align: left;
+  font-size: 15px;
+}
+
+#intro {
+  text-align: left;
+  font-size: 15px;
 }
 </style>
 <style>

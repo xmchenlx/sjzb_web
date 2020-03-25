@@ -20,7 +20,8 @@ Vue.use(axios)
 axios.defaults.timeout = 5000
 // 配置请求头
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
-axios.defaults.baseURL = 'https://bp.chenlx.top:6868/brps_war'// 配置接口地址
+// axios.defaults.baseURL = 'http://localhost:6868/brps_war'// 配置接口地址 -开发
+axios.defaults.baseURL = 'https://bp.chenlx.top:6868/brps_war'// 配置接口地址 -生产环境
 axios.defaults.withCredentials = true
 // 可以通过这种方式给axios设置的默认请求头
 // axios.defaults.headers = {

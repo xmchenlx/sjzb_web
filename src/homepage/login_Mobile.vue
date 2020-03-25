@@ -9,7 +9,7 @@
       </el-header>
       <el-main style="height:55%;width:100%;margin:5% 0;margin:0 auto">
         <el-card class="logincard">
-        <span>网站尚处于研发阶段，部分未完成的功能暂时不提供使用。<br>测试账号：yezhan,密码：95951</span>
+               <span>网站尚处于研发阶段，部分未完成的功能暂时不提供使用。<br>测试账号：yezhan,密码：6666。测试账号为公共账号，请不要输入隐私数据</span>
 
           <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="25%">
             <el-form-item label="账号" prop="uName">
@@ -25,8 +25,8 @@
               </el-button>
             </el-form-item>
           </el-form>
-          <el-link type="primary" id="linktext" style="float:left">注册账号</el-link>
-          <el-link type="primary" id="linktext" style="float:right">忘记密码惹</el-link>
+          <el-button type="text" @click="toRegister" id="linktext" style="float:left">注册账号</el-button>
+          <el-button type="text" @click="forgetPwd" id="linktext" style="float:right">忘记密码惹</el-button>
         </el-card>
       </el-main>
       <el-footer style="width:100%;height:20%">
@@ -68,6 +68,12 @@ export default {
     Bus
   },
   methods: {
+    forgetPwd(){
+      this.$message.error('该功能还未上线...')
+    },
+    toRegister(){
+      this.$message.error('该功能目前只支持PC端使用')
+    },
     getTimeToMadeGreetins(){
       //分析时间返回问候语
       let now = moment().locale('zh-cn').format('HH')
@@ -106,12 +112,15 @@ export default {
 
           }else{
             this.$message.error('账号信息不正确！')
+            this.$nextTick(()=>{_this.enterBtnIcon = ''})
           }
         }).catch(error=>{
           this.$notify({
             title:'访问被拒绝',
             message:'服务器没有回应。无法使用'
           })
+          this.$nextTick(()=>{_this.enterBtnIcon = ''})
+
         
         });
       }catch(e){

@@ -1,30 +1,34 @@
 <template>
-  <div id="articleDetail">
-   <headerBanner/>
+  <div id="articleDetail" style="height:auto">
+    <headerBanner />
     <div id="mainLayout">
-      <el-container style="height:100%">
-        <el-header style="margin:30px 0;height:30%">
+      <el-container >
+        <el-header style="margin:30px 0 80px 0;">
           <el-page-header @back="goBack" title="返回社区墙" content="帖子详情页面">
-</el-page-header>
+            |
+            <el-link href="http://www.chenlx.top" :underline="false">回到小天地首页</el-link>
+          </el-page-header>
+
           <h1>{{article.aTitle}}</h1>
-          <p>
+          <el-divider>
             <i class="el-icon-timer" />
             发布时间：{{datetimeConvert(article.aPostTime)}} |
             <i class="el-icon-user" />
-            发布人：{{article.uName}} | 阅读量：
-            {{article.aReadCount}}次
-          </p>
+            来源：{{article.uName}} XXX | 
+            {{article.aReadCount}}次阅读
+          </el-divider>
         </el-header>
-        <el-main style="height:70%">
+        <el-main >
           <div v-html="article.aContent" class="mainContent"></div>
           <el-divider>文章已到底，请在下面开始你的表演</el-divider>
           <div id="commitDiv">
             <el-input
               type="textarea"
-              autosize
+              :rows=2
+              :min="2"
               v-model="commitContent"
               placeholder="虽然这是记账系统的公告，但也不是法外之地。您需要了解到，您所说的评论都是需要负责任的哦"
-              style="width:90%;float:left"
+              style="width:90%;float:left;"
             />
             <el-button type="primary" @click="submitCommit" style="height:55px;width:10%">发表评论</el-button>
           </div>
@@ -79,7 +83,7 @@ export default {
       return moment(d).format('YYYY-MM-DD HH:mm:ss')
     },
     goBack () {
-      this.$router.push({name: 'articleList'})
+      this.$router.push({ name: 'articleList' })
     },
     submitCommit () {
       this.$message.error('评论系统还在建设中...暂时无法发表评论哦')
@@ -87,22 +91,13 @@ export default {
   },
   created: function () {
     let aid = localStorage.getItem('articleId')
-    if (this.$route.query.articleId)aid = this.$route.query.articleId
+    if (this.$route.query.articleId) aid = this.$route.query.articleId
     this.getArticle(aid)
   }
 }
 </script>
 
 <style lang="less" scoped>
-// * {
-//   margin: 0;
-//   padding: 0;
-//   border: 0;
-//   height: 100%;
-// }
-html{
-  height:100%;
-}
 #BRPSHead {
   width: 100%;
   height: 350px;
@@ -110,39 +105,36 @@ html{
   border-bottom-style: solid;
   border-bottom-color: lightblue;
   border-bottom-width: 5px;
-  background-image: url("../img/BRPS_banner.jpg");
   background-repeat: no-repeat;
   background-size: 100%;
 }
-#HeadTitle{
-    // text-align: left;
-    font-size:50px;
-    color:white;
-    padding: 110px 0 0 200px;
+#HeadTitle {
+  // text-align: left;
+  font-size: 50px;
+  color: white;
+  padding: 110px 0 0 200px;
 }
 #articleDetail {
-  background-color: rgb(233, 233, 233);
-  background-repeat: repeat;
+  // background-color: rgb(233, 233, 233);
+  // background-repeat: repeat;
   width: 100%;
-  //   height: 100%;
   margin: 0 auto;
 }
 #mainLayout {
-    background-color: white;
-    box-shadow: 0 5px 5px black;
-  width: 60%;
-  height: 100%;
+  background-color: white;
+  box-shadow: 0 5px 5px black;
+  width: 68%;
   margin: 0 auto;
-  padding: 0 100px;
+  padding: 0 50px;
   //   margin-bottom: 25px;
 }
 .mainContent {
-  //   height: 100%;
-  margin: 15px;
+  margin: 10px;
   width: 100%;
-  font-size: 20px;
+  font-size: 18px;
   text-indent: 2em;
   line-height: 1.5em;
+  letter-spacing: 1.5px;
 }
 h1 {
   font-size: 36px;
@@ -164,7 +156,9 @@ p {
   border-top-width: 5px;
   background-color: white;
   width: 100%;
-  padding:10px 0;
+  padding: 10px 0;
+  height:60px;
+  bottom: 0px;
 }
 .footStyle > #footCopy > a {
   color: black;
