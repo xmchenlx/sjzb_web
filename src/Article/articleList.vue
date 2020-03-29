@@ -125,11 +125,15 @@ export default {
     //   else return '[未知]'
     // },
     openArticle (row) {
-      let routeData = this.$router.resolve({
-        name: 'articleDetail'
+      // let routeData = this.$router.push({
+      this.$router.push({
+        name: 'articleDetail',
+        query: {
+          aid: row.aId
+        }
       })
       localStorage.setItem('articleId', JSON.stringify(row.aId)) // 传参：房源hid
-      window.open(routeData.href, '_blank')
+      // window.open(routeData.href, '_blank')
     }
   },
   created: function () {

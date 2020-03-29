@@ -52,6 +52,15 @@ const router = new Router({
       }
     },
     {
+      path: '/addNewArticle',
+      name: 'addNewArticle',
+      component: () => import('@/Article/addNewArticle'),
+      meta: {
+        title: '发布新文章',
+        show: true
+      }
+    },
+    {
       path: '/wmList',
       name: 'wmList',
       component: () => import('@/Article/wmList'),

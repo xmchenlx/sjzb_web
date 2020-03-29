@@ -1,7 +1,8 @@
 <template>
-  <div id="articleDetail" style="height:auto">
-    <headerBanner />
-    <div id="mainLayout">
+  <div id="articleDetail" >
+    <headerBanner   style="" />
+    <div style="width:100%;background-color:rgb(233,233,233)">
+    <div id="mainLayout"  >
       <el-container >
         <el-header style="margin:30px 0 80px 0;">
           <el-page-header @back="goBack" title="返回社区墙" content="帖子详情页面">
@@ -14,12 +15,15 @@
             <i class="el-icon-timer" />
             发布时间：{{datetimeConvert(article.aPostTime)}} |
             <i class="el-icon-user" />
-            来源：{{article.uName}} XXX | 
+            来源：{{article.uName}} XXX |
             {{article.aReadCount}}次阅读
           </el-divider>
+
         </el-header>
+        <br/><br/>
         <el-main >
           <div v-html="article.aContent" class="mainContent"></div>
+          <br/>
           <el-divider>文章已到底，请在下面开始你的表演</el-divider>
           <div id="commitDiv">
             <el-input
@@ -38,6 +42,7 @@
         </el-main>
       </el-container>
     </div>
+    </div>
     <div id="foo">
       <footCopy class="footStyle" style="color:black" />
     </div>
@@ -47,6 +52,7 @@
 <script>
 import { getArticleInfo } from '@/api/article'
 import moment from 'moment'
+import utils from '@/api/util'
 import footCopy from '@/homepage/copyrightFoot'
 import headerBanner from './nav/header'
 
@@ -55,7 +61,7 @@ export default {
     return {
       article: {
         aId: '',
-        aContent: '',
+        aContent: 'ERROR_非法访问，无法正确显示内容。',
         aPostTime: '',
         aTitle: '',
         aFilePath: '',
@@ -66,7 +72,8 @@ export default {
         aTitlePicPath: '',
         uName: ''
       },
-      articleId: ''
+      articleId: '',
+      commitContent: ''
     }
   },
   components: {
@@ -91,7 +98,13 @@ export default {
   },
   created: function () {
     let aid = localStorage.getItem('articleId')
-    if (this.$route.query.articleId) aid = this.$route.query.articleId
+    let _this = this
+    if (aid == null || aid == 'null') {
+      // aid = _this.$route.params.aid
+      aid = utils.getUrlKey('aid')
+    }
+    localStorage.setItem('articleId', null)
+    // if (this.$route.query.articleId) aid = this.$route.query.articleId
     this.getArticle(aid)
   }
 }

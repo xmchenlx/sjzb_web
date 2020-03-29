@@ -9,6 +9,10 @@ import 'element-ui/lib/theme-chalk/index.css'
 import VCharts from 'v-charts'
 import VueCookies from 'vue-cookies'
 import 'babel-polyfill'
+
+// 富文本编辑器
+import VueQuillEditor from 'vue-quill-editor'
+Vue.use(VueQuillEditor)
 // import VConsole from 'vconsole'
 // const vC = new VConsole()
 // Vue.use(vC)
