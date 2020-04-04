@@ -153,7 +153,7 @@ export default {
     this.$nextTick(() => {
       this.getWmList()
     })
-    console.log(this.tableData)
+    //console.log(this.tableData)
   }
 }
 </script>

@@ -131,6 +131,7 @@ export default {
   // background-color: rgb(233, 233, 233);
   // background-repeat: repeat;
   width: 100%;
+  min-width: 1500px;
   margin: 0 auto;
 }
 #mainLayout {

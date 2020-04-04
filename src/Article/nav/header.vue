@@ -34,7 +34,7 @@ export default {
     }
   },
   created: function () {
-    // console.log(this.bgList)
+    // //console.log(this.bgList)
   }
 
 }

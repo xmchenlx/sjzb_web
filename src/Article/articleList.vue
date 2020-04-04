@@ -208,6 +208,9 @@ p {
   height: 120px;
   color: black;
 }
+#articlelist{
+  min-width: 1450px;
+}
 
 #breadGuide {
   margin: 10px 0;

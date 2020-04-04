@@ -29,7 +29,7 @@ export default {
     },
     onEditorChange ({editor, html, text}) { // 编辑器文本发生变化
       // this.content可以实时获取到当前编辑器内的文本内容
-      console.log(this.content)
+      //console.log(this.content)
     }
   }
 }

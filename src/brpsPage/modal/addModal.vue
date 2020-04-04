@@ -107,7 +107,7 @@
           <el-input v-model="newRecord.note" clearable style="width:80%" />
         </el-form-item>
         <el-form-item style="text-align:right">
-          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button @click="isAddModalShow = false">取 消</el-button>
           <el-button
             type="primary"
             @click="insertOneBillInfo"
@@ -246,7 +246,7 @@ export default {
       this.getType2ndList()
     },
     type2ndIsChange () {
-      // console.log(this.newRecord.type2nd)
+      // //console.log(this.newRecord.type2nd)
     },
     updateOneBillInfo () {
       if (this.validateIsFilled() === false) {
@@ -267,7 +267,7 @@ export default {
           status = false
         }
       })
-      console.log(status)
+      //console.log(status)
       return status
     },
     insertOneBillInfo () {
@@ -329,7 +329,7 @@ export default {
       let _this = this
       this.isEditStatus = true
       this.$forceUpdate()
-      console.log(this.ModalWidth)
+      //console.log(this.ModalWidth)
       searchOneBillInfo(bid).then(res => {
         _this.newRecord = res.data.data
         // 填充记录的日期
@@ -337,7 +337,7 @@ export default {
         // select识别key=>value必须为数值型，需要对传过来的数据进行数值化转义
         _this.newRecord.type1st = Number(_this.newRecord.type1st)
         _this.newRecord.type2nd = Number(_this.newRecord.type2nd)
-        // console.log(_this.newRecord.type1st)
+        // //console.log(_this.newRecord.type1st)
         _this.processType2ndList(_this.newRecord.type1st)
 
         let money = res.data.data.money

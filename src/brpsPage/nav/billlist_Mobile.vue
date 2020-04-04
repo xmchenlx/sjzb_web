@@ -1,8 +1,8 @@
 <template>
   <div id="billlistMobile">
-    <h2 style="text-align:center">
+    <h4 style="text-align:center;line-height:-10px">
       {{BillTitle}}消费流水账单
-    </h2>
+    </h4>
 
       <el-button type="text" @click="refreshTable" :underline="false" style="margin:0 auto">
         <i :class="refreshIconName" />
@@ -11,14 +11,14 @@
     <el-table
       :data="tableData"
       border
-      height="500"
-      style="width: 100%;"
+      style="width: 100%;height:100%"
+      max-height="450px"
       v-loading="isTableLoading"
       element-loading-text="正在查询数据"
     >
     <template slot="empty">
       <img  draggable="false" src="@/img/panda_angry.png" style="padding-bottom: -50px;margin-bottom:-60px;"/>
-      <p style="margin-top:5%;font-size:20px;color:gray;">没有任何开销？你真的不是一位合格的肥宅！快去花钱！！</p>
+      <p style="margin-top:25%;font-size:15px;color:gray;line-height:20px;width:100%">没有任何开销？<br/>你真的不是一位<br/>合格的肥宅！<br/>快去花钱！！</p>
     </template>
     <el-table-column type="expand">
       <template slot-scope="props">
@@ -165,7 +165,6 @@ export default {
       this.BillTitle = moment(new Date()).format("YYYY年MM月");
       getAllBillInRange().then(res => {
         this.tableData = res.data.data;
-        console.log(this.tableData);
         this.isTableLoading = false;
       });
     },
@@ -201,7 +200,7 @@ export default {
       this.refreshHint = "拉取数据中...";
       this.refreshIconName = "el-icon-loading";
       this.isTableLoading = true;
-      this.getRangeData().then(res => {
+      this.getRangeData().then(() => {
         _this.refreshIconName = "el-icon-refresh-right";
         _this.refreshHint = "已是最新数据！";
        
@@ -227,7 +226,7 @@ export default {
       _this.isTableLoading = true;
       _this.generateBillListReport(p);
       _this.tableData = p;
-      _this.BillTitle = dataRange[0] + '至' +dataRange[1] +'期间'
+      _this.BillTitle = dataRange.a + '至' +dataRange.b +'期间'
       _this.isTableLoading = false;
 
 

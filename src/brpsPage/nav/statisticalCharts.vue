@@ -51,10 +51,13 @@ export default {
     },
     getPayData () {
       let _this = this
+      this.showCharts = false
       getPast7DaysPayList().then(res => {
         // this.listData = res.data.data
         this.processDataToList(res.data.data)
       }).then(() => { _this.getIncomeData() })
+      //console.log('强制刷新')
+      this.$forceUpdate()
     },
 
     processDataToList (d) {
@@ -66,16 +69,10 @@ export default {
           payMoney: d[i].money
         })
       }
-      // d.forEach(function (item) {
-      //   _this.chartData.rows.push({
-      //     billDate: moment(item.billDate).format('YYYY-MM-DD'),
-      //     payMoney: item.money
-      //   })
-      // })
     }
   },
-  created: function () {
-    this.getPayData()
+  mounted: function () {
+    // this.getPayData()
   }
 
 }

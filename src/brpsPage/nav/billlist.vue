@@ -19,17 +19,17 @@
       <img  draggable="false" src="@/img/panda_angry.png" style="padding-bottom: -50px;margin-bottom:-60px;"/>
       <p style="margin-top:5%;font-size:20px;color:gray;">没有任何开销？你真的不是一位合格的肥宅！快去花钱！！</p>
     </template>
-      <el-table-column prop="id" label="流水" width="100"></el-table-column>
+      <!-- <el-table-column prop="id" label="流水" width="100"></!--> -->
       <el-table-column
         prop="billDate"
         :formatter="convertDate"
         label="日期"
         sortable
-        width="150"
+        width="130"
         align="center"
       ></el-table-column>
-      <el-table-column prop="content" label="账单内容" width="450" align="center"></el-table-column>
-      <el-table-column prop="money" label="波动金额" align="center" width="150">
+      <el-table-column prop="content" label="账单内容" width="350" align="center"></el-table-column>
+      <el-table-column prop="money" label="波动金额" align="center" width="120">
         <template slot-scope="scope">
           <span :class="payTypeClass(scope.row.money)">
            ￥ {{scope.row.money.toFixed(2)}}
@@ -48,8 +48,8 @@
       <el-table-column prop="note" label="额外备注" align="center" width="210"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" icon="el-icon-edit" @click="searchDetailInfo(scope.row.id)">编辑详情</el-button>
-          <el-button type="danger" size="small" icon="el-icon-delete" @click="removeOneRecord(scope.row.id,scope.row.content)">假装不存在</el-button>
+          <el-button type="primary" size="small" icon="el-icon-edit" @click="searchDetailInfo(scope.row.id)">变更</el-button>
+          <el-button type="danger" size="small" icon="el-icon-delete" @click="removeOneRecord(scope.row.id,scope.row.content)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -131,7 +131,7 @@ export default {
       this.BillTitle = moment(new Date()).format("YYYY年MM月");
       getAllBillInRange().then(res => {
         this.tableData = res.data.data;
-        console.log(this.tableData);
+        //console.log(this.tableData);
         this.isTableLoading = false;
       });
     },
