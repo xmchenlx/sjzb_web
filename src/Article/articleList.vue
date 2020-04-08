@@ -66,7 +66,7 @@
               <div v-else>
                 <div align="center">
                   <img
-                    src="@/img/404PageIcon.png"
+                    src="@/img/404PageIcon.gif"
                     align="middle"
                     style="margin:0 auto;width:300px;-webkit-user-drag: none;"
                   />
