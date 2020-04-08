@@ -1,7 +1,7 @@
 <template>
   <div id="personalCenter">
     <div id="greetingsArea">你好啊{{username}},今天是{{fullDate}},{{weekName}}。访问系统的时间为{{fullTime}}</div>
-    <el-tabs type="border-card" tab-position="left" style="height:100%;">
+    <el-tabs type="border-card" tab-position="left" style="height:100%;"  @tab-click="refreshCharts">
       <el-tab-pane label="账本信息">
         <el-date-picker
           v-model="searchBillRange"
@@ -144,6 +144,12 @@ export default {
     this.getType1stList();
   },
   methods: {
+    refreshCharts(opratelist) {
+      //console.log("refreshchart");
+      if(opratelist.index==="1"){
+      this.$refs.charts.getPayData();
+      }
+    },
     routerPush(index){
       if(index===0){
         this.$router.push({"name":'LoginPage'})
@@ -229,6 +235,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 #incomeNumber {
   color: green;
   font-weight: bold;
@@ -237,4 +244,11 @@ export default {
   color: red;
   font-weight: bold;
 }
+#personalCenter{
+  height:100%;
+  min-height: 600px;
+}
+</style>
+<style>
+
 </style>

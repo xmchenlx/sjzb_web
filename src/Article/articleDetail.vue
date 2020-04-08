@@ -1,47 +1,49 @@
 <template>
-  <div id="articleDetail" >
-    <headerBanner   style="" />
+  <div id="articleDetail">
+    <el-backtop ></el-backtop>
+
+    <headerBanner style />
     <div style="width:100%;background-color:rgb(233,233,233)">
-    <div id="mainLayout"  >
-      <el-container >
-        <el-header style="margin:30px 0 80px 0;">
-          <el-page-header @back="goBack" title="返回社区墙" content="帖子详情页面">
-            |
-            <el-link href="http://www.chenlx.top" :underline="false">回到小天地首页</el-link>
-          </el-page-header>
+      <div id="mainLayout">
+        <el-container>
+          <el-header style="margin:30px 0 80px 0;">
+            <el-page-header @back="goBack" title="返回社区墙" content="帖子详情页面">
+              |
+              <el-link href="http://www.chenlx.top" :underline="false">回到小天地首页</el-link>
+            </el-page-header>
 
-          <h1>{{article.aTitle}}</h1>
-          <el-divider>
-            <i class="el-icon-timer" />
-            发布时间：{{datetimeConvert(article.aPostTime)}} |
-            <i class="el-icon-user" />
-            来源：{{article.uName}} XXX |
-            {{article.aReadCount}}次阅读
-          </el-divider>
-
-        </el-header>
-        <br/><br/>
-        <el-main >
-          <div v-html="article.aContent" class="mainContent"></div>
-          <br/>
-          <el-divider>文章已到底，请在下面开始你的表演</el-divider>
-          <div id="commitDiv">
-            <el-input
-              type="textarea"
-              :rows=2
-              :min="2"
-              v-model="commitContent"
-              placeholder="虽然这是记账系统的公告，但也不是法外之地。您需要了解到，您所说的评论都是需要负责任的哦"
-              style="width:90%;float:left;"
-            />
-            <el-button type="primary" @click="submitCommit" style="height:55px;width:10%">发表评论</el-button>
-          </div>
-          <div id="commitL">
-            <h2 style="color:gray;text-align:center">太难了，现在还没有任何评论</h2>
-          </div>
-        </el-main>
-      </el-container>
-    </div>
+            <h1>{{article.aTitle}}</h1>
+            <el-divider>
+              <i class="el-icon-timer" />
+              发布时间：{{datetimeConvert(article.aPostTime)}} |
+              <i class="el-icon-user" />
+              来源：{{article.uName}} XXX |
+              {{article.aReadCount}}次阅读
+            </el-divider>
+          </el-header>
+          <br />
+          <br />
+          <el-main>
+            <div v-html="article.aContent" class="mainContent"></div>
+            <br />
+            <el-divider>文章已到底，请在下面开始你的表演</el-divider>
+            <div id="commitDiv">
+              <el-input
+                type="textarea"
+                :rows="2"
+                :min="2"
+                v-model="commitContent"
+                placeholder="虽然这是记账系统的公告，但也不是法外之地。您需要了解到，您所说的评论都是需要负责任的哦"
+                style="width:90%;float:left;"
+              />
+              <el-button type="primary" @click="submitCommit" style="height:55px;width:10%">发表评论</el-button>
+            </div>
+            <div id="commitL">
+              <h2 style="color:gray;text-align:center">太难了，现在还没有任何评论</h2>
+            </div>
+          </el-main>
+        </el-container>
+      </div>
     </div>
     <div id="foo">
       <footCopy class="footStyle" style="color:black" />
@@ -171,7 +173,7 @@ p {
   background-color: white;
   width: 100%;
   padding: 10px 0;
-  height:60px;
+  height: 60px;
   bottom: 0px;
 }
 .footStyle > #footCopy > a {

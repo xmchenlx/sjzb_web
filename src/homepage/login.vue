@@ -62,6 +62,7 @@
           </el-form>
           <el-button type="text" style="float:left" @click="registerUser()">注册账号</el-button>
           <el-button type="text" style="float:right" @click="fogertPwd()">忘记密码惹</el-button>
+          <el-button type="text" style="float:right" @click="testPHP()">对接PHP</el-button>
         </el-card>
       </el-main>
       <el-footer style="height:10%;margin:0;">
@@ -73,9 +74,10 @@
 
 <script>
 /* eslint-disable */
+
 import Bus from "@/bus";
 import foot from "@/homepage/copyrightFoot";
-import { validateUser, userReg } from "@/api/Users";
+import { validateUser, userReg, vuephp } from "@/api/Users";
 import moment from "moment";
 export default {
   data() {
@@ -111,6 +113,14 @@ export default {
     Bus
   },
   methods: {
+    testPHP(){
+      let a ='';
+      vuephp().then(res=>{
+        a=res.data;
+        this.$alert("php结果："+a)
+      })
+
+    },
     gotoArticle() {
       this.$router.push({ name: "articleList" });
     },
@@ -264,7 +274,9 @@ export default {
   width: 100%;
   height: 100%;
   background-image: linear-gradient(rgb(212, 244, 255), rgb(5, 117, 245));
-  background-size: cover;
+  background-size: fill;
+  overflow: hidden;
+  min-height: 800px;
 }
 
 .logincard {

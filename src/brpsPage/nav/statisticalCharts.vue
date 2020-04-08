@@ -51,12 +51,13 @@ export default {
     },
     getPayData () {
       let _this = this
+      this.chartData.rows = []
       this.showCharts = false
       getPast7DaysPayList().then(res => {
         // this.listData = res.data.data
         this.processDataToList(res.data.data)
       }).then(() => { _this.getIncomeData() })
-      //console.log('强制刷新')
+      // console.log('强制刷新')
       this.$forceUpdate()
     },
 

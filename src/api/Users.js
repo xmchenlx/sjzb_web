@@ -40,3 +40,11 @@ export function userReg (u) {
     // get方法传参用params，post方法传参用data
   })
 }
+
+export function vuephp () {
+  return axios({
+    url: 'http://localhost:666/fruitsale/vuetest.php',
+    method: 'get'
+    // get方法传参用params，post方法传参用data
+  })
+}
