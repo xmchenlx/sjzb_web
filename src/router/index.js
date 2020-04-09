@@ -77,6 +77,16 @@ const router = new Router({
         title: '文章详情',
         show: true
       }
+    },
+    {
+      path: '/sbsubConan',
+      name: 'sbsubConan',
+      component: (resolve) => require(['@/other/conan/getDownloadLink'], resolve),
+      meta: {
+        title: '银弹柯南公告获取',
+        show: true,
+        requireAuth: true // 需要登录权限
+      }
     }
   ]
 

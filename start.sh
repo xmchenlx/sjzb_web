@@ -50,3 +50,7 @@ docker run -d -p 80:80 -p 443:443 --name brps_nginx -v /home/brpsProject/nginx/c
 
 docker run -d -p 80:80 -p:443:443 --name brps_nginx -v /home/brpsProject/nginx/conf.d:/root/nginx-1.8.1/conf:rw -v /home/brpsProject/brps_web/brps_web/dist:/home/brpsProject/nginx/html nginx
 docker run -d -p 81:80 --name www_nginx -v /home/brpsProject/nginx/conf.d:/root/nginx-1.8.1/conf:rw -v /home/brpsProject/www_page:/home/brpsProject/nginx/html  nginx
+
+
+
+#tomcat地址：./usr/local/tomcat

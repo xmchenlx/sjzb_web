@@ -53,6 +53,7 @@
         <el-button @click="routerPush(1)">前往文章模块</el-button>
         <el-button @click="routerPush(2)">前往接单查询</el-button>
         <el-button @click="routerPush(3)" type="primary">前往chenlx小天地首页</el-button>
+        <el-button @click="routerPush(4)" type="primary">前往银弹柯南公告发布</el-button>
       </el-tab-pane>
     </el-tabs>
 
@@ -159,6 +160,8 @@ export default {
         this.$router.push({"name":'wmList'})
       }else if(index===3){
         // this.$router.push({"name":''})
+      }else if(index===4){
+        this.$router.push({"name":'sbsubConan'})
       }
     },
     processType2ndList(t1Id) {

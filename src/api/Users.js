@@ -7,7 +7,8 @@ axios.defaults.withCredentials = true
 const api = {
   unlogin: 'User/unlogin',
   userLogin: 'User/validateUser',
-  userReg: 'User/userReg'
+  userReg: 'User/userReg',
+  conanTVList: 'conan/getConanList'
 
 }
 export default api
@@ -45,6 +46,17 @@ export function vuephp () {
   return axios({
     url: 'http://localhost:666/fruitsale/vuetest.php',
     method: 'get'
+    // get方法传参用params，post方法传参用data
+  })
+}
+
+export function sbsubJson () {
+  return axios({
+    url: `${api.conanTVList}`,
+    method: 'get',
+    withCredentials: true,
+    timeout: 100000
+
     // get方法传参用params，post方法传参用data
   })
 }
