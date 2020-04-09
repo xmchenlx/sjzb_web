@@ -54,7 +54,6 @@ export function sbsubJson () {
   return axios({
     url: `${api.conanTVList}`,
     method: 'get',
-    withCredentials: true,
     timeout: 100000
 
     // get方法传参用params，post方法传参用data
