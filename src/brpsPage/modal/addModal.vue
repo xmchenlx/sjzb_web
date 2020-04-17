@@ -37,7 +37,7 @@
             class="item"
             effect="dark"
             content="请输入金额，不论正负。选择类型为支出或收入后系统自动为您归类。"
-            placement="right"
+            placement="top"
           >
             <el-input-number
               v-model="tempRecordMoney"
@@ -51,7 +51,7 @@
           </el-tooltip>
         </el-form-item>
 
-        <el-form-item label="一级类目:">
+        <el-form-item label="一级类目:" >
           <el-select
             v-model="newRecord.type1st"
             filterable
@@ -267,7 +267,7 @@ export default {
           status = false
         }
       })
-      //console.log(status)
+      // console.log(status)
       return status
     },
     insertOneBillInfo () {
@@ -275,6 +275,7 @@ export default {
       this.isProcess = true
       if (this.validateIsFilled() === false) {
         this.$message.error('请填写完整信息！')
+        this.isProcess = false
         return false
       }
       this.isProcess = true
@@ -282,7 +283,7 @@ export default {
       // 如果是支出，需要添加负号，收入则维持正数状态
 
       this.newRecord.money =
-        this.billType == '0' ? this.newRecord.money * -1 : this.newRecord.money
+        this.billType === '0' ? this.newRecord.money * -1 : this.newRecord.money
       this.newRecord.money = this.newRecord.money.toFixed(3)
 
       this.newRecord.billDate = moment(this.newRecord.bill_date).valueOf()
@@ -329,7 +330,7 @@ export default {
       let _this = this
       this.isEditStatus = true
       this.$forceUpdate()
-      //console.log(this.ModalWidth)
+      // console.log(this.ModalWidth)
       searchOneBillInfo(bid).then(res => {
         _this.newRecord = res.data.data
         // 填充记录的日期
@@ -361,7 +362,7 @@ export default {
       }
     },
     computedLastPrice () {
-      if (this.isDiscount == false) this.disCountPercent = 1
+      if (this.isDiscount === false) this.disCountPercent = 1
       else this.computedDiscount()
       this.newRecord.money = this.disCountPercent * this.tempRecordMoney
     }
@@ -384,6 +385,18 @@ export default {
     },
     isDiscount: function () {
       this.computedLastPrice()
+    },
+    billType: function () {
+      this.newRecord.type2nd = ''
+
+      if (this.billType === '1') {
+        this.type2ndOptions = ''
+        this.newRecord.type1st = 9
+        this.processType2ndList(9)
+      } else {
+        this.newRecord.type1st = ''
+        this.type2ndOptions = ''
+      }
     }
   }
 }
