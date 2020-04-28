@@ -203,6 +203,7 @@ export default {
     convertArticleInfo (d) {
       if (d === 1) return '公告'
       else if (d === 2) return '文章'
+      else if (d === 3) return '技术'
       else return '其他'
     },
     datetimeConvert (d) {

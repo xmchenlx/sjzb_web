@@ -15,6 +15,7 @@
     "babel-polyfill": "^6.26.0",
     "clipboard": "^2.0.6",
     "echarts": "^4.6.0",
+    "element-tiptap": "^1.19.0",
     "element-ui": "^2.13.0",
     "gzip": "^0.1.0",
     "moment": "^2.24.0",
@@ -23,7 +24,6 @@
     "vconsole": "^3.3.4",
     "vue": "^2.5.2",
     "vue-cookies": "^1.7.0",
-    "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

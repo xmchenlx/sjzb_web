@@ -1,7 +1,7 @@
 <template>
   <div id="footCopy" class="CopyInfo_homepage">
     <span style="text-align:center;">
-      Copyright ©2019-{{nowYear}} BRPS 版权所有 版本：2020-03-26 | 本网站仅用于技术的学习交流与个人记账，不用于任何商业用途 |
+      Copyright ©2019-{{nowYear}} BRPS 版权所有 版本：2020-04-28（第18次更新） | 本网站仅用于技术的学习交流与个人记账，不用于任何商业用途 |
       <a class="aStyle1" style="text-decoration:none;" href="http://www.miitbeian.gov.cn">备案号：闽ICP备18027684号-1</a> |
     </span>
     <img style="width:12px;" src="@/img/beianIcon.png" />
@@ -14,9 +14,8 @@
       <p class="aStyle1"
       >闽公网安备 35020602001332号</p>
     </a>
-    <!-- <span style="font-size:15px;">本网站仅用于分享个人生活和经验用途，并不用于任何商业目的.</span> -->
     <br />
-    <span style="font-size:15px;">ALL RIGHTS RESERVED. MADE AND DESIGNED BY chenlx for personal bill recording and processing.This website is only used for technical learning and personal accounting, not for any commercial purposes.</span>
+    <span style="font-size:15px;">ALL RIGHTS RESERVED. MADE AND DESIGNED BY lyh This website is not for any commercial purposes.</span>
   </div>
 </template>
 

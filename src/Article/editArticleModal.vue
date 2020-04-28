@@ -1,7 +1,7 @@
 <template>
-  <div id="addArticleModal">
+  <div id="editArticleModal">
     <el-input v-model="title" placeholder="文章标题" style="width:85%" />
-    <el-button type="primary" @click="postMyArticle" style="margin-bottom:10px;width:11%">完成发布</el-button>
+    <el-button type="primary" style="margin-bottom:10px;width:11%">提交更改</el-button>
     <el-tiptap
       v-model="content"
       :extensions="extensions"
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { addNewArticle } from '@/api/article'
+import { getArticleInfo } from '@/api/article'
 import {
   // 需要的 extensions
   Doc,
@@ -65,34 +65,18 @@ export default {
     }
   },
   methods: {
-    postMyArticle () {
-      console.log(this.content)
-      let dat = {
-        aTitle: this.title,
-        aContent: this.content.replace('<image src="data:image/jpeg;base64', 'data:image/jpeg;base64'),
-        aPostTime: new Date().toLocaleDateString().replace('/', '-').replace('/', '-'),
-        uId: sessionStorage.getItem('userId')
-      }
-      addNewArticle(dat).then(res => {
-        if (res.data !== '0') {
-          this.$message.success('发布成功！')
-          this.content = ''
-          this.title = ''
-          this.closeCard()
-        } else {
-          this.$message('有点奇怪诶..等下再尝试发布吧')
-        }
+    loadArticle (aid) {
+      getArticleInfo(aid).then(res => {
+        this.content = res.data.art.a_content
+        this.title = res.data.art.a_title
       })
-    },
-    closeCard () {
-      this.$router.push({path: '/adminCenter/welcome'})
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-#addArticleModal {
+#editArticleModal {
   width: 100%;
   min-height: 500px;
 }

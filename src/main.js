@@ -10,9 +10,9 @@ import VCharts from 'v-charts'
 import VueCookies from 'vue-cookies'
 import 'babel-polyfill'
 
-// 富文本编辑器
-import VueQuillEditor from 'vue-quill-editor'
-Vue.use(VueQuillEditor)
+// import element-tiptap 样式
+import 'element-tiptap/lib/index.css'
+import { ElementTiptapPlugin } from 'element-tiptap'
 // import VConsole from 'vconsole'
 // const vC = new VConsole()
 // Vue.use(vC)
@@ -32,6 +32,11 @@ axios.defaults.withCredentials = true
 //   'Content-Type': 'application/x-www-form-urlencoded'
 // }
 Vue.prototype.$axios = axios
+Vue.use(ElementTiptapPlugin, {
+  /* 插件配置项 */
+  lang: 'zh'
+})
+// 现在你已经在全局注册了 `el-tiptap` 组件。
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

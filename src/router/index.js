@@ -74,9 +74,37 @@ const router = new Router({
       name: 'articleDetail',
       component: (resolve) => require(['@/Article/articleDetail'], resolve),
       meta: {
-        title: '文章详情',
+        title: '管理页面',
         show: true
       }
+    },
+    {
+      path: '/adminCenter',
+      name: 'adminCenter',
+      component: (resolve) => require(['@/AdminCenter/personalIndex'], resolve),
+      meta: {
+        title: '管理',
+        show: true
+      },
+      children: [
+        {
+          path: '/adminCenter/welcome',
+          name: 'welcome',
+          component: () => import('@/AdminCenter/Right/defaultPage'),
+          meta: {
+            title: '管理中心', show: true
+          }
+        },
+        {
+          path: '/adminCenter/addNewArticle',
+          name: 'addNewArticle',
+          component: (resolve) => require(['@/Article/addNewArticle'], resolve),
+          meta: {
+            title: '发布新文章',
+            show: true
+          }
+        }
+      ]
     },
     {
       path: '/sbsubConan',

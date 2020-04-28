@@ -86,6 +86,7 @@ export default {
     getArticle (aid) {
       getArticleInfo({ aId: aid }).then(res => {
         this.article = res.data.data
+        this.article.aContent = this.article.aContent.replace('data:image/jpeg;base64', '<image src="data:image/jpeg;base64')
       })
     },
     datetimeConvert (d) {
