@@ -1,5 +1,5 @@
 <template>
-  <div id="articleDetail">
+  <div id="articleDetail" >
     <el-backtop ></el-backtop>
 
     <headerBanner style />
@@ -7,7 +7,7 @@
       <div id="mainLayout">
         <el-container>
           <el-header style="margin:30px 0 80px 0;">
-            <el-page-header @back="goBack" title="返回社区墙" content="帖子详情页面">
+            <el-page-header @back="goBack" title="返回搜索页" content="文章详情页面">
               |
               <el-link href="http://www.chenlx.top" :underline="false">回到小天地首页</el-link>
             </el-page-header>
@@ -17,14 +17,14 @@
               <i class="el-icon-timer" />
               发布时间：{{datetimeConvert(article.aPostTime)}} |
               <i class="el-icon-user" />
-              来源：{{article.uName}} XXX |
+              来源：{{article.uName}} |
               {{article.aReadCount}}次阅读
             </el-divider>
           </el-header>
           <br />
           <br />
-          <el-main>
-            <div v-html="article.aContent" class="mainContent"></div>
+          <el-main >
+            <div v-html="article.aContent" class="mainContent" ></div>
             <br />
             <el-divider>文章已到底，请在下面开始你的表演</el-divider>
             <div id="commitDiv">
@@ -75,7 +75,14 @@ export default {
         uName: ''
       },
       articleId: '',
-      commitContent: ''
+      commitContent: '',
+      isLoad: true,
+      loading: this.$loading({
+        lock: true,
+        text: '正在加载中',
+        spinner: 'el-icon-loading',
+        background: 'rgba(255,255,255, 0.7)'
+      })
     }
   },
   components: {
@@ -88,6 +95,10 @@ export default {
         this.article = res.data.data
         this.article.aContent = this.article.aContent.replace('data:image/jpeg;base64', '<image src="data:image/jpeg;base64')
       })
+      this.loading.close()
+      // this.$nextTick(() => {
+      // this.isLoad = false
+      // })
     },
     datetimeConvert (d) {
       return moment(d).format('YYYY-MM-DD HH:mm:ss')
