@@ -76,6 +76,10 @@
             <el-button class="longButton" @click="routerPush(2)">前往接单查询</el-button>
             <br />
             <el-button class="longButton" @click="routerPush(3)" type="primary">前往chenlx小天地首页</el-button>
+            <br/>
+            <div v-if="username === 'chenlx'">
+              <el-button  class="longButton" @click="routerPush(4)" type="primary">进入管理中心</el-button>
+            </div>
           </el-col>
         </el-row>
       </el-tab-pane>
@@ -178,6 +182,12 @@ export default {
         this.$router.push({"name":'wmList'})
       }else if(index===3){
         // this.$router.push({"name":''})
+      }else if(index === 4){
+        if(sessionStorage.getItem("userName") === 'chenlx'){
+          this.$router.push({'path':'/adminCenter/welcome'})
+        }else{
+          this.$message.error('账号不符合')
+        }
       }
     },
     refreshCharts() {

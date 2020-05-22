@@ -253,7 +253,7 @@ export default {
         this.$message.error('请填写完整信息！')
         return false
       }
-      if (this.billType == '0') {
+      if (this.billType === '0') {
         this.newRecord.money = this.newRecord.money * -1
       }
       updateOneRecord(this.newRecord).then(res => {
@@ -284,7 +284,7 @@ export default {
 
       this.newRecord.money =
         this.billType === '0' ? this.newRecord.money * -1 : this.newRecord.money
-      this.newRecord.money = this.newRecord.money.toFixed(3)
+      if (this.newRecord.money !== 0) { this.newRecord.money = this.newRecord.money.toFixed(3) }
 
       this.newRecord.billDate = moment(this.newRecord.bill_date).valueOf()
       this.newRecord.userId = parseInt(localStorage.getItem('userId'))
@@ -315,14 +315,14 @@ export default {
     },
     processOptionLabel (typeindex, id) {
       let _this = this
-      if (typeindex == '1') {
+      if (typeindex === '1') {
         for (let i = 0; i < this.type1stOptions.length; i++) {
-          if (_this.type1stOptions[i].value == id) {
+          if (_this.type1stOptions[i].value === id) {
             _this.newRecord.type1st = _this.type1stOptions[i].label
             break
           }
         }
-      } else if (typeindex == '2') {
+      } else if (typeindex === '2') {
       }
       return 'finish'
     },
@@ -355,7 +355,7 @@ export default {
       this.isAddModalShow = true
     },
     computedDiscount () {
-      if (this.payPrice != 0 && this.payPrice != '') {
+      if (this.payPrice !== 0 && this.payPrice !== '') {
         this.disCountPercent = this.payPrice / this.originPrice
       } else {
         this.disCountPercent = 1

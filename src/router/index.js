@@ -103,6 +103,15 @@ const router = new Router({
             title: '发布新文章',
             show: true
           }
+        },
+        {
+          path: '/adminCenter/articleManage',
+          name: 'articleManage',
+          component: (resolve) => require(['@/sysManage/nav/articleList'], resolve),
+          meta: {
+            title: '文章管理',
+            show: true
+          }
         }
       ]
     },

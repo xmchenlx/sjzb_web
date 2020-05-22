@@ -52,10 +52,10 @@
           <span>博客文章管理</span>
         </template>
         <el-menu-item-group>
-          <router-link :to="{name : ''}">
+          <router-link :to="{path : '/adminCenter/articleManage'}">
             <el-menu-item index="3-1">
               <i class="el-icon-coordinate" />
-              公告类文章
+              文章列表
             </el-menu-item>
           </router-link>
 

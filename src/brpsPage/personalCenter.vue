@@ -1,7 +1,10 @@
 <template>
   <div id="personalCenter">
-    <div id="greetingsArea">你好啊{{username}},今天是{{fullDate}},{{weekName}}。访问系统的时间为{{fullTime}}</div>
-    <el-tabs type="border-card" tab-position="left" style="height:100%;"  @tab-click="refreshCharts">
+    <el-tabs type="border-card" tab-position="left" style="height:100%;" @tab-click="refreshCharts">
+      <el-tab-pane label="消费报告">
+        <div id="greetingsArea">你好啊{{username}},今天是{{fullDate}},{{weekName}}。访问系统的时间为{{fullTime}}</div>
+        <billReport/>
+      </el-tab-pane>
       <el-tab-pane label="账本信息">
         <el-date-picker
           v-model="searchBillRange"
@@ -40,27 +43,32 @@
         <charts ref="charts" />
       </el-tab-pane>
       <el-tab-pane label="固定消费扫码记账">
-        <h2 style="text-align:center;color:gray;">该模块主要用于快速记录一些固定的支出或收入记录。<br>如：公交、房租、奶茶、还款等。该模块需要调用摄像头，所以主要适用于手机记账。<br>该功能还在研发当中...</h2>
-          <scanModal />
-
+        <h2 style="text-align:center;color:gray;">
+          该模块主要用于快速记录一些固定的支出或收入记录。
+          <br />如：公交、房租、奶茶、还款等。该模块需要调用摄像头，所以主要适用于手机记账。
+          <br />该功能还在研发当中...
+        </h2>
+        <scanModal />
       </el-tab-pane>
 
-       <el-tab-pane label="消息通知">
-         <h2 style="text-align:center;">您暂时还没收到任何通知。</h2>
-       </el-tab-pane>
+      <el-tab-pane label="消息通知">
+        <h2 style="text-align:center;">您暂时还没收到任何通知。</h2>
+      </el-tab-pane>
       <el-tab-pane label="其他设置">
         <el-button @click="routerPush(0)" type="danger">退出登录</el-button>
         <el-button @click="routerPush(1)">前往文章模块</el-button>
         <el-button @click="routerPush(2)">前往接单查询</el-button>
         <el-button @click="routerPush(3)" type="primary">前往chenlx小天地首页</el-button>
         <el-button @click="routerPush(4)" type="primary">前往银弹柯南公告发布</el-button>
+        <div v-if="username == 'chenlx'">
+          <el-button class="longButton" @click="routerPush(5)" type="primary">进入管理中心</el-button>
+        </div>
       </el-tab-pane>
     </el-tabs>
 
     <div id="amodal">
       <addModal ref="addModal" width="300" />
     </div>
-
   </div>
 </template>
 
@@ -70,6 +78,7 @@ import billlist from "./nav/billlist";
 import charts from "./nav/statisticalCharts";
 import addModal from "./modal/addModal";
 import moment from "moment";
+import billReport from './nav/billReport'
 import { getSpecifidBillInRange } from "@/api/BillInfo";
 import { getAllType } from "@/api/type1st";
 import { getTypeListByFid } from "@/api/type2nd";
@@ -138,7 +147,8 @@ export default {
     billlist,
     addModal,
     charts,
-    scanModal
+    scanModal,
+    billReport
   },
   created: function() {
     this.loadingPageFun();
@@ -147,21 +157,27 @@ export default {
   methods: {
     refreshCharts(opratelist) {
       //console.log("refreshchart");
-      if(opratelist.index==="1"){
-      this.$refs.charts.getPayData();
+      if (opratelist.index === "1") {
+        this.$refs.charts.getPayData();
       }
     },
-    routerPush(index){
-      if(index===0){
-        this.$router.push({"name":'LoginPage'})
-      }else if(index===1){
-        this.$router.push({"name":'articleList'})
-      }else if(index===2){
-        this.$router.push({"name":'wmList'})
-      }else if(index===3){
+    routerPush(index) {
+      if (index === 0) {
+        this.$router.push({ name: "LoginPage" });
+      } else if (index === 1) {
+        this.$router.push({ name: "articleList" });
+      } else if (index === 2) {
+        this.$router.push({ name: "wmList" });
+      } else if (index === 3) {
         // this.$router.push({"name":''})
-      }else if(index===4){
-        this.$router.push({"name":'sbsubConan'})
+      } else if (index === 4) {
+        this.$router.push({ name: "sbsubConan" });
+      } else if (index === 5) {
+        if (sessionStorage.getItem("userName") === "chenlx") {
+          this.$router.push({ path: "/adminCenter/welcome" });
+        } else {
+          this.$message.error("账号不符合");
+        }
       }
     },
     processType2ndList(t1Id) {
@@ -238,7 +254,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
 #incomeNumber {
   color: green;
   font-weight: bold;
@@ -247,11 +262,10 @@ export default {
   color: red;
   font-weight: bold;
 }
-#personalCenter{
-  height:100%;
+#personalCenter {
+  height: 100%;
   min-height: 600px;
 }
 </style>
 <style>
-
 </style>

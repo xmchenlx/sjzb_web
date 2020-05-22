@@ -15,11 +15,16 @@
       v-loading="isTableLoading"
       element-loading-text="正在查询数据"
     >
-    <template slot="empty">
-      <img  draggable="false" src="@/img/panda_angry.png" style="padding-bottom: -50px;margin-bottom:-60px;"/>
-      <p style="margin-top:5%;font-size:20px;color:gray;">没有任何开销？你真的不是一位合格的肥宅！快去花钱！！</p>
-    </template>
-      <!-- <el-table-column prop="id" label="流水" width="100"></!--> -->
+      <template slot="empty">
+        <img
+          draggable="false"
+          src="@/img/panda_angry.png"
+          style="padding-bottom: -50px;margin-bottom:-60px;"
+        />
+        <p style="margin-top:5%;font-size:20px;color:gray;">没有任何开销？你真的不是一位合格的肥宅！快去花钱！！</p>
+      </template>
+      <!-- <el-table-column prop="id" label="流水" width="100"></!-->
+      -->
       <el-table-column
         prop="billDate"
         :formatter="convertDate"
@@ -31,14 +36,12 @@
       <el-table-column prop="content" label="账单内容" width="350" align="center"></el-table-column>
       <el-table-column prop="money" label="波动金额" align="center" width="120">
         <template slot-scope="scope">
-          <span :class="payTypeClass(scope.row.money)">
-           ￥ {{scope.row.money.toFixed(2)}}
-            </span>
+          <span :class="payTypeClass(scope.row.money)">￥ {{scope.row.money.toFixed(2)}}</span>
         </template>
       </el-table-column>
       <el-table-column label="一级目录" align="center" width="130">
         <template slot-scope="scope">
-          <el-tag type="light"  size="mdeium" >
+          <el-tag type="light" size="mdeium">
             <i :class="tableTagsIconConvert(scope.row.type1stName)" />
             {{scope.row.type1stName}}
           </el-tag>
@@ -48,8 +51,18 @@
       <el-table-column prop="note" label="额外备注" align="center" width="210"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" icon="el-icon-edit" @click="searchDetailInfo(scope.row.id)">变更</el-button>
-          <el-button type="danger" size="small" icon="el-icon-delete" @click="removeOneRecord(scope.row.id,scope.row.content)">删除</el-button>
+          <el-button
+            type="primary"
+            size="small"
+            icon="el-icon-edit"
+            @click="searchDetailInfo(scope.row.id)"
+          >变更</el-button>
+          <el-button
+            type="danger"
+            size="small"
+            icon="el-icon-delete"
+            @click="removeOneRecord(scope.row.id,scope.row.content)"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -62,15 +75,20 @@
       :total="1000">
     </el-pagination>-->
 
-      <el-tag v-show="isTagShow" :closable="true" @close="closeTag" style="height:35px;font-size:20px;margin:10px 0">简报：{{billListReport}}</el-tag>
-<ediaModal ref="ediaModal"/>
+    <el-tag
+      v-show="isTagShow"
+      :closable="true"
+      @close="closeTag"
+      style="height:35px;font-size:20px;margin:10px 0"
+    >简报：{{billListReport}}</el-tag>
+    <ediaModal ref="ediaModal" />
   </div>
 </template>
 
 <script>
 /* eslint-disable */
 import { getAllBill, getAllBillInRange, removeOneRecord } from "@/api/BillInfo";
-import ediaModal from '../modal/addModal'
+import ediaModal from "../modal/addModal";
 import moment from "moment";
 import Bus from "@/bus";
 export default {
@@ -81,51 +99,64 @@ export default {
       BillTitle: "",
       refreshHint: "刷新数据",
       refreshIconName: "el-icon-refresh-right",
-      billListReport:'',
-      isTagShow:false
+      billListReport: "",
+      isTagShow: false
     };
   },
   created: function() {
     this.BillTitle = moment(new Date()).format("YYYY年MM月");
     getAllBillInRange().then(res => {
       this.tableData = res.data.data;
-      this.generateBillListReport(this.tableData)
+      this.generateBillListReport(this.tableData);
       this.isTableLoading = false;
     });
   },
-  components:{
+  components: {
     ediaModal
   },
   methods: {
-    generateBillListReport(billData){
+    generateBillListReport(billData) {
       let _this = this;
-      let payCount=0;
-      let incomeCount=0;
-      billData.forEach(function(item){
-        if(item.money<0)payCount-=item.money
-        else incomeCount+=item.money
-      })
-      let reportText='在此期间，您累计支出￥'+payCount.toFixed(2)+'元，累计收入￥'+incomeCount.toFixed(2)+'元，差额'+(incomeCount-payCount).toFixed(2)+'元。'
+      let payCount = 0;
+      let incomeCount = 0;
+      billData.forEach(function(item) {
+        if (item.money < 0) payCount -= item.money;
+        else incomeCount += item.money;
+      });
+      let reportText =
+        "在此期间，您累计支出￥" +
+        payCount.toFixed(2) +
+        "元，累计收入￥" +
+        incomeCount.toFixed(2) +
+        "元，差额" +
+        (incomeCount - payCount).toFixed(2) +
+        "元。";
       this.billListReport = reportText;
-      this.isTagShow=true
+      this.isTagShow = true;
     },
-    removeOneRecord(bid,content){
-      this.$confirm('您正在尝试删除名为【'+content+'】的记录，操作不可逆，确认删除？','删除操作确认',{
-        confirmButtonText:'意已决，删除',
-        cancelButtonText: '朕再考虑',
-        type:'warning'
-      }).then(()=>{
-        removeOneRecord(bid).then(res=>{
-          if(res.data.data>0){
-            this.$message.success('已经删除！你真是个省钱的小天才！')
-            this.refreshTable()
-          }else{
-            this.$message.error('删除结果未知，请尝试刷新表格')
-          }
+    removeOneRecord(bid, content) {
+      this.$confirm(
+        "您正在尝试删除名为【" + content + "】的记录，操作不可逆，确认删除？",
+        "删除操作确认",
+        {
+          confirmButtonText: "意已决，删除",
+          cancelButtonText: "朕再考虑",
+          type: "warning"
+        }
+      )
+        .then(() => {
+          removeOneRecord(bid).then(res => {
+            if (res.data.data > 0) {
+              this.$message.success("已经删除！你真是个省钱的小天才！");
+              this.refreshTable();
+            } else {
+              this.$message.error("删除结果未知，请尝试刷新表格");
+            }
+          });
         })
-      }).catch(()=>{
-        this.$message('操作终止')
-      })
+        .catch(() => {
+          this.$message("操作终止");
+        });
     },
     getRangeData() {
       this.BillTitle = moment(new Date()).format("YYYY年MM月");
@@ -135,8 +166,8 @@ export default {
         this.isTableLoading = false;
       });
     },
-    searchDetailInfo(bid){
-      this.$refs.ediaModal.editBillInfo(bid,true)
+    searchDetailInfo(bid) {
+      this.$refs.ediaModal.editBillInfo(bid, true);
     },
     convertDate: function(row, column) {
       let newDate = moment(row.billDate).format("YYYY-MM-DD");
@@ -164,19 +195,20 @@ export default {
       this.refreshHint = "拉取数据中...";
       this.refreshIconName = "el-icon-loading";
       this.isTableLoading = true;
-      this.getRangeData().then(res => {
-        _this.refreshIconName = "el-icon-refresh-right";
-        _this.refreshHint = "已是最新数据！";
-       
-      })
-      _this.$forceUpdate();
+        _this.getRangeData().then(res => {
+      _this.$nextTick(() => {
+          _this.refreshIconName = "el-icon-refresh-right";
+          _this.refreshHint = "已是最新数据！";
+          _this.$forceUpdate();
+        })
+      });
     },
-    payTypeClass(p){
-      if(p<0)return 'redPay'
-      return 'greenPay'
+    payTypeClass(p) {
+      if (p < 0) return "redPay";
+      return "greenPay";
     },
-    closeTag(){
-      this.isTagShow=false;
+    closeTag() {
+      this.isTagShow = false;
     }
   },
   mounted: function() {
@@ -186,15 +218,13 @@ export default {
         this.refreshTable();
       }
     });
-    Bus.$on("searchSpecifiedData",function(p,dataRange){
+    Bus.$on("searchSpecifiedData", function(p, dataRange) {
       _this.isTableLoading = true;
       _this.generateBillListReport(p);
       _this.tableData = p;
-      _this.BillTitle = dataRange.a + '至' +dataRange.b +'期间'
+      _this.BillTitle = dataRange.a + "至" + dataRange.b + "期间";
       _this.isTableLoading = false;
-
-
-    })
+    });
   }
 };
 </script>
@@ -204,13 +234,12 @@ export default {
   width: 100%;
   height: 100%;
 }
-.redPay{
-  color:red;
+.redPay {
+  color: red;
   font-weight: bold;
-
 }
-.greenPay{
+.greenPay {
   font-weight: bold;
-  color:green;
+  color: green;
 }
 </style>
