@@ -24,7 +24,7 @@
         <p style="margin-top:5%;font-size:20px;color:gray;">没有任何开销？你真的不是一位合格的肥宅！快去花钱！！</p>
       </template>
       <!-- <el-table-column prop="id" label="流水" width="100"></!-->
-      -->
+
       <el-table-column
         prop="billDate"
         :formatter="convertDate"

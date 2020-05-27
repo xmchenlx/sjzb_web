@@ -48,7 +48,12 @@
             </span>
           </el-form-item>
           <el-form-item label="操作">
-            <span>编辑</span>
+            <template >
+
+            <el-button type="text" @click="searchDetailInfo(props.row.id)">编辑</el-button>
+            <el-button type="text"  @click="removeOneRecord(props.row.id,props.row.content)">删除</el-button>
+            </template>
+
           </el-form-item>
         </el-form>
       </template>
