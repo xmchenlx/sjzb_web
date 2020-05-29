@@ -6,8 +6,8 @@ import router from './router'
 import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import VCharts from 'v-charts'
-import VueCookies from 'vue-cookies'
+// import VCharts from 'v-charts'
+// import VueCookies from 'vue-cookies'
 import 'babel-polyfill'
 
 // import element-tiptap 样式
@@ -16,8 +16,8 @@ import { ElementTiptapPlugin } from 'element-tiptap'
 // import VConsole from 'vconsole'
 // const vC = new VConsole()
 // Vue.use(vC)
-Vue.use(VueCookies)
-Vue.use(VCharts)
+// Vue.use(VueCookies)
+// Vue.use(VCharts)
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(axios)

@@ -42,7 +42,7 @@ import Bus from '@/bus'
 import foot from "@/homepage/copyrightFoot";
 import {validateUser } from '@/api/Users'
 import moment from 'moment'
-
+import Utils from '@/api/util'
 export default {
   data() {
     return {
@@ -93,9 +93,14 @@ export default {
     loginSystem() {
       let _this = this
       let loginForm = _this.loginForm
+      let lForm = {
+        
+      'uName' : Utils.encrypt(_this.loginForm.uName),
+      'uPwd': Utils.encrypt(_this.loginForm.uPwd)
+      }
       this.enterBtnIcon = 'el-icon-loading'
       try{
-        validateUser(loginForm).then(res=>{
+        validateUser(lForm).then(res=>{
           if(res.data.success === true){
             // _this.$cookies.headers
             // $cookies.set('JSESSIONID',res.response.headers.cookie.JSESSIONID)
