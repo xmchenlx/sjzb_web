@@ -56,7 +56,10 @@
       </el-tab-pane>
       <el-tab-pane label="其他设置">
         <el-button @click="routerPush(0)" type="danger">退出登录</el-button>
-        <el-button @click="routerPush(1)">前往文章模块</el-button>
+        <el-button type="primary">
+          <el-link :underline="false" style="color:white;" href="https://blog.chenlx.top/">前往博客</el-link>
+
+          </el-button>
         <el-button @click="routerPush(2)">前往接单查询</el-button>
         <el-button @click="routerPush(3)" type="primary">前往chenlx小天地首页</el-button>
         <el-button @click="routerPush(4)" type="primary">前往银弹柯南公告发布</el-button>

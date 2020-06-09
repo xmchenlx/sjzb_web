@@ -63,7 +63,8 @@
                 <i :class="enterBtnIcon" />
                 进入系统
               </el-button>
-              <el-button type="primary" @click="gotoArticle()">前往博客</el-button>
+              <el-button type="primary"><el-link :underline="false" style="color:white;" href="https://blog.chenlx.top/">前往博客</el-link></el-button>
+              <!-- <el-button type="primary" @click="gotoArticle()">前往博客</el-button> -->
             </el-form-item>
           </el-form>
           <el-button type="text" style="float:left" @click="registerUser()">注册账号</el-button>
@@ -157,6 +158,10 @@ export default {
     },
     finishReg() {
       let _this = this;
+      if(_this.regform.uName==='' ||_this.regform.uPwd===''||_this.regform.uTel===''){
+        this.$alert('输入不能为空');
+        return false;
+      }
       this.regform.uRegisterDate = moment()
         .locale("zh-cn")
         .format("YYYY-MM-DD");
@@ -174,11 +179,20 @@ export default {
       this.stopContinue();
     },
     loginSystem() {
+      let _this = this;
+      
       this.$nextTick(() => {
         this.isLogining = true;
       });
-      let _this = this;
+      if(_this.loginForm.uName === '' || _this.loginForm.uPwd === ''){
+        this.$alert('输入不能为空')
+        this.$nextTick(() => {
+        this.isLogining = false;
+      });
+        return false;
+      }
       this.$forceUpdate();
+      
       let lForm = {
         
       'uName' : Utils.encrypt(_this.loginForm.uName),

@@ -1,119 +1,10 @@
 <template>
   <div id="articlelist">
-    <el-backtop>冲</el-backtop>
-    <headerBanner />
-    <el-container direction="vertical">
-      <!-- <el-header style="margin:0px 0;"></el-header> -->
-      <el-main style="width:85%;margin:0 auto">
-        <el-row :gutter="20">
-          <el-col :span="18">
-            <el-card>
-              <el-input
-                v-model="searchKey"
-                style="width:80%"
-                placeholder="输入标题的关键词"
-                prefix-icon="el-icon-search"
-              />
-              <el-button type="primary" @click="queryList" :loading="searching">查询</el-button>
-              <el-button type="plain" @click="futureTips">我也想发表</el-button>
-
-              <div id="articleListDIv" v-if="isSearchFinish==true">
-                <div v-for="(item) in articlelist" :key="item.aId">
-                  <el-row :gutter="20">
-                    <el-col :span="7">
-                      <div style="width:100%;height:230px;border-radius:25px;overflow:hidden;">
-                        <img
-                          style="width:auto;height:115%;"
-                          :src="requirePicture(item.aTitlePicPath)"
-                        />
-                      </div>
-                    </el-col>
-                    <el-col :span="15">
-                      <!-- <el-button type="text" @click="openArticle(item.aId)">
-                      <h2 style="line-height:0px;margin:0;padding:0;font-size:25px;margin-top:15px;">
-                        {{item.aTitle}}
-                      </h2>-->
-
-                      <h2>{{item.aTitle}}</h2>
-                      <p style="text-align:left;color:gray;">
-                        花笙联系不上李芳非常着急。有人举报张兰兰涉嫌组织暴徒威胁、袭击远方地产，花笙急忙赶到警察局，原来这是潘晓佳联合远方地产一起诬陷张兰兰。
-                        花笙决定继续查，要把远方房地产和它背后的黑公关一起找出来。戴猛合成了一段录音，
-                        其内容能证明潘晓佳偷了公司设计图给远方地产总经理孙静海，孙总在拿到录音后找潘晓佳求证，
-                      </p>
-                      <el-tag
-                        :color="convertArticleType(item.aTag)"
-                      >{{convertArticleInfo(item.aTag)}}</el-tag>
-                      <span>
-                        <i class="el-icon-time" />
-                        {{datetimeConvert(item.aPostTime)}}
-                      </span>
-                      <span>
-                        |
-                        <i class="el-icon-user" />
-                        {{item.uName}}
-                      </span>
-                      <el-button
-                        @click="openArticle(item.aId)"
-                        type="primary"
-                        size="small"
-                        style="float:right"
-                      >查看详情</el-button>
-                    </el-col>
-                  </el-row>
-                  <el-divider />
-                </div>
-              </div>
-              <div v-else>
-                <div align="center">
-                  <img
-                    src="@/img/404PageIcon.gif"
-                    align="middle"
-                    style="margin:0 auto;width:300px;-webkit-user-drag: none;"
-                  />
-                </div>
-                <h1 align="center">服务器可能在维护中，暂时无法提供数据。</h1>
-              </div>
-              <el-pagination
-                background
-                hide-on-single-page
-                layout="prev, pager, next"
-                :current-page="currentPage"
-                @current-change="handleCurrentChange"
-                :total="listTotal"
-              ></el-pagination>
-            </el-card>
-          </el-col>
-          <el-col :span="6">
-            <el-card :body-style="{ padding: '0px' }">
-              <img
-                src="@/img/articleHeadImg/cute_jmq.jpg"
-                style="height:100%;width:100%;overflow:hidden"
-              />
-              <h3 align="center">欢迎光临chenlx的博客~</h3>
-              <h3 align="center">外出务必戴口罩~</h3>
-            </el-card>
-            <br />
-            <el-card>
-              <div slot="header" class="clearfix">
-                <span>快捷链接</span>
-              </div>
-              <el-link href="http://chenlx.top">chenlx小天地主页</el-link>
-              <br />
-              <el-link href="https://brps.chenlx.top">BRPS记账系统</el-link>
-              <br />
-              <el-link href="#">（未上线）毕设项目：租房网</el-link>
-              <br />
-              <el-link href="https://www.sbsub.com/data/">银色子弹数据站</el-link>
-              <br />
-              <p>需要挂上自己的快捷链接请联系邮箱me@chenlx.top。无偿挂链！</p>
-            </el-card>
-          </el-col>
-        </el-row>
-      </el-main>
-      <el-footer id="foo">
-        <footCopy style="color:black;" />
-      </el-footer>
-    </el-container>
+<div style="text-align:center">
+  <h1>博客与BRPS在2020年6月有搬迁计划，目前博客暂停访问。还请理解。</h1>
+<h2>如需记账请前往<a href="http://brps.chenlx.top">BRPS记账网</a></h2>
+<h2>如需静态chenlx前页请前往<a href="http://chenlx.top">chenlx的小天地</a></h2>
+</div>
   </div>
 </template>
 
@@ -297,7 +188,7 @@ p {
 }
 #articlelist {
   min-width: 1450px;
-  background-color: rgb(233, 233, 233);
+  // background-color: rgb(233, 233, 233);
   height: auto;
 }
 

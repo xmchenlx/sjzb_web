@@ -71,7 +71,8 @@
           <el-col :span="24">
             <el-button type="danger" class="longButton" @click="routerPush(0)">退出登录</el-button>
             <br />
-            <el-button class="longButton" @click="routerPush(1)">前往文章列表</el-button>
+           <el-button class="longButton" type="primary"><el-link :underline="false" style="color:white;" href="https://blog.chenlx.top/">前往博客</el-link></el-button>
+
             <br />
             <el-button class="longButton" @click="routerPush(2)">前往接单查询</el-button>
             <br />

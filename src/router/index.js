@@ -42,24 +42,24 @@ const router = new Router({
         requireAuth: true // 需要登录权限
       }
     },
-    {
-      path: '/articleList',
-      name: 'articleList',
-      component: () => import('@/Article/articleList'),
-      meta: {
-        title: '文章列表',
-        show: true
-      }
-    },
-    {
-      path: '/addNewArticle',
-      name: 'addNewArticle',
-      component: () => import('@/Article/addNewArticle'),
-      meta: {
-        title: '发布新文章',
-        show: true
-      }
-    },
+    // {
+    //   path: '/articleList',
+    //   name: 'articleList',
+    //   component: () => import('@/Article/articleList'),
+    //   meta: {
+    //     title: '文章列表',
+    //     show: true
+    //   }
+    // },
+    // {
+    //   path: '/addNewArticle',
+    //   name: 'addNewArticle',
+    //   component: () => import('@/Article/addNewArticle'),
+    //   meta: {
+    //     title: '发布新文章',
+    //     show: true
+    //   }
+    // },
     {
       path: '/wmList',
       name: 'wmList',
@@ -69,15 +69,15 @@ const router = new Router({
         show: true
       }
     },
-    {
-      path: '/articleDetail',
-      name: 'articleDetail',
-      component: (resolve) => require(['@/Article/articleDetail'], resolve),
-      meta: {
-        title: '管理页面',
-        show: true
-      }
-    },
+    // {
+    //   path: '/articleDetail',
+    //   name: 'articleDetail',
+    //   component: (resolve) => require(['@/Article/articleDetail'], resolve),
+    //   meta: {
+    //     title: '管理页面',
+    //     show: true
+    //   }
+    // },
     {
       path: '/adminCenter',
       name: 'adminCenter',
@@ -94,25 +94,25 @@ const router = new Router({
           meta: {
             title: '管理中心', show: true
           }
-        },
-        {
-          path: '/adminCenter/addNewArticle',
-          name: 'addNewArticle',
-          component: (resolve) => require(['@/Article/addNewArticle'], resolve),
-          meta: {
-            title: '发布新文章',
-            show: true
-          }
-        },
-        {
-          path: '/adminCenter/articleManage',
-          name: 'articleManage',
-          component: (resolve) => require(['@/sysManage/nav/articleList'], resolve),
-          meta: {
-            title: '文章管理',
-            show: true
-          }
         }
+        // {
+        //   path: '/adminCenter/addNewArticle',
+        //   name: 'addNewArticle',
+        //   component: (resolve) => require(['@/Article/addNewArticle'], resolve),
+        //   meta: {
+        //     title: '发布新文章',
+        //     show: true
+        //   }
+        // },
+        // {
+        //   path: '/adminCenter/articleManage',
+        //   name: 'articleManage',
+        //   component: (resolve) => require(['@/sysManage/nav/articleList'], resolve),
+        //   meta: {
+        //     title: '文章管理',
+        //     show: true
+        //   }
+        // }
       ]
     },
     {
