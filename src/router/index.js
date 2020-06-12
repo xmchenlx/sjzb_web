@@ -94,25 +94,25 @@ const router = new Router({
           meta: {
             title: '管理中心', show: true
           }
+        },
+        {
+          path: '/adminCenter/addNewArticle',
+          name: 'addNewArticle',
+          component: (resolve) => require(['@/Article/addNewArticle'], resolve),
+          meta: {
+            title: '发布新文章',
+            show: true
+          }
+        },
+        {
+          path: '/adminCenter/articleManage',
+          name: 'articleManage',
+          component: (resolve) => require(['@/sysManage/nav/articleList'], resolve),
+          meta: {
+            title: '文章管理',
+            show: true
+          }
         }
-        // {
-        //   path: '/adminCenter/addNewArticle',
-        //   name: 'addNewArticle',
-        //   component: (resolve) => require(['@/Article/addNewArticle'], resolve),
-        //   meta: {
-        //     title: '发布新文章',
-        //     show: true
-        //   }
-        // },
-        // {
-        //   path: '/adminCenter/articleManage',
-        //   name: 'articleManage',
-        //   component: (resolve) => require(['@/sysManage/nav/articleList'], resolve),
-        //   meta: {
-        //     title: '文章管理',
-        //     show: true
-        //   }
-        // }
       ]
     },
     {
