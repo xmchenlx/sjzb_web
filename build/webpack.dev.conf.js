@@ -40,7 +40,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     publicPath: config.dev.assetsPublicPath,
     // proxy: config.dev.proxyTable,
     proxy:  [{
-      context:['/Bill','/type1st','/type2nd','/User','/Article','/wm','/conan'],
+      context:['/Bill','/type1st','/type2nd','/User','/Article','/wm','/conan','/wc'],
       target: 'https://bp.chenlx.top:6868/brps_war/',
       secure: false,
       changeOrigin: true,

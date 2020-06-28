@@ -11,11 +11,6 @@
       </el-header>
       <el-main style="height:55%;width:100%;margin:5% 0;margin:0 auto">
         <el-card class="logincard">
-          <span>
-            网站尚处于研发阶段，部分未完成的功能暂时不提供使用。
-            <br />测试账号：yezhan,密码：6666。测试账号为公共账号，请不要输入隐私数据
-          </span>
-
           <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="25%">
             <el-form-item label="账号" prop="uName">
               <el-input v-model="loginForm.uName"></el-input>
@@ -127,7 +122,7 @@ export default {
               sessionStorage.setItem("userId", res.data.data);
               sessionStorage.setItem("userName", _this.loginForm.uName);
               _this.$notify({
-                title: _this.getTimeToMadeGreetins() + loginForm.uName,
+                title: _this.getTimeToMadeGreetins() + _this.loginForm.uName,
                 message:
                   "欢迎使用个人记账系统！\r\n现在时间：" +
                   moment()
@@ -146,7 +141,7 @@ export default {
           .catch(error => {
             this.$notify({
               title: "访问被拒绝",
-              message: "服务器没有回应。无法使用"
+              message: "服务器没有回应。无法使用:"+error
             });
             this.$nextTick(() => {
               _this.enterBtnIcon = "";
