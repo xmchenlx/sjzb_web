@@ -1,27 +1,25 @@
+/* eslint-disable no-undef */
+// ---------------因为插件全部采用cdn，不import以达到减小体积的效果，避免语法检查报错
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
+// import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
-// import ElementUI from 'element-ui'
+// import ELEMENT from 'element-ui'
 // import 'element-ui/lib/theme-chalk/index.css'
-import VCharts from 'v-charts'
-// import VueCookies from 'vue-cookies'
+// import VCharts from 'v-charts'
 import 'babel-polyfill'
 
 // import element-tiptap 样式
-import 'element-tiptap/lib/index.css'
-import { ElementTiptapPlugin } from 'element-tiptap'
-// import VConsole from 'vconsole'
-// const vC = new VConsole()
-// Vue.use(vC)
-// Vue.use(VueCookies)
-Vue.use(VCharts)
-// Vue.config.productionTip = false
+// import 'element-tiptap/lib/index.css'
+// import { ElementTiptapPlugin } from 'element-tiptap'
+// Vue.use(VCharts)
+Vue.config.productionTip = false
 // Vue.use(ElementUI)
-// Vue.use(axios)
-axios.defaults.timeout = 5000
+Vue.use(ELEMENT)
+Vue.use(axios)
+axios.defaults.timeout = 10000
 // 配置请求头
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 // axios.defaults.baseURL = 'http://localhost:6868/brps_war'// 配置接口地址 -开发
@@ -32,10 +30,10 @@ axios.defaults.withCredentials = true
 //   'Content-Type': 'application/x-www-form-urlencoded'
 // }
 Vue.prototype.$axios = axios
-Vue.use(ElementTiptapPlugin, {
-  /* 插件配置项 */
-  lang: 'zh'
-})
+// Vue.use(ElementTiptapPlugin, {
+//   /* 插件配置项 */
+//   lang: 'zh'
+// })
 // 现在你已经在全局注册了 `el-tiptap` 组件。
 /* eslint-disable no-new */
 new Vue({

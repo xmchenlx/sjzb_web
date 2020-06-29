@@ -2,14 +2,37 @@
   <div id="loginpage_mobile">
     <el-container style="height:100%;width:100%">
       <el-header style="height:20%">
-        <h2 style="text-align:center;">
-          欢迎使用个人记账
-          <br />
-          <span style="font-size:15px">这里是Mobile端·请登录</span>
+         <h2 style="margin:0 auto;text-align:center;">
+          <img src="@/img/lx_logo_399.png" style="width:6rem;padding:0;margin:0" />
+          <p style="padding:0;padding-top:-1%">欢迎访问BRPS记账系统·Mobile</p>
         </h2>
         <br />
       </el-header>
       <el-main style="height:55%;width:100%;margin:5% 0;margin:0 auto">
+         <transition name="el-zoom-in-center">
+          <el-card
+            class="logincard"
+            style="margin:0 auto;margin-bottom:1%;height:3rem;padding:0;"
+            v-if="pagemsgContent !== null && pagemsgContent !== ''"
+          >
+            <div class="notice-card-wrapper">
+              <!-- 系统公告 -->
+              <div style="">
+                <el-row>
+                  <el-col :span="2">
+                    <i class="el-icon-message-solid" style="font-size:20px;" />
+                  </el-col>
+                  <el-col :span="22" style="overflow:hidden">
+                    <div class="inner-container">
+                      <span class="msgStyle">公告：{{pagemsgContent}}</span>
+                    </div>
+                  </el-col>
+                </el-row>
+              </div>
+            </div>
+          </el-card>
+        </transition>
+
         <el-card class="logincard">
           <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="25%">
             <el-form-item label="账号" prop="uName">
@@ -41,11 +64,13 @@
 import Bus from "@/bus";
 import foot from "@/homepage/copyrightFoot";
 import { validateUser } from "@/api/Users";
+import { getOnewc } from "@/api/webConfig";
 import moment from "moment";
 import Utils from "@/api/util";
 export default {
   data() {
     return {
+      pagemsgContent: null,
       enterBtnIcon: "el-icon-key",
       loginForm: {
         uName: "",
@@ -68,6 +93,22 @@ export default {
     Bus
   },
   methods: {
+    checkValueNull(s) {
+      if (s !== null && s !== "") return "ok";
+      return "null";
+    },
+    checkWebSetting() {
+      let _this = this;
+      getOnewc("HOME_PAGE_MSG").then(res => {
+        if (
+          res.data.data.configStatus != 0 &&
+          this.checkValueNull(res.data.data.configMsg) === "ok"
+        ) {
+          _this.pagemsgContent = res.data.data.configMsg;
+          console.log(_this.pagemsgContent);
+        }
+      });
+    },
     forgetPwd() {
       this.$message.error("该功能还未上线...");
     },
@@ -176,6 +217,9 @@ export default {
         message: "没有检测到您的登录信息，此次访问已被拦截。请重新登录。"
       });
     });
+  },
+  created:function(){
+    this.checkWebSetting();
   }
 };
 </script>
@@ -195,6 +239,40 @@ export default {
   // margin-top: 5%;
 
   #linktext {
+  }
+
+
+}
+
+.msgStyle {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: gray;
+  white-space: nowrap; /*强制span不换行*/
+  display: inline-block; /*将span当做块级元素对待*/
+  // text-shadow: 2px 2px 3px lightblue;
+}
+
+.notice-card-wrapper {
+  overflow-y: hidden;
+  overflow-x: hidden;
+  .inner-container {
+    overflow-y: hidden;
+    overflow-x: hidden;
+    padding-left: 5%;
+    margin-left: 100%; // 把文字弄出可见区域
+    width: 600%;
+    animation: myMove 22s linear infinite; // 重点，定义动画
+    animation-fill-mode: forwards;
+  }
+  /*文字无缝滚动*/
+  @keyframes myMove {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-200%);
+    }
   }
 }
 </style>

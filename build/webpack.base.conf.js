@@ -22,10 +22,10 @@ const createLintingRule = () => ({
 module.exports = {
   context: path.resolve(__dirname, '../'),
   // 20200312更改，想让手机使用axios
-  // entry: {
-  //   app: './src/main.js'
-  // },
-  entry: ['babel-polyfill', './src/main.js'],
+  entry: {
+    app: './src/main.js'
+  },
+  // entry: ['babel-polyfill', './src/main.js'],
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
@@ -39,7 +39,8 @@ module.exports = {
     'vuex': 'Vuex',
     'moment':'moment',
     'vue-resource': 'VueResource',
-    'element-ui':'ElementUI'
+    'element-ui': 'ELEMENT',
+    'wangEditor':'wangEditor'
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],

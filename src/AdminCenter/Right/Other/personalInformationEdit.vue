@@ -81,103 +81,102 @@
 </template>
 
 <script>
-import { getUserInfomation, updateUserInfo } from "../../api/users";
-import { getCorrectImgName } from "@/publicFunc/houseImageProcess";
-import Bus from "../bus";
+import { getUserInfomation, updateUserInfo } from '../../api/users'
+import { getCorrectImgName } from '@/publicFunc/houseImageProcess'
+import Bus from '../bus'
 export default {
-  name: "personalInformationEdit",
-  data() {
-    getUserInfomation({ uid: new Number(sessionStorage.getItem("userid")) })
+  name: 'personalInformationEdit',
+  data () {
+    getUserInfomation({ uid: new Number(sessionStorage.getItem('userid')) })
       .then(res => {
         // console.log(sessionStorage.getItem("userid"))
         (this.personalInformation.usersex = res.data.data.uSex),
-          (this.personalInformation.usertel = res.data.data.uTelephone),
-          (this.personalInformation.username = res.data.data.uName);
-          this.personalInformation.userHeadImageUrl = this.userHeadPathConvert(
+        (this.personalInformation.usertel = res.data.data.uTelephone),
+        (this.personalInformation.username = res.data.data.uName)
+        this.personalInformation.userHeadImageUrl = this.userHeadPathConvert(
           res.data.data.uHeadImage)
       })
       .then(res => {
-        this.formloading = false;
-      });
+        this.formloading = false
+      })
     return {
       personalInformation: {
-        usersex: "",
-        usertel: "",
-        userintro: "",
-        username: "",
-        userstate: "",
-        userHeadImageUrl:null
+        usersex: '',
+        usertel: '',
+        userintro: '',
+        username: '',
+        userstate: '',
+        userHeadImageUrl: null
       },
-      loicon: "",
+      loicon: '',
       formloading: true,
       rules: {
         username: [
-          { required: true, message: "请输入用户名", trigger: "blur" }
+          { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
-        usersex: [{ required: true, message: "请选择性别", trigger: "blur" }],
+        usersex: [{ required: true, message: '请选择性别', trigger: 'blur' }],
         confirmPwd: [
-          { required: true, message: "请确认新密码", trigger: "blur" }
+          { required: true, message: '请确认新密码', trigger: 'blur' }
         ]
       }
-    };
+    }
   },
   methods: {
-    postPersonalInfomationChanged() {
-      this.loicon = "el-icon-loading";
-      let formInfo ={
-        uId:sessionStorage.getItem("userid"),
-        uTelephone:this.personalInformation.usertel,
-        uName:this.personalInformation.username,
-        uSex:this.personalInformation.usersex
-      };
-      updateUserInfo(formInfo).then( res =>{
-        if(res.data == true){
-          this.$message.success("信息修改成功！");
-          sessionStorage.setItem("username", this.personalInformation.username);
-          Bus.$emit("changeUsername",this.personalInformation.username);
+    postPersonalInfomationChanged () {
+      this.loicon = 'el-icon-loading'
+      let formInfo = {
+        uId: sessionStorage.getItem('userid'),
+        uTelephone: this.personalInformation.usertel,
+        uName: this.personalInformation.username,
+        uSex: this.personalInformation.usersex
+      }
+      updateUserInfo(formInfo).then(res => {
+        if (res.data == true) {
+          this.$message.success('信息修改成功！')
+          sessionStorage.setItem('username', this.personalInformation.username)
+          Bus.$emit('changeUsername', this.personalInformation.username)
           // 传递更新好的新昵称到顶栏
-        }else{
-          this.$message("修改失败")
+        } else {
+          this.$message('修改失败')
         }
-      }).catch(error =>{
-        this.$message("信息提交出现了异常："+error);
+      }).catch(error => {
+        this.$message('信息提交出现了异常：' + error)
       })
-      this.$nextTick(this.loicon = '');
+      this.$nextTick(this.loicon = '')
     },
-    userstateConvert(statenum) {},
-    postUserHeadImage(){
+    userstateConvert (statenum) {},
+    postUserHeadImage () {
       let form = {
-        uId:sessionStorage.getItem("userid"),
-        uHeadImage:this.personalInformation.userHeadImageUrl
-      };
-      updateUserInfo(form).then(res =>{
-        if(res == true){
-          this.$message.success("头像更换成功！");
+        uId: sessionStorage.getItem('userid'),
+        uHeadImage: this.personalInformation.userHeadImageUrl
+      }
+      updateUserInfo(form).then(res => {
+        if (res == true) {
+          this.$message.success('头像更换成功！')
           // console.log("这里要删除原来的头像")
         }
-        this.$forceUpdate();
+        this.$forceUpdate()
       })
     },
-    userHeadPathConvert(imgurl) {
-      let imgstring = "";
+    userHeadPathConvert (imgurl) {
+      let imgstring = ''
       if (imgurl != null && imgurl != '') {
-        imgstring = require('@/img/userHead/' + imgurl);
+        imgstring = require('@/img/userHead/' + imgurl)
       } else {
-        imgstring = require("@/img/loadingDefaultImage.jpg");
+        imgstring = require('@/img/loadingDefaultImage.jpg')
       }
       // console.log("拼接后=" + imgstring);
-      return imgstring;
+      return imgstring
     },
-    handleAvatarSuccess(res, file) {
-      //上传头像成功后
-      this.$message.success("头像更换成功！");
-      Bus.$emit("changeUserHeadImage",res.data);
-      this.personalInformation.userHeadImageUrl = res.data;
-      this.postUserHeadImage();
-      
+    handleAvatarSuccess (res, file) {
+      // 上传头像成功后
+      this.$message.success('头像更换成功！')
+      Bus.$emit('changeUserHeadImage', res.data)
+      this.personalInformation.userHeadImageUrl = res.data
+      this.postUserHeadImage()
     }
   }
-};
+}
 </script>
 
 <style scoped>

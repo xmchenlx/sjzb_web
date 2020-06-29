@@ -1,7 +1,7 @@
 <template>
   <div id="topmain" class="topmain">
     <div class="logo" @click="toHome()">
-      <img src="../../img/websitelogo.png" width="230px" />
+      <img src="../../img/lx_logo_399.png" width="70px" style="margin-left:7%" />
       <!-- <span class="logofont">疲惫租房</span> -->
     </div>
     <div id="personalMenu" class="personalMenu">
@@ -17,36 +17,35 @@
 </template>
 
 <script>
-import Bus from "../bus";
+import Bus from '../bus'
 export default {
-  name: "topmain",
-  data(){
-    return{
-      username:sessionStorage.getItem("adminname")
+  name: 'topmain',
+  data () {
+    return {
+      username: sessionStorage.getItem('adminname')
     }
   },
   methods: {
-    logout(){
-      console.log("logout!")
-      sessionStorage.clear();
-      this.$router.push(({name:'login'}))
+    logout () {
+      console.log('logout!')
+      sessionStorage.clear()
+      this.$router.push(({name: 'login'}))
     },
-    toHome(){
-      this.$router.push({name:"homePage"});
+    toHome () {
+      this.$router.push({name: 'homePage'})
     }
   },
-  mounted:function(){
+  mounted: function () {
     // 接收更改的新昵称并且同步显示到顶栏实现更新
-    let _this = this;
-    Bus.$on("changeUsername",function(name){
-      _this.username = name;
+    let _this = this
+    Bus.$on('changeUsername', function (name) {
+      _this.username = name
     })
   }
-};
+}
 </script>
 
 <style scoped>
-
 
 html,
 body {

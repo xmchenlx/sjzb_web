@@ -36,10 +36,10 @@
               <!-- 系统公告 -->
               <div class="message">
                 <el-row>
-                  <el-col :span="3">
+                  <el-col :span="1">
                     <i class="el-icon-message-solid" style="font-size:20px" />
                   </el-col>
-                  <el-col :span="21">
+                  <el-col :span="23" style="overflow:hidden">
                     <div class="inner-container">
                       <span class="msgStyle">公告：{{pagemsgContent}}</span>
                     </div>
