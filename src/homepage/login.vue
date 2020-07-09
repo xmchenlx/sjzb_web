@@ -6,27 +6,9 @@
           <img src="@/img/lx_logo_399.png" style="width:6rem;padding:0;margin:0" />
           <p style="padding:0;padding-top:-10%">欢迎访问BRPS记账系统</p>
         </h2>
-        <!-- <h2 style="text-align:center;">欢迎使用个人记账系统，请登录</h2>
-
-        <p
-          style="text-align:center"
-        >Welcome to use Bill Record And Process System. Please Enter your info and using it.</p>
-        <br />-->
       </el-header>
       <el-main style="height:70%">
-        <!-- <el-tag
-      v-show="pagemsgContent"
-      :closable="true"
-      style="margin:0 auto;height:35px;font-size:15px;text-align:center;"
-        >{{pagemsgContent}}</el-tag>-->
-        <!-- <div id="pageMsgShow">
-      <div id="inner-container">
-        <span id="notice">
-          {{pagemsgContent}}
-        </span>
-      </div>
-        </div>-->
-        <transition name="el-zoom-in-center">
+        <transition v-if="wantToRegister === false" name="el-zoom-in-center">
           <el-card
             class="logincard"
             style="margin:0 auto;margin-bottom:-4%"
@@ -49,33 +31,10 @@
             </div>
           </el-card>
         </transition>
-        <el-card class="logincard" v-if="wantToRegister==true">
-          <h3 style="text-align:center">注册账号</h3>
-          <el-form :model="regform">
-            <el-form-item label="昵称：">
-              <el-input style="width:80%;" v-model="regform.uName"></el-input>
-            </el-form-item>
-            <el-form-item label="手机：">
-              <el-input style="width:80%;" v-model="regform.uTel"></el-input>
-              <p
-                style="font-size:10px;padding:5px;margin:0;color:red;"
-              >提示：日后手机号码将作为登录、找回密码、短信通知的凭证。目前可以选填</p>
-            </el-form-item>
-            <el-form-item label="密码：">
-              <el-input style="width:80%;" v-model="regform.uPwd" show-password></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="finishReg">完成注册</el-button>
-              <el-button type="primary" @click="wantToRegister=false">返回登录</el-button>
-            </el-form-item>
-          </el-form>
-        </el-card>
+        <div id="registerdiv" v-if="wantToRegister==true">
+          <registerNav />
+        </div>
         <el-card class="logincard" v-else>
-          <!-- <span>
-            网站尚处于研发阶段，部分未完成的功能暂时不提供使用。
-            <br />测试账号：yezhan,密码：6666。测试账号为公共账号，请不要输入隐私数据
-          </span>-->
-
           <el-form
             :model="loginForm"
             :rules="rules"
@@ -83,7 +42,7 @@
             label-width="20%"
             :disabled="isLogining"
           >
-          <br/>
+            <br />
             <el-form-item label="手机号：" prop="uName">
               <el-input v-model="loginForm.uName" placeholder="输入账号昵称或手机号"></el-input>
             </el-form-item>
@@ -107,7 +66,13 @@
                   href="https://blog.chenlx.top/"
                 >前往博客</el-link>
               </el-button>
-            <el-button type="text" style="text-align:center;margin:0 auto" circle icon="el-icon-info" @click="updateDrawer=true">更新日志</el-button>
+              <el-button
+                type="text"
+                style="text-align:center;margin:0 auto"
+                circle
+                icon="el-icon-info"
+                @click="updateDrawer=true"
+              >更新日志</el-button>
 
               <!-- <el-button type="primary" @click="gotoArticle()">前往博客</el-button> -->
             </el-form-item>
@@ -132,9 +97,10 @@ import Utils from "@/api/util";
 import Bus from "@/bus";
 import foot from "@/homepage/copyrightFoot";
 import updateInfo from "./updateInfo";
-import { validateUser, userReg, vuephp } from "@/api/Users";
+import { validateUser, userReg } from "@/api/Users";
 import { getOnewc } from "@/api/webConfig";
 import moment from "moment";
+import registerNav from "./nav_register";
 export default {
   data() {
     return {
@@ -149,11 +115,7 @@ export default {
         uName: "",
         uPwd: ""
       },
-      regform: {
-        uName: "",
-        uPwd: "",
-        uTel: ""
-      },
+
       rules: {
         uName: [
           { required: true, message: "请输入账户名", trigger: "blur" },
@@ -169,7 +131,8 @@ export default {
   components: {
     foot,
     Bus,
-    updateInfo
+    updateInfo,
+    registerNav
   },
   methods: {
     checkValueNull(s) {
@@ -216,32 +179,7 @@ export default {
       this.wantToRegister = true;
       // this.stopContinue()
     },
-    finishReg() {
-      let _this = this;
-      if (
-        _this.regform.uName === "" ||
-        _this.regform.uPwd === "" ||
-        _this.regform.uTel === ""
-      ) {
-        this.$alert("输入不能为空");
-        return false;
-      }
-      this.regform.uRegisterDate = moment()
-        .locale("zh-cn")
-        .format("YYYY-MM-DD");
-      userReg(this.regform)
-        .then(res => {
-          if (res.data.data > 0) {
-            _this.wantToRegister = false;
-            _this.$alert("您已注册完成。请登录。", "注册成功", {
-              confirmButtonText: "确定"
-            });
-          }
-        })
-        .catch(e => {
-          this.$message("注册异常");
-        });
-    },
+
     fogertPwd() {
       this.stopContinue();
     },
@@ -353,6 +291,12 @@ export default {
   },
   created: function() {
     this.checkWebSetting();
+  },
+  mounted:function(){
+    let _this = this
+    Bus.$on("backToLogin",function(){
+      _this.wantToRegister = false
+    })
   },
   watch: {
     isLogining(val) {

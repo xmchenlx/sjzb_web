@@ -62,7 +62,7 @@
             </el-col>
             <el-col :span="14">
               <h2>{{uName}}</h2>
-              <h4>这里显示一句个性签名</h4>
+              <h4>这个人很懒，什么都没留下</h4>
             </el-col>
           </el-row>
         </div>
@@ -116,7 +116,7 @@ export default {
       BillEval: "",
       typeid: "",
       searchBillRange: "",
-      uName: localStorage.getItem("uName"),
+      uName: sessionStorage.getItem("userName"),
       pickerOptions: {
         shortcuts: [
           {

@@ -1,7 +1,7 @@
 <template>
   <div id="personalCenter">
     <el-tabs type="border-card" tab-position="left" style="height:100%;" @tab-click="refreshCharts">
-      <el-tab-pane label="消费报告">
+      <el-tab-pane label="消费报告" v-loading="true" element-loading-background="rgba(0, 0, 0, 0.8)" element-loading-text="该页面仍在研发">
         <div id="greetingsArea">你好啊{{username}},今天是{{fullDate}},{{weekName}}。访问系统的时间为{{fullTime}}</div>
         <billReport/>
       </el-tab-pane>

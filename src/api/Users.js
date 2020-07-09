@@ -8,7 +8,10 @@ const api = {
   unlogin: 'User/unlogin',
   userLogin: 'User/validateUser',
   userReg: 'User/userReg',
-  conanTVList: 'conan/getConanList'
+  conanTVList: 'conan/getConanList',
+  getValidCode: 'User/userRegisterSendSMS',
+  checkCode: 'User/validYZM',
+  isTelRegistered: 'User/checkTelRegistered'
 
 }
 export default api
@@ -20,6 +23,42 @@ export function unlogin () {
   })
 }
 
+export function checkTelRegistered (t) {
+  return axios({
+    url: `${api.isTelRegistered}`,
+    method: 'post',
+    data: t
+    // get方法传参用params，post方法传参用data
+  })
+}
+
+export function getValidCode (t) {
+  return axios({
+    url: `${api.getValidCode}`,
+    method: 'get',
+    params: {
+      'userTel': t
+    }
+    // get方法传参用params，post方法传参用data
+  })
+}
+
+export function checkCode (t) {
+  return axios({
+    url: `${api.checkCode}`,
+    method: 'get',
+    params: {
+      'useryzm': t
+    }
+
+    // get方法传参用params，post方法传参用data
+  })
+}
+
+/**
+ * 用户登录
+ * @param {*} u
+ */
 export function validateUser (u) {
   return axios({
     url: `${api.userLogin}`,
@@ -31,6 +70,10 @@ export function validateUser (u) {
   })
 }
 
+/**
+ * 注册用户
+ * @param {*} u
+ */
 export function userReg (u) {
   return axios({
     url: `${api.userReg}`,
@@ -42,14 +85,9 @@ export function userReg (u) {
   })
 }
 
-export function vuephp () {
-  return axios({
-    url: 'http://localhost:666/fruitsale/vuetest.php',
-    method: 'get'
-    // get方法传参用params，post方法传参用data
-  })
-}
-
+/**
+ * 获取银弹数据站json
+ */
 export function sbsubJson () {
   return axios({
     url: `${api.conanTVList}`,

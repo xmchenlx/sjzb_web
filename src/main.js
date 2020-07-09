@@ -14,7 +14,7 @@ import 'babel-polyfill'
 // import element-tiptap 样式
 // import 'element-tiptap/lib/index.css'
 // import { ElementTiptapPlugin } from 'element-tiptap'
-// Vue.use(VCharts)
+Vue.use('v-charts')
 Vue.config.productionTip = false
 // Vue.use(ElementUI)
 Vue.use(ELEMENT)
