@@ -1,6 +1,7 @@
 <template>
-  <div id="billReport">
+  <div id="billReport"  v-if="isReportLoad === false">
     <div>
+      <el-tag closable>当前只显示支出的部分，收益部分暂时不纳入报告里。</el-tag>
       <el-row :gutter="0">
         <el-col :xs="12"   :span="11">
           <div id="billNote">
@@ -82,6 +83,9 @@
     </div>
     <showDetailPie ref="showDetailPie"/>
   </div>
+  <div v-else>
+    <h1>大哥稍等片刻，小的这就为您呈上...</h1>
+  </div>
 </template>
 
 <script>
@@ -98,7 +102,7 @@ export default {
       }
     }
     return {
-      isLoad: false,
+      isReportLoad: true,
       reportData: {},
       sumOfPay: 0,
       sumOfIncome: 0,
@@ -144,7 +148,8 @@ export default {
     loadVCharts () {
       var _this = this
       var count = 0
-      for (let i = _this.reportData.type2ndData.length - 1; i > 1; i--) {
+      for (let i = 0; i < _this.reportData.type2ndData.length; i++) {
+        // let len = _this.reportData.type2ndData.length - 1
         let tempres = _this.reportData.type2ndData[i]
         if (++count < 4) {
           _this.chartsDataGroupByPay.rows.push({
@@ -155,7 +160,8 @@ export default {
           break
         }
       }
-      for (let i = _this.reportData.type1stData.length - 1; i > 1; i--) {
+
+      for (let i = 0; i < _this.reportData.type1stData.length; i++) {
         let tempres = _this.reportData.type1stData[i]
 
         _this.chartDataOfPie.rows.push({
@@ -166,15 +172,19 @@ export default {
 
       _this.$nextTick(() => {
         _this.chartloading = false
+        _this.isReportLoad = false
       })
     },
     loadBillReport () {
       let uid = sessionStorage.getItem('userId')
       let _this = this
-      getBillReportData(uid, 0).then(res => {
+      getBillReportData(uid, -1).then(res => {
         _this.reportData = res.data.data
-        _this.calcuSum(_this.reportData.type1stData)
-        _this.loadVCharts()
+        this.$nextTick(() => {
+          _this.calcuSum(_this.reportData.type1stData)
+          _this.loadVCharts()
+          _this.$forceUpdate()
+        })
       })
     },
     convertEvalText (index) {
