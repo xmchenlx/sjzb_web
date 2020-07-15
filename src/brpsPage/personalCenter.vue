@@ -1,7 +1,8 @@
 <template>
   <div id="personalCenter">
-    <el-tabs type="border-card" tab-position="left" style="height:100%;" @tab-click="refreshCharts">
-      <el-tab-pane label="消费报告" v-loading="true" element-loading-background="rgba(0, 0, 0, 0.8)" element-loading-text="该页面仍在研发">
+    <el-tabs type="border-card" tab-position="left" style="min-height:100%" @tab-click="refreshCharts">
+      <!-- v-loading="true" element-loading-background="rgba(0, 0, 0, 0.8)" element-loading-text="该页面仍在研发" -->
+      <el-tab-pane label="消费报告" >
         <div id="greetingsArea">你好啊{{username}},今天是{{fullDate}},{{weekName}}。访问系统的时间为{{fullTime}}</div>
         <billReport/>
       </el-tab-pane>
@@ -158,6 +159,7 @@ export default {
     this.getType1stList();
   },
   methods: {
+
     refreshCharts(opratelist) {
       //console.log("refreshchart");
       if (opratelist.index === "1") {
@@ -266,7 +268,7 @@ export default {
   font-weight: bold;
 }
 #personalCenter {
-  height: 100%;
+  height: auto;
   min-height: 600px;
 }
 </style>

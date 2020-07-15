@@ -8,13 +8,14 @@ import router from './router'
 import axios from 'axios'
 // import ELEMENT from 'element-ui'
 // import 'element-ui/lib/theme-chalk/index.css'
-// import VCharts from 'v-charts'
+import VCharts from 'v-charts'
 import 'babel-polyfill'
-
+Vue.use(gsap)
 // import element-tiptap 样式
 // import 'element-tiptap/lib/index.css'
 // import { ElementTiptapPlugin } from 'element-tiptap'
-Vue.use('v-charts')
+Vue.use(VCharts)
+// Vue.use('v-charts')
 Vue.config.productionTip = false
 // Vue.use(ElementUI)
 Vue.use(ELEMENT)
@@ -22,8 +23,8 @@ Vue.use(axios)
 axios.defaults.timeout = 10000
 // 配置请求头
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
-// axios.defaults.baseURL = 'http://localhost:6868/brps_war'// 配置接口地址 -开发
-axios.defaults.baseURL = 'https://bp.chenlx.top:6868/brps_war'// 配置接口地址 -生产环境
+axios.defaults.baseURL = 'http://localhost:6868/brps_war'// 配置接口地址 -开发
+// axios.defaults.baseURL = 'https://bp.chenlx.top:6868/brps_war'// 配置接口地址 -生产环境
 axios.defaults.withCredentials = true
 // 可以通过这种方式给axios设置的默认请求头
 // axios.defaults.headers = {

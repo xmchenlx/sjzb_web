@@ -7,6 +7,10 @@
       tab-position="top"
       style="height:100%;width:100%;"
     >
+    <el-tab-pane label="消费报告" >
+        <div id="greetingsArea">你好啊{{username}},今天是{{fullDate}},{{weekName}}。访问系统的时间为{{fullTime}}</div>
+        <billReport/>
+      </el-tab-pane>
       <el-tab-pane label="账单表格">
         <billlist style="width:100%;" />
         <br />
@@ -99,6 +103,7 @@ import moment from "moment";
 import { getSpecifidBillInRange } from "@/api/BillInfo";
 import { getAllType } from "@/api/type1st";
 import { getTypeListByFid } from "@/api/type2nd";
+import billReport from './nav/billReport'
 import Bus from "@/bus";
 import scanModal from "@/brpsPage/modal/scanModal";
 export default {
@@ -165,6 +170,7 @@ export default {
     billlist,
     addModal,
     charts,
+    billReport,
     scanModal
   },
   created: function() {

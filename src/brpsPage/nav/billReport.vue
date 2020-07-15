@@ -1,11 +1,11 @@
 <template>
   <div id="billReport">
     <div>
-      <el-row>
-        <el-col :span="8">
+      <el-row :gutter="0">
+        <el-col :xs="12"   :span="11">
           <div id="billNote">
             <div id="notecontent">
-              <h3 style="text-align:center">账单评价</h3>
+              <h3 style="text-align:center">账单报告</h3>
               <el-row>
                 <el-col :span="12">
                   本月消费
@@ -17,20 +17,30 @@
                   <br />
                   <span class="price_large greenColor">{{reportNote.incomeTotal}}</span>元
                 </el-col>
-              </el-row>本月破高消费类别：
-              <div style="background-color:brown;color:white;width:90%;height:100px">图表图表</div>
-              <br />
+              </el-row>
+              本月最高消费类别：
+              <div style="color:white;width:90%;height:13rem">
+                 <ve-bar width="105%"  height="100%" :data="chartsDataGroupByPay" :loading="chartloading" :settings="chartSettings"></ve-bar>
+                </div>
               <p>
-                评价：
                 <span class="lineBorder redColor">{{convertEvalText(reportNote.evalIndex)}}</span>
               </p>
-              <el-divider />
-              提示：{{reportNote.tipText}}
+             <span style="padding:0;margin:0"> 提示：{{reportNote.tipText}}</span>
             </div>
           </div>
         </el-col>
-        <el-col :span="16">
-          <div id="billSettingdiv">
+        <el-col :xs="13"  :span="13">
+           <div id="pieChartsDiv">
+          <h3 style="text-align:center">当月消费二级类目占比饼图</h3>
+               <ve-pie :events="pieChartEvents" :settings="chartSettings"  :data="chartDataOfPie"></ve-pie>
+               <!-- <ve-funnel :settings="chartSettings" :data="chartDataOfPie"></ve-funnel> -->
+           </div>
+
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+            <div id="billSettingdiv">
             <h3>
               关注类别
               <span style="font-size:15px;color:gray;font-weight:400">您可至多设置4项关注</span>
@@ -68,29 +78,105 @@
           </div>
         </el-col>
       </el-row>
-      <el-row>
-        <el-col :span="6"></el-col>
-      </el-row>
       <el-divider />
     </div>
+    <showDetailPie ref="showDetailPie"/>
   </div>
 </template>
 
 <script>
+import { getBillReportData } from '@/api/BillInfo'
+import showDetailPie from '../modal/showDetailPieChartModal'
 export default {
   data () {
+    let _this = this
+    this.pieChartEvents = {
+
+      click: function (e) {
+        // console.log(e)
+        _this.$refs.showDetailPie.showDialog(e.data.name)
+      }
+    }
     return {
       isLoad: false,
+      reportData: {},
+      sumOfPay: 0,
+      sumOfIncome: 0,
+      chartloading: true,
       reportNote: {
-        payTotal: 1285,
-        incomeTotal: 4569,
+        payTotal: 0,
+        incomeTotal: 0,
         evalIndex: 2,
         tipText:
-          '这是一段啊实打实副书记刚开始的 说东街口水电费会计师地方时代峰峻收快递费扣水电费可收到反馈就是口令大家看来是建设大街分开了是分开了是。'
+          '这个月的开销目前看来很稳定，消费时请时常记住到底真的需不需要哦。'
+      },
+      chartSettings: {
+        dimension: ['名称'],
+        metrics: ['金额']
+      },
+      chartDataOfPie: {
+        columns: ['名称', '金额'],
+        rows: [
+
+        ]
+      },
+      chartsDataGroupByPay: {
+        columns: ['名称', '金额'],
+        rows: [
+
+        ]
       }
     }
   },
   methods: {
+    calcuSum (list) {
+      // var p = 0
+      // var i = 0
+      let _this = this
+      for (let i = 0; i < list.length; i++) {
+        let t = list[i].tTotal
+        if (t < 0) { _this.reportNote.payTotal += t } else { _this.reportNote.incomeTotal += t }
+      }
+      // console.log('out' + i)
+      this.reportNote.payTotal = this.reportNote.payTotal.toFixed(2)
+      this.reportNote.incomeTotal = this.reportNote.incomeTotal.toFixed(2)
+    },
+    loadVCharts () {
+      var _this = this
+      var count = 0
+      for (let i = _this.reportData.type2ndData.length - 1; i > 1; i--) {
+        let tempres = _this.reportData.type2ndData[i]
+        if (++count < 4) {
+          _this.chartsDataGroupByPay.rows.push({
+            '名称': tempres.tName,
+            '金额': tempres.tTotal
+          })
+        } else {
+          break
+        }
+      }
+      for (let i = _this.reportData.type1stData.length - 1; i > 1; i--) {
+        let tempres = _this.reportData.type1stData[i]
+
+        _this.chartDataOfPie.rows.push({
+          '名称': tempres.tName,
+          '金额': tempres.tTotal
+        })
+      }
+
+      _this.$nextTick(() => {
+        _this.chartloading = false
+      })
+    },
+    loadBillReport () {
+      let uid = sessionStorage.getItem('userId')
+      let _this = this
+      getBillReportData(uid, 0).then(res => {
+        _this.reportData = res.data.data
+        _this.calcuSum(_this.reportData.type1stData)
+        _this.loadVCharts()
+      })
+    },
     convertEvalText (index) {
       if (index === 0) {
         return '败家东西'
@@ -100,6 +186,13 @@ export default {
         return '持家大佬'
       }
     }
+
+  },
+  created: function () {
+    this.loadBillReport()
+  },
+  components: {
+    showDetailPie
   }
 }
 </script>
@@ -109,7 +202,7 @@ export default {
   font-size: 20px;
 }
 .price_large {
-  font-size: 45px;
+  font-size: 1.7rem;
   font-weight: bolder;
 }
 .redColor {
@@ -124,8 +217,8 @@ export default {
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
-  width: 414px; //690*60%
-  height: 532px; //887*60%
+  width: 27rem; //690*60%
+  height: 32rem; //887*60%
   // width: 100%;
   // height: 100%;
 }
@@ -136,16 +229,16 @@ export default {
 }
 
 .lineBorder {
-  font-size: 40px;
+  font-size: 2rem;
   float: left;
   font-weight: bold;
   border: 3px dashed red;
   transform: rotate(-15deg);
   user-select: none;
   position: absolute;
-  left: 10%;
+  left: 13vw;
   padding: 2px 5px;
-  top: 58%;
+  top: 28vw;
 }
 
 #billSettingdiv {
@@ -153,6 +246,16 @@ export default {
   background-color: rgb(240, 240, 240);
   height: 350px;
   padding: 2px 15px;
+  margin-top: 1.5%;
+}
+
+#pieChartsDiv {
+  min-width: 23.5rem;
+  width:70%;
+  background-color: rgb(240, 240, 240);
+  // height: 31vw;
+  height:auto;
+  // margin-left: 2rem;
   margin-top: 1.5%;
 }
 </style>

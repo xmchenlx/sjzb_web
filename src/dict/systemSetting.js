@@ -17,3 +17,7 @@ export function getTimeToMadeGreetins () {
     return '晚上好呀，'
   }
 }
+
+export function dateformat (t) {
+  return moment(t).format('YYYY-MM-DD')
+}

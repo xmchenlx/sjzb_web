@@ -40,7 +40,8 @@ module.exports = {
     'moment':'moment',
     'vue-resource': 'VueResource',
     'element-ui': 'ELEMENT',
-    'wangEditor':'wangEditor'
+    'wangEditor': 'wangEditor',
+    'gsap':'gsap'
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],

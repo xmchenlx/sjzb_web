@@ -13,10 +13,38 @@ const api = {
   getSpecifidBillInRange: '/Bill/getSpecifidBillInRange',
   getPast7DaysPayList: '/Bill/getPast7DayPayList',
   getPast7DayIncomeList: 'Bill/getPast7DayIncomeList',
-  searchOneBillInfo: 'Bill/searchOneBillInfo'
+  searchOneBillInfo: 'Bill/searchOneBillInfo',
+  search0BillReportData: 'Bill/searchBillReportData',
+  getDetailFromtypename: 'Bill/lookUpOneDetailType1st'
 
 }
 export default api
+
+export function searchOneDetailType1st (u, typename) {
+  return axios({
+    url: `${api.getDetailFromtypename}`,
+    method: 'get',
+    withCredentials: true,
+    params: {
+      'uid': parseInt(u),
+      'typename': typename
+    }
+    // get方法传参用params，post方法传参用data
+  })
+}
+
+export function getBillReportData (u, dire) {
+  return axios({
+    url: `${api.search0BillReportData}`,
+    method: 'get',
+    withCredentials: true,
+    params: {
+      uid: parseInt(u),
+      d: dire !== '' ? dire : 0
+    }
+    // get方法传参用params，post方法传参用data
+  })
+}
 
 export function getPast7DayIncomeList () {
   return axios({
