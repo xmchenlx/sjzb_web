@@ -1,7 +1,7 @@
 <template>
   <div id="billReport"  v-if="isReportLoad === false">
     <div>
-      <el-tag closable>当前只显示支出的部分，收益部分暂时不纳入报告里。</el-tag>
+      <el-tag closable>当前只显示支出的部分，收益部分暂时不纳入报告里。如若记录了新账刷新后会显示最新数据。</el-tag>
       <el-row :gutter="0">
         <el-col :xs="12"   :span="11">
           <div id="billNote">
@@ -32,7 +32,7 @@
         </el-col>
         <el-col :xs="13"  :span="13">
            <div id="pieChartsDiv">
-          <h3 style="text-align:center">当月消费二级类目占比饼图</h3>
+          <h3 style="text-align:center">当月消费(支出)详细类别图</h3>
                <ve-pie :events="pieChartEvents" :settings="chartSettings"  :data="chartDataOfPie"></ve-pie>
                <!-- <ve-funnel :settings="chartSettings" :data="chartDataOfPie"></ve-funnel> -->
            </div>
@@ -149,8 +149,8 @@ export default {
       var _this = this
       var count = 0
       for (let i = 0; i < _this.reportData.type2ndData.length; i++) {
-        // let len = _this.reportData.type2ndData.length - 1
-        let tempres = _this.reportData.type2ndData[i]
+        let len = _this.reportData.type2ndData.length - 1
+        let tempres = _this.reportData.type2ndData[len - i]
         if (++count < 4) {
           _this.chartsDataGroupByPay.rows.push({
             '名称': tempres.tName,
@@ -163,7 +163,7 @@ export default {
 
       for (let i = 0; i < _this.reportData.type1stData.length; i++) {
         let tempres = _this.reportData.type1stData[i]
-
+        if (tempres.tTotal > 0) continue
         _this.chartDataOfPie.rows.push({
           '名称': tempres.tName,
           '金额': tempres.tTotal
@@ -178,7 +178,7 @@ export default {
     loadBillReport () {
       let uid = sessionStorage.getItem('userId')
       let _this = this
-      getBillReportData(uid, -1).then(res => {
+      getBillReportData(uid, 0).then(res => {
         _this.reportData = res.data.data
         this.$nextTick(() => {
           _this.calcuSum(_this.reportData.type1stData)
