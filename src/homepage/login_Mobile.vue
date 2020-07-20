@@ -132,6 +132,22 @@ export default {
       } else if (now >= 18 && now < 24) {
         return "晚上好呀，";
       }
+    } ,checkLocalStroage(){
+      let s_uname = localStorage.getItem("userName")
+      let _this = this 
+      // console.log(s_uname)
+      // console.log(localStorage.getItem("userP"))
+      if(s_uname){
+        _this.loginForm.uName = s_uname
+        _this.loginForm.uPwd = localStorage.getItem("userP")
+        _this.loginSystem()
+        _this.$notify({
+                title: "检测到登录记录",
+                message:
+                  "您此前已经登陆过BRPS啦，已尝试为您直接登录。",
+                type: "success"
+              });
+      }
     },
     loginSystem() {
       let _this = this;
@@ -220,6 +236,7 @@ export default {
   },
   created:function(){
     this.checkWebSetting();
+    this.checkLocalStroage()
   }
 };
 </script>

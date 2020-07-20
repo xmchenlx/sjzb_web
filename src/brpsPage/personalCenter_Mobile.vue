@@ -182,6 +182,7 @@ export default {
   methods: {
     routerPush(index){
       if(index===0){
+        localStorage.removeItem("userName")
         this.$router.push({"name":'LoginPage'})
       }else if(index===1){
         this.$router.push({"name":'articleList'})

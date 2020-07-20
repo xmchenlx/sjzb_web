@@ -139,6 +139,23 @@ export default {
       if (s !== null && s !== "") return "ok";
       return "null";
     },
+    checkLocalStroage(){
+      let s_uname = localStorage.getItem("userName")
+      let _this = this 
+      // console.log(s_uname)
+      // console.log(localStorage.getItem("userP"))
+      if(s_uname){
+        _this.loginForm.uName = s_uname
+        _this.loginForm.uPwd = localStorage.getItem("userP")
+        _this.loginSystem()
+        _this.$notify({
+                title: "检测到登录记录",
+                message:
+                  "您此前已经登陆过BRPS啦，已尝试为您直接登录。",
+                type: "success"
+              });
+      }
+    },
     checkWebSetting() {
       let _this = this;
       getOnewc("HOME_PAGE_MSG").then(res => {
@@ -211,6 +228,7 @@ export default {
               // $cookies.set('JSESSIONID',res.response.headers.cookie.JSESSIONID)
               localStorage.setItem("userId", res.data.data);
               localStorage.setItem("userName", _this.loginForm.uName);
+              localStorage.setItem("userP",_this.loginForm.uPwd)
               sessionStorage.setItem("userId", res.data.data);
               sessionStorage.setItem("userName", _this.loginForm.uName);
               _this.$notify({
@@ -291,6 +309,7 @@ export default {
   },
   created: function() {
     this.checkWebSetting();
+    this.checkLocalStroage()
   },
   mounted:function(){
     let _this = this
