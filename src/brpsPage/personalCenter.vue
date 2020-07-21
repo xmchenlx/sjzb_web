@@ -1,3 +1,11 @@
+<!-----------------This is lx's Project Named BRPS!^_^-----------------------------------
+  lx的小天地下属项目 版权所有(c) 2018 - 2020
+  文  件：personalCenter.vue
+  中文名：个人中心-PC端
+  作  者：chenlx | 邮箱：me@chenlx.top
+  时  间：2020年07月20日 17:23:09
+  描  述： 有记录表格、消费报告、消费图表、其他设置;
+---------------------------------------------------------------------------------->
 <template>
   <div id="personalCenter">
     <el-tabs type="border-card" tab-position="left" style="min-height:100%" @tab-click="refreshCharts">

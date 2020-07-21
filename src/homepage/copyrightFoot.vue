@@ -1,3 +1,11 @@
+<!-----------------This is lx's Project Named BRPS!^_^-----------------------------------
+  lx的小天地下属项目 版权所有(c) 2018 - 2020
+  文  件：copyrightFoot.vue
+  中文名：版权脚注
+  作  者：chenlx | 邮箱：me@chenlx.top
+  时  间：2020年07月20日 17:26:16
+  描  述： 用于展示在页面底端的版权声明;
+---------------------------------------------------------------------------------->
 <template>
   <div id="footCopy" class="CopyInfo_homepage">
     <span style="text-align:center;">

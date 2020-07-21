@@ -1,3 +1,10 @@
+<!-----------------This is lx's Project Named BRPS!^_^-----------------------------------
+  lx的小天地下属项目 版权所有(c) 2018 - 2020
+  文件：login_Mobile.vue
+  作者：chenlx | 邮箱：me@chenlx.top
+  时间：2020年07月20日 17:16:06
+  描述：  Moble手机web的登录页面，主要有注册功能、登录功能、查看开发日志和其余页面跳转功能。;
+---------------------------------------------------------------------------------->
 <template>
   <div id="loginpage_mobile">
     <el-container style="height:100%;width:100%">
@@ -176,6 +183,8 @@ export default {
               // $cookies.set('JSESSIONID',res.response.headers.cookie.JSESSIONID)
               localStorage.setItem("userId", res.data.data);
               localStorage.setItem("userName", _this.loginForm.uName);
+              localStorage.setItem("userP",_this.loginForm.uPwd)
+
               sessionStorage.setItem("userId", res.data.data);
               sessionStorage.setItem("userName", _this.loginForm.uName);
               _this.$notify({

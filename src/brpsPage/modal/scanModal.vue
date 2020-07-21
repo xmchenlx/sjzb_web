@@ -1,3 +1,11 @@
+<!-----------------This is lx's Project Named BRPS!^_^-----------------------------------
+  lx的小天地下属项目 版权所有(c) 2018 - 2020
+  文  件：scanModal.vue
+  中文名：手机端的常用信息扫描
+  作  者：chenlx | 邮箱：me@chenlx.top
+  时  间：2020年07月20日 17:24:06
+  描  述： 暂未详细定义，未来可能废弃此模块;
+---------------------------------------------------------------------------------->
 <template>
   <div id="savnDiv">
     <el-dialog title="正在扫码中" :visible.sync="isScanDivShow" :before-close="handleClose">

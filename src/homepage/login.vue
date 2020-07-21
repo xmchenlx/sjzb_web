@@ -1,3 +1,10 @@
+<!-----------------This is lx's Project Named BRPS!^_^-----------------------------------
+  lx的小天地下属项目 版权所有(c) 2018 - 2020
+  文件：login.vue
+  作者：chenlx | 邮箱：me@chenlx.top
+  时间：2020年07月20日 17:14:33
+  描述： PC的登录页面，主要有注册功能、登录功能、查看开发日志和其余页面跳转功能。;
+---------------------------------------------------------------------------------->
 <template>
   <div id="loginpage">
     <el-container style="height:100%">
@@ -6,7 +13,7 @@
           <img src="@/img/lx_logo_399.png" style="width:6rem;padding:0;margin:0" />
           <p style="padding:0;padding-top:-10%">欢迎访问BRPS记账系统</p>
         </h2>
-      </el-header>
+      </el-header
       <el-main style="height:70%">
         <transition v-if="wantToRegister === false" name="el-zoom-in-center">
           <el-card

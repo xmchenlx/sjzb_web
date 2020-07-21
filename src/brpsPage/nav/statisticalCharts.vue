@@ -1,3 +1,11 @@
+<!-----------------This is lx's Project Named BRPS!^_^-----------------------------------
+  lx的小天地下属项目 版权所有(c) 2018 - 2020
+  文  件：statisticalCharts.vue
+  中文名：常见账单表格
+  作  者：chenlx | 邮箱：me@chenlx.top
+  时  间：2020年07月20日 17:25:26
+  描  述： 用于展示常见的分析表格，目前接入了“近7天消费收益表格;
+---------------------------------------------------------------------------------->
 <template>
   <div id="mainCharts" v-if="showCharts">
       <ve-line :data="chartData" :extend="chartExtend" :settings="chartSettings"></ve-line>
