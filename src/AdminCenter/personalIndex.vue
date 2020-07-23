@@ -18,7 +18,8 @@
               <span>页面</span>
               <el-button style="float: right; padding: 3px 0" @click="closeCard" type="text">关闭</el-button>
             </div>
-            <router-view style="width:100%;margin:0 auto"></router-view>
+            <router-view style="width:100%;margin:0 auto">
+            </router-view>
           </el-card>
         </transition>
       </el-main>

@@ -112,6 +112,15 @@ const router = new Router({
             title: '文章管理',
             show: true
           }
+        },
+        {
+          path: '/adminCenter/brpsTypeManage',
+          name: 'brpsTypeManage',
+          component: (resolve) => require(['@/AdminCenter/Right/modal/brpsTypeManage'], resolve),
+          meta: {
+            title: '记账类别管理',
+            show: true
+          }
         }
       ]
     },

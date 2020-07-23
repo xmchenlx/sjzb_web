@@ -71,6 +71,34 @@
           </router-link>
         </el-menu-item-group>
       </el-submenu>
+      <el-submenu index="4">
+        <template slot="title">
+          <i class="el-icon-s-shop"></i>
+          <span>BRPS</span>
+        </template>
+        <el-menu-item-group>
+          <router-link :to="{name : 'brpsTypeManage'}">
+            <el-menu-item index="4-1">
+              <i class="el-icon-coordinate" />
+              记账归类管理
+            </el-menu-item>
+          </router-link>
+        </el-menu-item-group>
+      </el-submenu>
+       <el-submenu index="5">
+        <template slot="title">
+          <i class="el-icon-s-shop"></i>
+          <span>便捷跳转</span>
+        </template>
+        <el-menu-item-group>
+          <router-link :to="{path : '/'}">
+            <el-menu-item index="5-1">
+              <i class="el-icon-coordinate" />
+              跳转BRPS登录页
+            </el-menu-item>
+          </router-link>
+        </el-menu-item-group>
+      </el-submenu>
     </el-menu>
   </div>
 </template>

@@ -2,18 +2,15 @@
 // ---------------因为插件全部采用cdn，不import以达到减小体积的效果，避免语法检查报错
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-// import Vue from 'vue'
+import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
-// import ELEMENT from 'element-ui'
+// import ElementUI from 'element-ui'
 // import 'element-ui/lib/theme-chalk/index.css'
 import VCharts from 'v-charts'
 import 'babel-polyfill'
 Vue.use(gsap)
-// import element-tiptap 样式
-// import 'element-tiptap/lib/index.css'
-// import { ElementTiptapPlugin } from 'element-tiptap'
 Vue.use(VCharts)
 // Vue.use('v-charts')
 Vue.config.productionTip = false
@@ -31,11 +28,6 @@ axios.defaults.withCredentials = true
 //   'Content-Type': 'application/x-www-form-urlencoded'
 // }
 Vue.prototype.$axios = axios
-// Vue.use(ElementTiptapPlugin, {
-//   /* 插件配置项 */
-//   lang: 'zh'
-// })
-// 现在你已经在全局注册了 `el-tiptap` 组件。
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

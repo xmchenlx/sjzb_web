@@ -187,6 +187,9 @@ export default {
       let uid = sessionStorage.getItem('userId')
       let _this = this
       getBillReportData(uid, 0).then(res => {
+        if (res.data.status === 10) {
+          _this.$router.push({ path: '/' })
+        }
         _this.reportData = res.data.data
         this.$nextTick(() => {
           _this.calcuSum(_this.reportData.type1stData)

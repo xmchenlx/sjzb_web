@@ -4,55 +4,84 @@
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <meta charset="UTF-8">
-  <link rel="icon" href="./lx_logo.ico"/>
+  <link rel="icon" href="./lx_logo.ico" />
 
   <title>BRPS个人记账网</title>
   <style>
+    #yinhao{
+      font-size: 6rem;
+      font-family: Arial, Helvetica, sans-serif;
+      float: left;
+      color:gray;
+      margin-top: -1%;
+
+    }
+    #jitang{
+      text-align: left;
+      text-indent: 1em;
+      padding-left: 1em;
+      font-style: italic;
+    }
     .loading_animation {
-    border: 2px solid #0b8be1;
-    border-bottom-color: transparent;
-    border-left-color: transparent;
-    border-radius: 50%;
-    -webkit-animation: 0.6s loading linear infinite;
-    -o-animation: 0.6s loading linear infinite;
-    animation: 0.6s loading linear infinite;
-    position: relative;
-    /* display: inline-block; */
-    width: 26px;
-    height: 26px;
-    margin: 0 auto;
-}
+      border: 2px solid #0b8be1;
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+      border-radius: 50%;
+      -webkit-animation: 0.6s loading linear infinite;
+      -o-animation: 0.6s loading linear infinite;
+      animation: 0.6s loading linear infinite;
+      position: relative;
+      /* display: inline-block; */
+      width: 26px;
+      height: 26px;
+      margin: 0 auto;
+    }
 
 
-@-webkit-keyframes loading {
-    0% {
+    @-webkit-keyframes loading {
+      0% {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
-    }
-    100% {
+      }
+
+      100% {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
+      }
     }
-}
 
-@keyframes loading {
-    0% {
+    @keyframes loading {
+      0% {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
-    }
-    100% {
+      }
+
+      100% {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
+      }
     }
-}
-#loadingdiv{margin:0 auto;text-align: center;}
+
+    #loadingdiv {
+      margin: 0 auto;
+      text-align: center;
+    }
   </style>
 </head>
 
 <body>
-  <div id="app"><div id="loadingdiv"><div class="loading_animation"></div><h2>每日一碗毒鸡汤!! ↓</h2></div>
-  <p id="jitang"></p>
-</div>
+  <div id="app">
+    <div id="loadingdiv">
+      <div class="loading_animation"></div>
+      <h2>每日一碗毒鸡汤!! ↓</h2>
+      <div style="width:70%;margin:0 auto;">
+        <span id="yinhao" >“</span>
+        <p id="jitang"></p>
+        <p>预计还需要等待<span id="loadt">10</span>秒</p>
+      </div>
+    </div>
+
+  </div>
   <!-- built files will be auto injected -->
   <!-- built files will be auto injected -->
   <script type="text/javascript">
@@ -66,16 +95,59 @@
           '看看你那坨圆圆的脸蛋，你还好意思继续喝奶茶吗？',
           'Yesterday you said tomorrow.',
           '请解不等式组：{2x≤6-x ① , 3x+1≥2(x-1) ②}',
-          '求出lim<x→1时> (x+1)·[sin(x²-1)/x²-1]的解。'
+          '求出lim<x→1时> (x+1)·[sin(x²-1)/x²-1]的解。',
+          "我相信一万小时定律，我从来不相信天上掉馅饼的灵感和坐等的成就。",
+          "我们没有改变不了的未来，只有不想改变的过去。",
+          "虽然晚了点，依靠自己的力量前进吧。为了开始新的人生。",
+          "苦尽甘来的那一天，山河星月都作贺礼。",
+          "只有一样东西令梦想无法成真，那就是担心失败。",
+          "We should never give up and struggle in our life.",
+          "也许你感觉自己的务力总是徒劳无功，但不必怀疑你每天都离顶点更进一步。",
+          "为了能成为比原来更好的人，就算再苦再累也会努力。",
+          "经历的痛苦愈多，体会到的喜悦就愈多。 ——阿德勒",
+          "种一棵树最好的时间是十年前，其次是现在。 ——CaunDerre",
+          "年轻时就释怀与淡泊，是没有希望的。——王石",
+          "解除痛的最好的方法，是付出比痛更多的爱。——董卿",
+          "长得漂亮是优势，活得漂亮是本事。",
+          "心随境转是凡夫，境随心转是圣贤。",
+          "我年轻时注意到，我每做十件事有九件不成功，于是我就十倍地去努力干下去。",
+          "骄傲是胜利的敌人，努力是成功的朋友。",
+          "一个人是在对周围生活环境的反抗中创造成功的。",
+          "大胆的尝试只等于成功的一半。",
+          "失败是坚韧的最后考验。",
+          "成功的花，人们只惊慕她现时的明艳！然而当初她的芽儿，浸透了奋斗的泪泉，洒遍了牺牲的血雨。",
+          "别人能做到的事情，我也能做到。",
+          "世上之所以有矢志不渝的爱情，忠肝义胆的气概，皆因为时间相当短暂，方支撑得了，久病床前无孝子，旷日持久不容易，一切事物之美好在于“没时间变坏”。",
+          "行动不一定带来快乐，而无行动则决无快乐。",
+          "人的脆弱和坚强都超乎自己的想象。有时，我可能脆弱得一句话就泪流满面，有时，也发现自己咬着牙走了很长的路。——莫泊桑 《一生》",
+          "请把努力当成一种习惯 而不是三分钟热度 每一个你羡慕的收获 都是努力用心拼来的 相信人生不会亏待你 你吃的苦 你受的累 你掉进的坑 你走错的路 都会练就独一无二成熟坚强感恩的你.",
+          "知道弹簧吗？弹簧压到最低，才能弹得更高。就算现实已经低至谷底，你怎么知道它不会触底反弹？",
+          "今年要记得，明年也不能忘，那么接下来，就请保持很多的热爱和一点点野心，一定要站在自己所热爱的世界里，闪闪发光。"
         ]
       }
       var rndnum = parseInt(Math.random() * jitangList.listdata.length)
-
-      console.log(rndnum)
+      if(!document.getElementById("jitang"))return false
+      // console.log(rndnum)
       // console.log(jitangList[rndnum].listdata)
-      document.getElementById("jitang").innerText = jitangList.listdata[rndnum]
+      document.getElementById("jitang").innerText = "「"+jitangList.listdata[rndnum]+"」"
+
     }
+    try{
     window.returnJITANG()
+    setInterval("returnJITANG()", 3000)
+    function loadTmin(){
+      if(!document.getElementById("loadt"))return false
+
+      var t = document.getElementById("loadt").innerText
+      t = parseInt(t)
+      document.getElementById("loadt").innerText =  --t;
+      
+    }
+    setInterval("loadTmin()",1000)
+    }catch( e){
+
+    }
+
   </script>
   <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
   <script src="https://cdn.bootcss.com/vue-router/3.1.3/vue-router.min.js"></script>
@@ -88,15 +160,12 @@
   <script src="https://cdn.bootcss.com/moment.js/2.24.0/moment.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.zhimg.com/element-ui/lib/theme-chalk/index.css">
   <script src="https://unpkg.zhimg.com/element-ui/lib/index.js"></script>
-  <!-- <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/index.js"></script> -->
   <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/v-charts/lib/index.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/v-charts/lib/style.min.css">
-  <!-- textarea -->
   <script src="https://cdn.bootcdn.net/ajax/libs/wangEditor/10.0.13/wangEditor.js"></script>
   <link href="https://cdn.bootcdn.net/ajax/libs/wangEditor/10.0.13/wangEditor.css" rel="stylesheet">
   <script src="https://cdn.bootcdn.net/ajax/libs/gsap/3.4.0/gsap.min.js"></script>
-  <!-- <script src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.0/gsap.min.js" > </script>  -->
 </body>
 
 </html>
