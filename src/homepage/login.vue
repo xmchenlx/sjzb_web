@@ -13,7 +13,7 @@
           <img src="@/img/lx_logo_399.png" style="width:6rem;padding:0;margin:0" />
           <p style="padding:0;padding-top:-10%">欢迎访问BRPS记账系统</p>
         </h2>
-      </el-header
+      </el-header>
       <el-main style="height:70%">
         <transition v-if="wantToRegister === false" name="el-zoom-in-center">
           <el-card
@@ -80,7 +80,17 @@
                 icon="el-icon-info"
                 @click="updateDrawer=true"
               >更新日志</el-button>
+              <el-checkbox v-model="isAutoLogin">信任登录</el-checkbox>
 
+              <el-popover
+                placement="top-start"
+                trigger="hover"
+                width="350"
+                title="什么是信任登录？"
+                content="BRPS支持在您经常使用的设备上记住账号信息以节省输入账户的时间。前提是登录的设备是您信任的、先前登陆过至少1次网站。如若您清理浏览痕迹，该功能有可能无法使用。"
+              >
+                <i class="el-icon-question" slot="reference" />
+              </el-popover>
               <!-- <el-button type="primary" @click="gotoArticle()">前往博客</el-button> -->
             </el-form-item>
           </el-form>
@@ -117,6 +127,7 @@ export default {
       pagemsgContent: null,
       errorCount: 0,
       isBtnEnabled: false,
+      isAutoLogin:false,
       isLogining: false,
       loginForm: {
         uName: "",
@@ -146,21 +157,36 @@ export default {
       if (s !== null && s !== "") return "ok";
       return "null";
     },
-    checkLocalStroage(){
-      let s_uname = localStorage.getItem("userName")
-      let _this = this 
-      // console.log(s_uname)
-      // console.log(localStorage.getItem("userP"))
-      if(s_uname){
-        _this.loginForm.uName = s_uname
-        _this.loginForm.uPwd = localStorage.getItem("userP")
-        _this.loginSystem()
+    checkLocalStroage() {
+      let _this = this
+      let ial = localStorage.getItem('isAutoLogin')
+      
+      if(ial){
+        if(ial === 'true'){
+          _this.isAutoLogin = true
+          _this.$forceUpdate()
+        }else{
+          _this.isAutoLogin = false
+        }
+      }else{
+        
+        _this.isAutoLogin = false
+      }
+    this.$forceUpdate()
+// this.isAutoLogin = localStorage.getItem('isAutoLogin')?localStorage.getItem('isAutoLogin'):false
+      // 
+      let s_uname = localStorage.getItem("userName");
+      // 
+      // 
+      if (s_uname && _this.isAutoLogin === true) {
+        _this.loginForm.uName = s_uname;
+        _this.loginForm.uPwd = localStorage.getItem("userP");
+        _this.loginSystem();
         _this.$notify({
-                title: "检测到登录记录",
-                message:
-                  "您此前已经登陆过BRPS啦，已尝试为您直接登录。",
-                type: "success"
-              });
+          title: "检测到登录记录",
+          message: "您此前已经登陆过BRPS啦，已尝试为您直接登录。",
+          type: "success"
+        });
       }
     },
     checkWebSetting() {
@@ -171,7 +197,7 @@ export default {
           this.checkValueNull(res.data.data.configMsg) === "ok"
         ) {
           _this.pagemsgContent = res.data.data.configMsg;
-          console.log(_this.pagemsgContent);
+          
         }
       });
     },
@@ -235,7 +261,10 @@ export default {
               // $cookies.set('JSESSIONID',res.response.headers.cookie.JSESSIONID)
               localStorage.setItem("userId", res.data.data);
               localStorage.setItem("userName", _this.loginForm.uName);
-              localStorage.setItem("userP",_this.loginForm.uPwd)
+              localStorage.setItem('isAutoLogin',_this.isAutoLogin)
+      
+
+              localStorage.setItem("userP", _this.loginForm.uPwd);
               sessionStorage.setItem("userId", res.data.data);
               sessionStorage.setItem("userName", _this.loginForm.uName);
               _this.$notify({
@@ -283,7 +312,7 @@ export default {
           title: "响应异常",
           message: "请求发送可能超时。可能是因为服务器正在维护，请您稍后再试。"
         });
-        console.log(e);
+        
         _this.enterBtnIcon = "el-icon-key";
         this.isLogining = false;
       }
@@ -307,7 +336,7 @@ export default {
   mounted: function() {
     let _this = this;
     Bus.$on("unLogin", function() {
-      console.log("BusOnUnlogin");
+      
       _this.$notify({
         title: "非法访问",
         message: "没有检测到您的登录信息，此次访问已被拦截。请重新登录。"
@@ -316,13 +345,13 @@ export default {
   },
   created: function() {
     this.checkWebSetting();
-    this.checkLocalStroage()
+    this.checkLocalStroage();
   },
-  mounted:function(){
-    let _this = this
-    Bus.$on("backToLogin",function(){
-      _this.wantToRegister = false
-    })
+  mounted: function() {
+    let _this = this;
+    Bus.$on("backToLogin", function() {
+      _this.wantToRegister = false;
+    });
   },
   watch: {
     isLogining(val) {

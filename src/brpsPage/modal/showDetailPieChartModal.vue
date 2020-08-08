@@ -11,7 +11,7 @@
     <el-dialog
       :title="typename"
       :visible.sync="dialogVisible"
-      width="60%"
+      :width="ModalWidth"
       :before-close="handleClose"
     >
       <ve-pie
@@ -62,6 +62,7 @@ export default {
   data () {
     return {
       dialogVisible: false,
+      ModalWidth: '60%',
       typename: '',
       chargLoad: true,
       chartDataOfPie: {
@@ -78,6 +79,12 @@ export default {
       }
     }
   },
+  mounted () {
+    var dw = document.getElementById('showDetailPieChartModal').offsetWidth
+    if (dw < 600) {
+      this.ModalWidth = 100 + '%'
+    }
+  },
   methods: {
     dateFormat (t) {
       return dateformat(t)
@@ -89,6 +96,9 @@ export default {
     showDialog (tn) {
       this.dialogVisible = true
       this.typename = '关于' + tn + '的详细信息'
+      // let isUsePC = localStorage.getItem('isPC')
+
+      // this.ModalWidth = (isUsePC === 'true') ? '50%' : '100%'
       this.getDataFromType1st(tn)
     },
     getDataFromType1st (typename) {

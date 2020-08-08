@@ -44,13 +44,13 @@
           <el-tooltip
             class="item"
             effect="dark"
-            content="请输入金额，不论正负。选择类型为支出或收入后系统自动为您归类。"
+            content="请输入金额，不论正负。"
             placement="top"
           >
             <el-input-number
               v-model="tempRecordMoney"
               :precision="2"
-              :step="0.1"
+              :step="0.5"
               :min="0"
               :max="99999"
               style="width:80%"
@@ -91,6 +91,17 @@
             ></el-option>
           </el-select>
         </el-form-item>
+                <el-form-item label="平摊消费:">
+            <el-switch v-model="isAAMoney"></el-switch>
+            <el-popover title="操作提示" width="150px" trigger="hover" content="该选项仅供用户方便计算而设置，提交时优惠的详细数据不会被系统记录，只会收录最后的价格。">
+            <el-link slot="reference" :underline="false"><i class="el-icon-question" ></i></el-link>
+            </el-popover>
+        </el-form-item>
+        <div id="aaMoney" v-if="isAAMoney===true">
+<el-form-item label="平摊次数:">
+            <el-input v-model="AACount" style="width:80%" />
+          </el-form-item>
+        </div>
         <el-form-item label="是否优惠:">
           <!-- <el-tooltip content="该选项仅供用户方便计算而设置，提交时优惠的详细数据不会被系统记录，只会收录最后的价格。"> -->
             <el-switch v-model="isDiscount"></el-switch>
@@ -169,6 +180,7 @@ export default {
       ModalWidth: '95%',
       billType: '0', // 类型为支出或收入
       isDiscount: false, // 如果是直售商品为false，如用优惠券为true
+      isAAMoney: false,
       isEditStatus: false, // 模态框是否编辑，否为新增，是为编辑
       payPrice: '',
       originPrice: '',
@@ -179,7 +191,7 @@ export default {
       type2ndOptions: [],
       tempRecordMoney: 0,
       titleName: '记录单次新变动',
-
+      AACount: 0,
       rule: {
         bill_date: [{ required: true, message: '请输入日期', trigger: 'blur' }],
         content: [{ required: true, message: '请输入内容', trigger: 'blur' }],

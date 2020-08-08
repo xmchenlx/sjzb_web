@@ -107,7 +107,7 @@ const router = new Router({
         {
           path: '/adminCenter/articleManage',
           name: 'articleManage',
-          component: (resolve) => require(['@/sysManage/nav/articleList'], resolve),
+          component: (resolve) => require(['@/AdminCenter/Right/modal/articleList'], resolve),
           meta: {
             title: '文章管理',
             show: true
@@ -153,8 +153,10 @@ router.beforeEach((to, from, next) => {
     // 如果前往地址是登录界面直接放行
     // 检查是否适配，不适配的话，需要更改地址
     if (isMobile() === null && to.name === 'LoginPageMobile') {
+      localStorage.setItem('isPC', true)
       next({ name: 'LoginPage' })
     } else if (isMobile() !== null && to.name === 'LoginPage') {
+      localStorage.setItem('isPC', false)
       next({ name: 'LoginPageMobile' })
     } else {
       next()
