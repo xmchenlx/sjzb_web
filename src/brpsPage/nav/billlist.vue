@@ -203,12 +203,17 @@ export default {
       this.refreshHint = "拉取数据中...";
       this.refreshIconName = "el-icon-loading";
       this.isTableLoading = true;
-        _this.getRangeData().then(res => {
+      _this.getRangeData();
       _this.$nextTick(() => {
+        setTimeout(() => {
           _this.refreshIconName = "el-icon-refresh-right";
-          _this.refreshHint = "已是最新数据！";
+          _this.refreshHint = "数据刷新于"+ moment().format('YYYY-MM-DD hh:mm:ss');
+          setTimeout(() => {
+          _this.refreshHint = "刷新数据";
+            
+          }, 3000); 
           _this.$forceUpdate();
-        })
+        }, 1000);
       });
     },
     payTypeClass(p) {
@@ -223,7 +228,7 @@ export default {
     let _this = this;
     Bus.$on("addNewRec", function(status) {
       if (status == "success") {
-        this.refreshTable();
+        _this.refreshTable();
       }
     });
     Bus.$on("searchSpecifiedData", function(p, dataRange) {

@@ -28,7 +28,7 @@
     style="width: 100%">
     <el-table-column
       prop="billDate"
-      :formatter="dateFormat"
+      :formatter="datFormat"
       label="日期"
       width="180">
     </el-table-column>
@@ -86,8 +86,8 @@ export default {
     }
   },
   methods: {
-    dateFormat (t) {
-      return dateformat(t)
+    datFormat (row, column) {
+      return dateformat(row.billDate)
     },
     handleClose () {
       this.chartDataOfPie.rows = []

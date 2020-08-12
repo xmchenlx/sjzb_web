@@ -34,7 +34,7 @@
           clearable
         ></el-cascader>
         <el-input
-          placeholder="该功能尚未实现 | 账单内容关键词检索"
+          placeholder="关键词..."
           v-model="contentKeyWord"
           style="width:250px"
           prefix-icon="el-icon-search"
@@ -113,6 +113,23 @@ export default {
       searchBillRange: "",
       pickerOptions: {
         shortcuts: [
+          {
+            text: "昨天",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24);
+              picker.$emit("pick", [start, start]);
+            }
+          },
+          {
+            text: "今天",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              picker.$emit("pick", [start, end]);
+            }
+          },
           {
             text: "最近一周",
             onClick(picker) {
@@ -254,7 +271,8 @@ export default {
         a: String(moment(this.searchBillRange[0]).format("YYYY-MM-DD")),
         b: String(moment(this.searchBillRange[1]).format("YYYY-MM-DD")),
         //typeid目录筛选是一二级数组，查询时需要提取第二级标签
-        typeid: _this.typeid == "" ? "" : _this.typeid[1]
+        typeid: _this.typeid == "" ? "" : _this.typeid[1],
+        searchKey:_this.contentKeyWord
       };
       getSpecifidBillInRange(dataRange).then(res => {
         if (res.data.data != null) {

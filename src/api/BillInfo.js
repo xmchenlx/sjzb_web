@@ -15,7 +15,8 @@ const api = {
   getPast7DayIncomeList: 'Bill/getPast7DayIncomeList',
   searchOneBillInfo: 'Bill/searchOneBillInfo',
   search0BillReportData: 'Bill/searchBillReportData',
-  getDetailFromtypename: 'Bill/lookUpOneDetailType1st'
+  getDetailFromtypename: 'Bill/lookUpOneDetailType1st',
+  insertMoreRecord: 'Bill/insertMoreBillRecord'
 
 }
 export default api
@@ -99,6 +100,22 @@ export function insertOneRecord (param) {
     url: `${api.insertOneRecord}`,
     method: 'post',
     data: param
+  })
+}
+
+/**
+ * 新增多条相同类型账单
+ * @param {*} param
+ */
+export function insertMoreRecord (param, t, s) {
+  return axios({
+    url: `${api.insertMoreRecord}`,
+    method: 'post',
+    data: {
+      'times': parseInt(t),
+      'bd': param,
+      'step': parseInt(s)
+    }
   })
 }
 

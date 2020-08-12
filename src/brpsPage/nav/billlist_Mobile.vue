@@ -213,11 +213,18 @@ export default {
       this.refreshHint = "拉取数据中...";
       this.refreshIconName = "el-icon-loading";
       this.isTableLoading = true;
-      this.getRangeData().then(() => {
-        _this.refreshIconName = "el-icon-refresh-right";
-        _this.refreshHint = "已是最新数据！";
-       
-      })
+      this.getRangeData()
+      _this.$nextTick(() => {
+        setTimeout(() => {
+          _this.refreshIconName = "el-icon-refresh-right";
+          _this.refreshHint = "数据刷新于"+ moment().format('YYYY-MM-DD hh:mm:ss');
+          setTimeout(() => {
+          _this.refreshHint = "刷新数据";
+            
+          }, 3000);
+          _this.$forceUpdate();
+        }, 1000);
+      });
       _this.$forceUpdate();
     },
     payTypeClass(p){
