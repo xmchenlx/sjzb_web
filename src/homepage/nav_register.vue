@@ -16,23 +16,23 @@
           通行证是小天地里的唯一互通账号。您可以使用通行证访问博客，也可以进行记账。未来的项目都将基于此账号通行，不再开设其他的账号注册功能。
         </el-popover>
       </h3>
-      <el-form :rules="rules" :model="regform" ref="regform" label-width="7em">
+      <el-form :label-position="labelPosition" :rules="rules" :model="regform" ref="regform" label-width="7em">
         <el-form-item label="昵称：" prop="uName">
-          <el-input style="width:28em;" placeholder="在小天地内对您的称呼" v-model="regform.uName"></el-input>
+          <el-input style="width:100%;" placeholder="在小天地内对您的称呼" v-model="regform.uName"></el-input>
         </el-form-item>
         <el-form-item label="手机：" prop="uTel">
-          <el-input style="width:18em;" placeholder="请输入规范的手机号码" v-model="regform.uTel"></el-input>
-          <el-button style="width:9.7em" type="primary" @click="sendYZM" :disabled="isSendYzm">
+          <el-input style="width:57%;" placeholder="请输入规范的手机号码" v-model="regform.uTel"></el-input>
+          <el-button style="width:39%" type="primary" @click="sendYZM" :disabled="isSendYzm">
             <i :class="yzmIcon" />
             {{yzmButtonText}}
           </el-button>
         </el-form-item>
         <el-form-item label="验证码：" prop="uYzm">
-          <el-input style="width:28em;" v-model="regform.uYzm"></el-input>
+          <el-input style="width:100%;" placeholder="输入您接收到的验证代码" v-model="regform.uYzm"></el-input>
         </el-form-item>
         <el-form-item label="密码：" prop="uPwd">
           <el-input
-            style="width:28em;"
+            style="width:100%;"
             placeholder="设置一定长度的密码"
             v-model="regform.uPwd"
             show-password
@@ -56,6 +56,8 @@ import {
 } from '@/api/Users'
 import Bus from '@/bus'
 import moment from 'moment'
+import {isMobile } from '@/dict/systemSetting'
+// import func from '../../vue-temp/vue-editor-bridge'
 export default {
   data () {
     return {
@@ -65,6 +67,7 @@ export default {
         uTel: '',
         uYzm: ''
       },
+      labelPosition:'right',
       yzmButtonText: '发送验证码',
       yzmSeconds: 60,
       isSendYzm: false,
@@ -90,6 +93,13 @@ export default {
         uYzm: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
       }
     }
+  },
+  mounted(){
+    this.chooseLabelPosition()
+    
+  },
+  created:function(){
+    this.chooseLabelPosition()
   },
   methods: {
     backToLogin () {
@@ -161,6 +171,14 @@ export default {
         }
       })
     },
+    chooseLabelPosition(){
+      if(isMobile()){
+      this.labelPosition='top'
+      }
+      else{
+        this.labelPosition='right'
+      }
+    },
     finishReg () {
       let _this = this
       let checkStatus = _this.checkForm('regform')
@@ -215,7 +233,7 @@ export default {
   margin-top: 2%;
 }
 #registerNav {
-  width: 35em;
+  width: 70vh;
   margin: 0 auto;
 }
 </style>

@@ -17,6 +17,7 @@
       </el-header>
       <el-main style="height:55%;width:100%;margin:5% 0;margin:0 auto">
          <transition name="el-zoom-in-center">
+          
           <el-card
             class="logincard"
             style="margin:0 auto;margin-bottom:1%;height:3rem;padding:0;"
@@ -39,8 +40,10 @@
             </div>
           </el-card>
         </transition>
-
-        <el-card class="logincard">
+          <div id="registerdiv" v-if="wantToRegister===true">
+          <registerNav style="width:100%"/>
+        </div>
+        <el-card class="logincard" v-else>
           <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="25%">
             <el-form-item label="账号" prop="uName">
               <el-input v-model="loginForm.uName"></el-input>
@@ -73,6 +76,7 @@ import foot from "@/homepage/copyrightFoot";
 import { validateUser } from "@/api/Users";
 import { getOnewc } from "@/api/webConfig";
 import moment from "moment";
+import registerNav from "./nav_register";
 import Utils from "@/api/util";
 export default {
   data() {
@@ -83,6 +87,7 @@ export default {
         uName: "",
         uPwd: ""
       },
+      wantToRegister:false,
       rules: {
         uName: [
           { required: true, message: "请输入账户名", trigger: "blur" },
@@ -97,7 +102,13 @@ export default {
   },
   components: {
     foot,
-    Bus
+    Bus,
+    registerNav
+  },mounted: function() {
+    let _this = this;
+    Bus.$on("backToLogin", function() {
+      _this.wantToRegister = false;
+    });
   },
   methods: {
     checkValueNull(s) {
@@ -120,7 +131,8 @@ export default {
       this.$message.error("该功能还未上线...");
     },
     toRegister() {
-      this.$message.error("该功能目前只支持PC端使用");
+      this.wantToRegister=true
+      // this.$message.error("该功能目前只支持PC端使用");
     },
     getTimeToMadeGreetins() {
       //分析时间返回问候语
@@ -235,12 +247,8 @@ export default {
   },
   mounted: function() {
     let _this = this;
-    Bus.$on("unLogin", function() {
-      console.log("BusOnUnlogin");
-      _this.$notify({
-        title: "非法访问",
-        message: "没有检测到您的登录信息，此次访问已被拦截。请重新登录。"
-      });
+    Bus.$on("backToLogin", function() {
+      _this.wantToRegister = false;
     });
   },
   created:function(){
@@ -287,7 +295,7 @@ export default {
     overflow-x: hidden;
     padding-left: 5%;
     margin-left: 100%; // 把文字弄出可见区域
-    width: 600%;
+    width: 800%;
     animation: myMove 22s linear infinite; // 重点，定义动画
     animation-fill-mode: forwards;
   }

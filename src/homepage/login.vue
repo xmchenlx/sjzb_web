@@ -259,9 +259,12 @@ export default {
             if (res.data.success === true) {
               // _this.$cookies.headers
               // $cookies.set('JSESSIONID',res.response.headers.cookie.JSESSIONID)
-              localStorage.setItem("userId", res.data.data);
+              setTimeout(() => {
+                              localStorage.setItem("userId", res.data.data);
               localStorage.setItem("userName", _this.loginForm.uName);
               localStorage.setItem('isAutoLogin',_this.isAutoLogin)
+              }, 1000);
+
       
 
               localStorage.setItem("userP", _this.loginForm.uPwd);
@@ -401,7 +404,7 @@ export default {
     overflow-x: hidden;
     padding-left: 5%;
     margin-left: 100%; // 把文字弄出可见区域
-    width: 300%;
+    width: 400%;
     animation: myMove 13s linear infinite; // 重点，定义动画
     animation-fill-mode: forwards;
   }
