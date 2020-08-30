@@ -103,6 +103,14 @@ const router = new Router({
             title: '发布新文章',
             show: true
           }
+        }, {
+          path: '/adminCenter/editArticle',
+          name: 'editArticle',
+          component: (resolve) => require(['@/Article/editArticle'], resolve),
+          meta: {
+            title: '编辑文章',
+            show: true
+          }
         },
         {
           path: '/adminCenter/articleManage',

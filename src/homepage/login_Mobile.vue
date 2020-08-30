@@ -17,7 +17,7 @@
       </el-header>
       <el-main style="height:55%;width:100%;margin:5% 0;margin:0 auto">
          <transition name="el-zoom-in-center">
-          
+
           <el-card
             class="logincard"
             style="margin:0 auto;margin-bottom:1%;height:3rem;padding:0;"
@@ -296,7 +296,7 @@ export default {
     padding-left: 5%;
     margin-left: 100%; // 把文字弄出可见区域
     width: 800%;
-    animation: myMove 22s linear infinite; // 重点，定义动画
+    animation: myMove 30s linear infinite; // 重点，定义动画
     animation-fill-mode: forwards;
   }
   /*文字无缝滚动*/

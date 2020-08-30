@@ -1,6 +1,6 @@
 <template>
   <div id="adminArticleList">
-    <el-card>
+    <!-- <el-card> -->
       <el-input
         v-model="searchKey"
         style="width:80%"
@@ -8,8 +8,7 @@
         prefix-icon="el-icon-search"
       />
       <el-button type="primary" @click="queryList" :loading="searching">查询</el-button>
-      <el-button type="plain" @click="futureTips">我也想发表</el-button>
-
+      <br/>
       <div id="articleListDIv" v-if="isSearchFinish==true">
         <div v-for="(item) in articlelist" :key="item.aId">
           <el-row :gutter="20">
@@ -19,18 +18,10 @@
               </div>
             </el-col>
             <el-col :span="21">
-              <!-- <el-button type="text" @click="openArticle(item.aId)">
-                      <h2 style="line-height:0px;margin:0;padding:0;font-size:25px;margin-top:15px;">
-                        {{item.aTitle}}
-              </h2>-->
 
               <h2>{{item.aTitle}}</h2>
-              <p style="text-align:left;color:gray;">
-                花笙联系不上李芳非常着急。有人举报张兰兰涉嫌组织暴徒威胁、袭击远方地产，花笙急忙赶到警察局，原来这是潘晓佳联合远方地产一起诬陷张兰兰。
-                花笙决定继续查，要把远方房地产和它背后的黑公关一起找出来。戴猛合成了一段录音，
-                其内容能证明潘晓佳偷了公司设计图给远方地产总经理孙静海，孙总在拿到录音后找潘晓佳求证，
-              </p>
-              <el-tag :color="convertArticleType(item.aTag)">{{convertArticleInfo(item.aTag)}}</el-tag>
+
+              <el-tag >{{convertArticleInfo(item.aTag)}}</el-tag>
               <span>
                 <i class="el-icon-time" />
                 {{datetimeConvert(item.aPostTime)}}
@@ -45,7 +36,8 @@
                 type="primary"
                 size="small"
                 style="float:right"
-              >查看详情</el-button>
+                icon="el-icon-edit"
+              >编辑</el-button>
             </el-col>
           </el-row>
           <el-divider />
@@ -69,7 +61,7 @@
         @current-change="handleCurrentChange"
         :total="listTotal"
       ></el-pagination>
-    </el-card>
+    <!-- </el-card> -->
   </div>
 </template>
 
@@ -172,13 +164,19 @@ export default {
     // },
     openArticle (row) {
       // let routeData = this.$router.push({
+      // this.$router.push({
+      //   name: 'articleDetail',
+      //   query: {
+      //     aid: row
+      //   }
+      // })
+      // localStorage.setItem('articleId', JSON.stringify(row)) // 传参：房源hid
       this.$router.push({
-        name: 'articleDetail',
+        name: 'editArticle',
         query: {
           aid: row
         }
       })
-      localStorage.setItem('articleId', JSON.stringify(row)) // 传参：房源hid
       // window.open(routeData.href, '_blank')
     }
   },
