@@ -28,7 +28,9 @@
             align="right"
             type="date"
             placeholder="选择日期"
+            format="yyyy-MM-dd"
             style="width:80%"
+            @change="dateChange"
             :picker-options="pickerOptions"
           ></el-date-picker>
         </el-form-item>
@@ -192,6 +194,7 @@ export default {
         bill_date: moment(new Date()).format('YYYY-MM-DD'),
         type2nd: '',
         content: '',
+        billDate: '',
         money: 0,
         type1st: '',
         note: ''
@@ -298,6 +301,7 @@ export default {
       if (this.billType === '0') {
         this.newRecord.money = this.newRecord.money * -1
       }
+      this.newRecord.billDate = moment(this.newRecord.bill_date).valueOf()
       updateOneRecord(this.newRecord).then(res => {
         if (res.data.data > 0) {
           this.$message.success('更新成功！')
@@ -407,15 +411,19 @@ export default {
       }
       return 'finish'
     },
+    dateChange (val) {
+      console.log(val)
+      this.newRecord.bill_date = val
+    },
     editBillInfo (bid, isUsePC) {
       let _this = this
       this.isEditStatus = true
-      this.$forceUpdate()
       // console.log(this.ModalWidth)
       searchOneBillInfo(bid).then(res => {
         _this.newRecord = res.data.data
         // 填充记录的日期
-        _this.newRecord.bill_date = res.data.data.billDate
+        // _this.newRecord.bill_date = new Date(res.data.data.billDate)
+        _this.$set(_this.newRecord, 'bill_date', res.data.data.billDate)
         // select识别key=>value必须为数值型，需要对传过来的数据进行数值化转义
         _this.newRecord.type1st = Number(_this.newRecord.type1st)
         _this.newRecord.type2nd = Number(_this.newRecord.type2nd)
@@ -429,6 +437,7 @@ export default {
         // _this.processOptionLabel(1, res.data.data.type1st)
         // _this.type2nd = _this.processOptionLabel(2, res.data.data.type2nd)
         _this.show(isUsePC)
+        _this.$forceUpdate()
       })
     },
     show (isUsePC) {
