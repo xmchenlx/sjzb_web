@@ -127,7 +127,7 @@ export default {
       pagemsgContent: null,
       errorCount: 0,
       isBtnEnabled: false,
-      isAutoLogin:false,
+      isAutoLogin: false,
       isLogining: false,
       loginForm: {
         uName: "",
@@ -158,26 +158,25 @@ export default {
       return "null";
     },
     checkLocalStroage() {
-      let _this = this
-      let ial = localStorage.getItem('isAutoLogin')
-      
-      if(ial){
-        if(ial === 'true'){
-          _this.isAutoLogin = true
-          _this.$forceUpdate()
-        }else{
-          _this.isAutoLogin = false
+      let _this = this;
+      let ial = localStorage.getItem("isAutoLogin");
+
+      if (ial) {
+        if (ial === "true") {
+          _this.isAutoLogin = true;
+          _this.$forceUpdate();
+        } else {
+          _this.isAutoLogin = false;
         }
-      }else{
-        
-        _this.isAutoLogin = false
+      } else {
+        _this.isAutoLogin = false;
       }
-    this.$forceUpdate()
-// this.isAutoLogin = localStorage.getItem('isAutoLogin')?localStorage.getItem('isAutoLogin'):false
-      // 
+      this.$forceUpdate();
+      // this.isAutoLogin = localStorage.getItem('isAutoLogin')?localStorage.getItem('isAutoLogin'):false
+      //
       let s_uname = localStorage.getItem("userName");
-      // 
-      // 
+      //
+      //
       if (s_uname && _this.isAutoLogin === true) {
         _this.loginForm.uName = s_uname;
         _this.loginForm.uPwd = localStorage.getItem("userP");
@@ -197,7 +196,6 @@ export default {
           this.checkValueNull(res.data.data.configMsg) === "ok"
         ) {
           _this.pagemsgContent = res.data.data.configMsg;
-          
         }
       });
     },
@@ -259,13 +257,9 @@ export default {
             if (res.data.success === true) {
               // _this.$cookies.headers
               // $cookies.set('JSESSIONID',res.response.headers.cookie.JSESSIONID)
-              setTimeout(() => {
-                              localStorage.setItem("userId", res.data.data);
+              localStorage.setItem("userId", res.data.data);
               localStorage.setItem("userName", _this.loginForm.uName);
-              localStorage.setItem('isAutoLogin',_this.isAutoLogin)
-              }, 1000);
-
-      
+              localStorage.setItem("isAutoLogin", _this.isAutoLogin);
 
               localStorage.setItem("userP", _this.loginForm.uPwd);
               sessionStorage.setItem("userId", res.data.data);
@@ -279,7 +273,10 @@ export default {
                     .format("YYYY-MM-DD HH:mm"),
                 type: "success"
               });
+              setTimeout(() => {
               _this.$router.push({ name: "personalCenter" });
+                
+              }, 1000);
             } else {
               _this.errorCount++;
               if (_this.errorCount == 3) {
@@ -315,7 +312,7 @@ export default {
           title: "响应异常",
           message: "请求发送可能超时。可能是因为服务器正在维护，请您稍后再试。"
         });
-        
+
         _this.enterBtnIcon = "el-icon-key";
         this.isLogining = false;
       }
@@ -339,7 +336,6 @@ export default {
   mounted: function() {
     let _this = this;
     Bus.$on("unLogin", function() {
-      
       _this.$notify({
         title: "非法访问",
         message: "没有检测到您的登录信息，此次访问已被拦截。请重新登录。"
@@ -405,7 +401,7 @@ export default {
     padding-left: 5%;
     margin-left: 100%; // 把文字弄出可见区域
     width: 400%;
-    animation: myMove 13s linear infinite; // 重点，定义动画
+    animation: myMove 25s linear infinite; // 重点，定义动画
     animation-fill-mode: forwards;
   }
   /*文字无缝滚动*/

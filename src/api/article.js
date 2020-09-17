@@ -7,7 +7,8 @@ axios.defaults.headers = {
 const api = {
   getArticleList: 'Article/getArticleList',
   getArticleInfo: 'Article/getArticleInfo',
-  insertOneArticle: 'Article/insertOneArticle'
+  insertOneArticle: 'Article/insertOneArticle',
+  editArticle: 'Article/postEdidiArticle'
 
 }
 export default api
@@ -34,6 +35,15 @@ export function addNewArticle (param) {
   return axios({
     url: `${api.insertOneArticle}`,
     method: 'post',
+    data: param
+    // get方法传参用params，post方法传参用data
+  })
+}
+
+export function editArticle (param) {
+  return axios({
+    url: `${api.editArticle}`,
+    method: 'put',
     data: param
     // get方法传参用params，post方法传参用data
   })

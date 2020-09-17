@@ -15,7 +15,7 @@
         <transition name="el-zoom-in-top">
           <el-card>
             <div slot="header" class="clearfix">
-              <span>页面</span>
+              <span>窗口</span>
               <el-button style="float: right; padding: 3px 0" @click="closeCard" type="text">关闭</el-button>
             </div>
             <router-view style="width:100%;margin:0 auto">
