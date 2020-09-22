@@ -35,7 +35,16 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="变动内容:" prop="content">
-          <el-input v-model="newRecord.content" style="width:80%" />
+          <!-- <el-input v-model="newRecord.content" style="width:80%" /> -->
+           <el-autocomplete
+      class="inline-input"
+      v-model="newRecord.content"
+      :fetch-suggestions="querySearch"
+      placeholder="请输入内容"
+      :trigger-on-focus="false"
+      style="width:80%"
+      @select="handleSelect"
+    ></el-autocomplete>
         </el-form-item>
         <el-form-item label="变动金额:" prop="money">
           <!-- <el-input type="money" v-model.number="newRecord.money" style="width:80%" placeholder="【+】正数表示收入，【-】负数表示支出"/> -->
@@ -177,6 +186,7 @@
 
 <script>
 import { getAllType } from '@/api/type1st'
+import { getIKJson } from '@/api/webConfig'
 import { getTypeListByFid } from '@/api/type2nd'
 import {
   insertOneRecord,
@@ -190,6 +200,7 @@ export default {
   data () {
     return {
       isAddModalShow: false,
+      inputKeywordJson: [],
       newRecord: {
         bill_date: moment(new Date()).format('YYYY-MM-DD'),
         type2nd: '',
@@ -249,9 +260,26 @@ export default {
   },
   created: function () {
     this.getType1stList()
+    this.getInputJson()
     // this.getType2ndList()
   },
   methods: {
+    getInputJson () {
+      // this.inputKeywordJson = require('@/dict/inputKeyword.json')
+      this.inputKeywordJson = getIKJson()
+      // console.log(this.inputKeywordJson)
+    },
+    querySearch (queryString, cb) {
+      var inputKeywordJson = this.inputKeywordJson
+      var results = queryString ? inputKeywordJson.filter(this.createFilter(queryString)) : inputKeywordJson
+      // 调用 callback 返回建议列表的数据
+      cb(results)
+    },
+    createFilter (queryString) {
+      return (restaurant) => {
+        return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
+      }
+    },
     getType1stList () {
       getAllType().then(res => {
         let _this = this

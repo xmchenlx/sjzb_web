@@ -18,3 +18,11 @@ export function getOnewc (param) {
     // get方法传参用params，post方法传参用data
   })
 }
+
+export function getIKJson (param) {
+  return axios({
+    url: `http://chenlx.top/data/IK.json`,
+    method: 'get'
+    // get方法传参用params，post方法传参用data
+  })
+}
