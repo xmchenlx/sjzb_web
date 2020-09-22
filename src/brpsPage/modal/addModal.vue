@@ -265,8 +265,8 @@ export default {
   },
   methods: {
     getInputJson () {
-      // this.inputKeywordJson = require('@/dict/inputKeyword.json')
-      this.inputKeywordJson = getIKJson()
+      this.inputKeywordJson = require('@/dict/IK.json')
+      // this.inputKeywordJson = getIKJson()
       // console.log(this.inputKeywordJson)
     },
     querySearch (queryString, cb) {

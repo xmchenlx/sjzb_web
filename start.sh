@@ -54,3 +54,7 @@ docker run -d -p 81:80 --name www_nginx -v /home/brpsProject/nginx/conf.d:/root/
 
 
 #tomcat地址：./usr/local/tomcat
+
+
+\最新运行nginx代码
+docker run -d -p 80:80 -p 443:443 --name bbrps -v /home/brpsProject/nginx/conf.d:/etc/nginx/conf.d:rw -v /home/brpsProject/brps_web/brps_web/dist:/home/brpsProject/nginx/html -v /home/blogProject/lxblog_web/dist:/home/blogProject/nginx/html  -v /home/houserentProject/houserent_web/dist:/home/houserentProject/houserent_web/dist -v /home/brpsProject/www_page:/home/brpsProject/www_page nginx

@@ -13,15 +13,19 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       // module.exports = {
-        // devServer: {
-          // disableHostCheck: true, // 跳过host检查，避免【Invalid Host header错误】
-          // proxy: {
-            '/Bill': {
-        target: 'https://192.168.1.2:6868/brps_war/',
-              changeOrigin:true
-            }
-          // }
-        // }
+      // devServer: {
+      // disableHostCheck: true, // 跳过host检查，避免【Invalid Host header错误】
+      // proxy: {
+      // '/Bill': {
+      //   target: 'https://192.168.1.2:6868/brps_war/',
+      //   changeOrigin: true
+      // }
+      // '/ikj': {
+      //   target: 'https://www.chenlx.top:80',
+      //   changeOrigin: true,
+      //   pathRewrite
+      // }      // }
+      // }
       // }
     },
 
@@ -64,7 +68,7 @@ module.exports = {
     productionGzip: true,
     productionGzipExtensions: ['js', 'css'],
     //gzip -end
-    
+
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
